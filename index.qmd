@@ -1,5 +1,5 @@
 ---
-title: "My website and data analysis portfolio"
+title: "My Website and Data Analysis Portfolio"
 ---
 
 # Hello
