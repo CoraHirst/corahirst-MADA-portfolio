@@ -33,7 +33,7 @@ The autoimmunity lecture is a nice comment on how this mechanism of distinguishi
 
 She's also pretty cool - as a graduate student, here advisor insited she publish a paper she worked on all by herself. Afraid she wouldn't be taken seriously, she included her dog as a co-author. 
 
-![Polly with her dog and most famous co-author, Galadriel Mirkwood ](Polly_matzinger.jpeg)
+![Polly with her dog and most famous co-author, Galadriel Mirkwood ](figures/Polly_matzinger.jpeg)
 
 ### Why I've decided to join this virtual community
 
@@ -43,14 +43,14 @@ Dr. Handel graciously allowed me to participate in this course, and from it I'm 
 
 ![This is me, holding a pumpkin spice latte in front of the Christmas lights at the farm near my home along the front range!](photo_me_introduction.JPG)
 
-![Here's a photo of my cat, Eigen, in Georgia...](eigen.jpg)
+![Here's a photo of my cat, Eigen, in Georgia...](figures/eigen.jpg)
 
 He's a rescue, with one eye, FIV, and a reset jaw. But he's perfectly (purr-fectly?) happy and relatively healthy with the help of antibiotics, and sounds a little like Darth Vador when he breathes :) Plus, I've been interested in dynamical systems models of HIV infections, so to me, the little man is a treasure trove of interesting immunology!
 
-![...and here's one of my cat back in Denver.](tailsers.JPG)
+![...and here's one of my cat back in Denver.](figures/tailsers.JPG)
 
 He's a rescue too (of sorts - we collected him as a kitten from a box in front of a grocery store.) Tails - named after the Sonic the Hedgehog character, which seven-year-old me was adament about explaining - has been a part of our family for nearly 16 years, and while he's not the brightest bulb, he sure is fun to mess with!
 
-![Lastly, this is my roommate, Tracy, who is my best friend here in Georgia and is working her tailfeathers off to find an MD-PhD program for Orthopedics.](tracy_and_I.jpeg)
+![Lastly, this is my roommate, Tracy, who is my best friend here in Georgia and is working her tailfeathers off to find an MD-PhD program for Orthopedics.](figures/tracy_and_I.jpeg)
 
 
