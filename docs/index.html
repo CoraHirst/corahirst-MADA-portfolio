@@ -33,7 +33,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -127,32 +126,53 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+
+
+<div class="quarto-about-jolla">
+  <img src="figures/me_profile.jpg" class="about-image
+  round " style="height: 15em; width: 15em;">
+ <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Cora’s Website and Data Analysis Portfolio</h1>
 </div>
-
-
-
 <div class="quarto-title-meta">
-
-    
-  
-    
   </div>
-  
+</header><div id="head">
+<blockquote class="blockquote">
+<p>Then he who would be a master of the art [of rhetoric] must understand the real nature of everything; or he will never know either how to make the gradual departure from truth into the opposite of truth which is effected by the help of resemblances, or how to avoid it?</p>
+<p>– Plato, <em>Phaedrus</em></p>
+</blockquote>
+</div> 
+  <hr class="about-sep">
+   <div class="about-links">
+  <a href="/www.linkedin.com/in/cora-hirst-a36413191" class="about-link">
+    <i class="bi bi-linkedin"></i>
+     <span class="about-link-text">LinkedIn</span>
+  </a>
+  <a href="https://github.com/CoraHirst" class="about-link">
+    <i class="bi bi-github"></i>
+     <span class="about-link-text">GitHub</span>
+  </a>
+  <a href="mailto:cora.virginia.hirst@emory.edu" class="about-link">
+    <i class="bi bi-envelope-fill"></i>
+     <span class="about-link-text">Email</span>
+  </a>
+</div>
+</div>
 
-</header>
-
-<section id="welcome" class="level1">
-<h1>Welcome</h1>
-<p>Welcome to my website and data analysis portfolio, where I plan to keep track of my progress throughout the Spring 2024 <strong>M</strong>odern <strong>A</strong>pplied <strong>D</strong>ata <strong>A</strong>nalysis (<strong>MADA</strong>) course.</p>
+<section id="hello-friend" class="level3">
+<h3 data-anchor-id="hello-friend">Hello, friend!</h3>
+<p>Welcome to my website and data analysis portfolio for the Spring 2024 <strong>M</strong>odern <strong>A</strong>pplied <strong>D</strong>ata <strong>A</strong>nalysis (<strong>MADA</strong>) course.</p>
 <ul>
-<li>Please use the <code>Menu Bar</code> above to navigate to our various data analysis and technical skill-building projects.</li>
+<li>Please use the <code>Menu Bar</code> above to navigate to our various data analysis and technical projects. Projects will be added throughout the semester, so check back in to see what’s new!</li>
 <li>Have fun! And feel free to contact me with questions, comments, feedback, etc.</li>
 </ul>
-<p>Perhaps I’ll add some pages for projects I’ve completed during my graduate coursework in Ecology, Population Biology, and Evolution, to help study for qualifying exams. Maybe I’ll exapt this site to note and share theories and techniques I find particularly interesting. I suppose we’ll see!</p>
-<p>Regardless, welcome! 🙂</p>
+<!--
+
+-->
+<p>Perhaps I’ll add some pages for projects I’ve completed during my graduate coursework in Ecology, Population Biology, and Evolution, to help study for qualifying exams. Maybe I’ll exapt this site to note and share theories and techniques I find particularly interesting. I suppose we’ll see…</p>
+<p>…regardless, welcome! 🙂</p>
+
 
 
 </section>
@@ -178,13 +198,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
   const clipboard = new window.ClipboardJS('.code-copy-button', {
     target: function(trigger) {
       return trigger.previousElementSibling;

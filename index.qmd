@@ -1,14 +1,41 @@
 ---
 title: "Cora's Website and Data Analysis Portfolio"
+image: figures/me_profile.jpg
+about:
+  id: head
+  template: jolla
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: www.linkedin.com/in/cora-hirst-a36413191
+    - icon: github
+      text: GitHub
+      href: https://github.com/CoraHirst
+    - icon: envelope-fill
+      text: Email
+      href: mailto:cora.virginia.hirst@emory.edu
 ---
 
-# Welcome
+:::{#head}
 
-Welcome to my website and data analysis portfolio, where I plan to keep track of my progress throughout the Spring 2024 **M**odern **A**pplied **D**ata **A**nalysis (**MADA**) course. 
+> Then he who would be a master of the art [of rhetoric] must understand the real nature of everything; or he will never know either how to make the gradual departure from truth into the opposite of truth which is effected by the help of resemblances, or how to avoid it?
+>
+> -- Plato, *Phaedrus*
 
-* Please use the `Menu Bar` above to navigate to our various data analysis and technical skill-building projects. 
+:::
+
+### Hello, friend! 
+
+Welcome to my website and data analysis portfolio for the Spring 2024 **M**odern **A**pplied **D**ata **A**nalysis (**MADA**) course. 
+
+* Please use the `Menu Bar` above to navigate to our various data analysis and technical projects. Projects will be added throughout the semester, so check back in to see what's new!
 * Have fun! And feel free to contact me with questions, comments, feedback, etc.
 
-Perhaps I'll add some pages for projects I've completed during my graduate coursework in Ecology, Population Biology, and Evolution, to help study for qualifying exams. Maybe I'll exapt this site to note and share theories and techniques I find particularly interesting. I suppose we'll see! 
 
-Regardless, welcome! 🙂
+<!--
+
+-->
+
+Perhaps I'll add some pages for projects I've completed during my graduate coursework in Ecology, Population Biology, and Evolution, to help study for qualifying exams. Maybe I'll exapt this site to note and share theories and techniques I find particularly interesting. I suppose we'll see... 
+
+...regardless, welcome! 🙂

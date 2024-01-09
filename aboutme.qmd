@@ -1,12 +1,21 @@
 ---
 title: "About me"
 ---
-
 ## Cora the Coloradan
+
+![](figures/haley_me_mountain.JPG)
 
 ### Hello!
 
 My name is Cora Hirst, and I am a first year Population Biology, Ecology, and Evolution PhD student at Emory University. I am originally from Denver, Colorado, but I have lived in Georgia for about 6 years (and counting!)
+
+### Education
+
+**PhD, Population Biology, Ecology, and Evolution.** August 2023 -- Present. Emory University, Atlanta, GA, USA.
+
+**BS, Human Biology and Anthropology and Biology, Summa cum Laude.** August 2018 -- May 2022. Emory University, Atlanta, GA, USA.
+
+*and Proud International Baccalaureate Diploma Holder*
 
 ### Previous research
 
@@ -21,19 +30,19 @@ That said, I focused mainly on charting allele frequency changes among genes enc
 
 Fatefully, I met my current research advisor after taking an Immunology class on a whim, and discovered that theoretical biology was not only a field, but one very closely related to the theories in population biology and evolution I was already so curious about. An incredible mathematical biologist and modeler, he took me under his wing to build my statistical, mathematical, and theoretical intuition from the ground up. 
 
-Over the past two years, I've greatly built upon my understanding of statistics (and surveyed statistical mechanics, as a mirror to population biology), developed a strong understanding of how to utilize R (and, from my undergraduate experience, Python) to develop and run both stochastic and determinisitic models of dynamical systems, and ventured into the realm of regression modeling to try to find deterministic factors in noisy data (and to try to understand what "noise" really means.) Mainly, I focus on questions regarding fundamental immunological mechanisms - how well does our body actually distinguishing "bad" from "good"? How does our immune system decide the amount of memory to allocate to past infections? How does the timing of effector cell recruitment determine disease outcome?
+Over the past two years, I've greatly built upon my understanding of statistics (and surveyed statistical mechanics, as a mirror to population biology), developed a strong understanding of how to utilize R (and, from my undergraduate experience, Python) to develop and run both stochastic and determinisitic models of dynamical systems, and ventured into the realm of regression modeling to try to find deterministic factors in noisy data (and to try to understand what "noise" really means.) Mainly, I focus on questions regarding fundamental immunological mechanisms - how well does our body actually distinguish "bad" from "good"? How does our immune system decide the amount of memory to allocate to past infections? How does the timing of effector cell recruitment determine disease outcome?
 
 ### Polly Matzinger's lecture on autoimmunity
 
 One such area of big-picture questions that has piqued my interest lately is that of autoimmunity - for instance, why, if our immune responses are *so specific* and could recognize any organic compound we could ever think of manufacturing, do we not see higher instances of autoimmunity? How common is autoreactivity, and when does it lead to disease? How much do different mechanisms of self-tolerance (and other-tolerance?) contribute to reducing autoimmune disease?
 
-The immunologist Polly Matzinger delivered a series of lectures regarding theoretical immunology, and [this](https://videocast.nih.gov/watch=17284) was one of my favorites. She's credited with developing the "Danger Model" of immune system activation, which helps to explain how our immune systems can specifically target pathogens, but not our own cells. 
+The immunologist (and one of my *favorite* theoreticians) Polly Matzinger delivered a series of lectures regarding theoretical immunology, and [this](https://videocast.nih.gov/watch=17284) was one of my favorites. She's credited with developing the "Danger Model" of immune system activation, which helps to explain how our immune systems can specifically target pathogens, but not our own cells. 
 
 The autoimmunity lecture is a nice comment on how this mechanism of distinguishing "good self" from "harmful other" *might* go awry. Our immune systems may have a difficult time discerning "harmful self" like cancers or "good other" like commensals, and this challenge may be compounded by pathogens who evolve to look more like us, by an increased amount of time we are inflamed, or by naivety (age).
 
-She's also pretty cool - as a graduate student, here advisor insited she publish a paper she worked on all by herself. Afraid she wouldn't be taken seriously, she included her dog as a co-author. 
+She's also pretty cool - as a graduate student, her advisor insited she publish a paper she worked on all by herself. Afraid she wouldn't be taken seriously, she included her dog as a co-author. 
 
-![Polly with her dog and most famous co-author, Galadriel Mirkwood ](figures/Polly_matzinger.jpeg)
+![Polly with her dog and most famous co-author, Galadriel Mirkwood.](figures/Polly_matzinger.jpeg)
 
 ### Why I've decided to join this virtual community
 
