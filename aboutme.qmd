@@ -1,6 +1,7 @@
 ---
 title: "About me"
 ---
+
 ## Cora the Coloradan
 
 ![](figures/haley_me_mountain.jpg)
