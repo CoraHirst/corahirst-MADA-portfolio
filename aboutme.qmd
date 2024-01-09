@@ -41,7 +41,7 @@ Dr. Handel graciously allowed me to participate in this course, and from it I'm 
 
 ### Photo gallery? 
 
-![This is me, holding a pumpkin spice latte in front of the Christmas lights at the farm near my home along the front range!](photo_me_introduction.JPG)
+![This is me, holding a pumpkin spice latte in front of the Christmas lights at the farm near my home along the front range!](figures/photo_me_introduction.JPG)
 
 ![Here's a photo of my cat, Eigen, in Georgia...](figures/eigen.jpg)
 
