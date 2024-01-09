@@ -1,16 +1,14 @@
 ---
-title: "My Website and Data Analysis Portfolio"
+title: "Cora's Website and Data Analysis Portfolio"
 ---
 
-# Hello
-
-### And hello again
+# Welcome 
 
 Welcome to my website and data analysis portfolio, where I plan to keep track of my progress throughout the Spring 2024 **M**odern **A**pplied **D**ata **A**nalysis (**MADA**) course. 
 
 * Please use the `Menu Bar` above to navigate to our various data analysis and technical skill-building projects. 
-* Have fun! And feel free to contact me with questions, comments, feedback, etc. via github.
+* Have fun! And feel free to contact me with questions, comments, feedback, etc.
 
-Perhaps I'll add some pages for projects I've completed during my graduate coursework in Ecology, Population Biology, and Evolution, to help me study for qualifying exams. Or, maybe I'll exapt this site as a way to note and share theories and techniques I find particularly interesting, somewhat like a blog! I suppose we'll see! 🙂
+Perhaps I'll add some pages for projects I've completed during my graduate coursework in Ecology, Population Biology, and Evolution, to help study for qualifying exams. Maybe I'll exapt this site to note and share theories and techniques I find particularly interesting. I suppose we'll see! 🙂
 
 Regardless, welcome!
