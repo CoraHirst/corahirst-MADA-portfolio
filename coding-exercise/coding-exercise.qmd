@@ -2,6 +2,15 @@
 title: "R Coding Exercise"
 ---
 
+
+# Purpose
+
+The following is an R coding excerise on loading, viewing, processing, and visualizing data in R. We complete all analysis on the `gapminder` dataset. 
+
+All code chunks are echoed for ease of viewing. 
+
+The following chunk loads all libraries which will be used during this exercise. 
+
 ```{r load-libraries}
 ## install packages and load required libraries
 
@@ -20,7 +29,6 @@ library(gtsummary)
 # install.packages("flextable")
 library(flextable)
 ```
-
 
 # Loading and checking the data
 
