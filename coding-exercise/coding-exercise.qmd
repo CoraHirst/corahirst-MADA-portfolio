@@ -298,4 +298,67 @@ knitr::include_graphics(here("coding-exercise","results","figures","life_exp_pop
 
 Life expectancy appears to decrease with infant mortality, while decreasing only slightly with population size (@fig-reg-inf-mort-2000, @fig-reg-pop-2000). Using a definition of $pvalue < 0.05$ as significance, it is evident that population size is a poor predictor of life expectancy ($p = 0.6 > 0.05$). However, infant mortality is in fact a better, significant predictor of life expectancy ($p = 2 \times 10^{-8}$) (@tbl-lm_life_exp_inf_mort-2000, @tbl-lm_life_exp_pop-2000). Thus, we fail to reject the null hypothesis that life expectancy is not correlated with population size, but do reject the null hypothesis that life expectancy is not correlated with infant mortality rates.
 
+### This section is contributed by Taylor Glass. 
+# Exploring the dataset
+I chose to explore the 'movie' dataset in the dslabs package. I used the help() function to find the description of the dataset and an explanation of the 7 variables it includes. I used the str() function to determine there are 100,004 observations of 7 variables. There are 4 integer variables, 1 character variable, 1 numeric variable and one factor variable with 901 levels. I used the summary() function to examine the range of each numerical variable. The year the movie was released ranges from 1902 to 2016. There are 6 distinct genres along with an 'other' option. The mean rating for all 100,004 movies included in the dataset is 3.544.  
+```{r}
+help("movielens") ##learn about the dataset
+str(movielens) ##determine dimensions of dataset
+summary(movielens) ##explore ranges for numerical variables
+```
+# Processing/cleaning data 
+I decided to create a subset of this data with movie ratings from just the year that I was born, 2001. I used the filter function to create a new object called 'mymovies' with 3442 observations of 7 variables. I decided to explore the ratings among different genres of movies during 2001. I created a boxplot using genres as the categorical variable, which was very messy and not helpful. I decided to filter the datset further by only including movies in the drama and comedy genres, which limited the dataset to 319 observations of 7 variables. I selected the title, genres, and rating columns because they are the only variables useful for this analysis. When I created the second boxplot with the final dataset called 'mymovies3', it became easy to view the spread in ratings for drama and comedy movies released in 2001. The average rating for comedy movies is a 3, while the average rating for drama movies is a 4. 
+```{r}
+mymovies <- movielens %>% 
+              filter(year == 2001) ##limit dataset to movies released in 2001
+str(mymovies)
+
+mymovies %>% ggplot(aes(x=genres,  y=rating)) + ##use genres as the categorical variable and rating as the numerical variable
+              geom_boxplot()   ##create exploratory boxplot 
+
+mymovies2 <- mymovies %>% 
+              filter(year == 2001 & genres %in% c("Drama", "Comedy")) ##further filter dataset to include 2 genres
+str(mymovies2)
+
+mymovies3 <- mymovies2 %>%
+              select("title", "genres", "rating") ##select 3 columns of useful information 
+str(mymovies3)
+
+```
+# Create a few exploratory figures
+I created the second boxplot with the final dataset called 'mymovies3', and it became easy to view the spread in ratings for drama and comedy movies released in 2001. I added a title for the boxplot and centered it to make it easier to read. The average rating for comedy movies is a 3, while the average rating for drama movies is a 4. I practiced saving this image to the folder previously created by Cora using the here() and ggsave() functions. To create another visualization of this data, I used the mean ratings from each category in a bar graph. The means of the ratings for each genre are displayed with better precision in this visualization. The mean rating for comedy movies is a little less than 3 at about 2.9 while the average rating for drama movies seems lower at about 3.5. This discrepancy could be explained by the 2 outliers shown in the drama category on the boxplot because these observations are skewing the mean. I saved this graph to the same folder with the boxplot using the here() and ggsave() functions. I also created a table of my final dataset to include the movie titles of both genres with each of their ratings from reviewers. It is a little busy since there are multiple reviews for the some of the same movies, so I organized it by title to allow for quick review of all the ratings provided for each movie. The first table has been commented out, so it will not print on this rendered website. It is included to show the process of creating the better table.
+```{r}
+boxplot <- mymovies3 %>% ggplot(aes(x=genres,  y=rating)) +   ##visualize the ratings for each genre of movie 
+                geom_boxplot() +    ##create clean boxplot to compare ratings across genres in 2001
+                labs(title = "Ratings for Drama and Comedy Movies in 2001 ") +  ##add a title to the graph
+                theme(plot.title = element_text(hjust = 0.5)) ##center the title 
+
+figure_file <- here("coding-exercise", "results", "figures", "movies_boxplot.png") ##inform R on where to save the image
+ggsave(filename = figure_file, plot = boxplot) ##save the image in the predefined location 
+
+bargraph <- mymovies3 %>% ggplot(aes(x=genres, y=rating)) + ##visualize the ratings for each genre of movie
+                geom_bar(stat = "summary", fun = "mean") +  ##use the mean of each rating for the bars
+                labs(title = "Ratings for Drama and Comedy Movies in 2001") + ##create a title for the graph
+                theme(plot.title = element_text(hjust = 0.5)) ##center the title
+
+figure_file2 <- here("coding-exercise", "results", "figures", "movies_bargraph.png") ##inform R on where to save the image
+ggsave(filename = figure_file2, plot = bargraph) ##save the image in the predefined location
+
+## knitr::kable(mymovies3) ##create a table to display movie titles with their ratings
+## comment out the first table so it will not show on the rendered website
+better_table <- arrange(mymovies3, title) ##organize the table by title 
+knitr::kable(better_table) ##view new table with all ratings for each movie grouped together by title
+```
+
+# Simple statistical model 
+I decided to conduct a simple t test to determine if the mean ratings among movies in each genre are statistically different from one another. I created an object called 'drama' to pull the ratings for movies in the drama genre from the dataframe. I did the same thing for movies in the comedy genre and saved that object as 'comedy'. I used the base R t.test() function to compare the average ratings between the two groups and printed the results. 
+```{r}
+drama <- mymovies3$rating[mymovies3$genres == "Drama"] ##create an object with ratings only for movies in drama genre
+comedy <- mymovies3$rating[mymovies3$genres == "Comedy"] ##create an object with ratings only for movies in comedy genre
+t.test1 <- t.test(drama, comedy) ##run a two-sample t-test between the two numeric vectors
+print(t.test1) ##show the results of the t-test
+```
+
+# Results of simple statistical model 
+After running the two-sample t-test, I get a test statistic of 4.6912 with a tiny p-value of 4.257e-06. Since the p-value is much less than 0.05, we can reject the null hypothesis to conclude that there is a statistically significant difference between the mean ratings of drama and comedy movies in 2001. It is clear that movies in the drama genre received higher ratings from viewers compared to movies in the comedy genre in 2001. 
 
