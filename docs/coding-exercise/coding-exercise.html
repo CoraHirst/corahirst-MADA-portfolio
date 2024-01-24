@@ -899,20 +899,44 @@ Figure&nbsp;8: linear regression of life expectancy by population size, Africa 2
 <div class="cell-output cell-output-stderr">
 <pre><code>Saving 7 x 5 in image</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>bargraph <span class="ot">&lt;-</span> mymovies3 <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>genres, <span class="at">y=</span>rating)) <span class="sc">+</span> <span class="do">##visualize the ratings for each genre of movie</span></span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> <span class="st">"mean"</span>) <span class="sc">+</span>  <span class="do">##use the mean of each rating for the bars</span></span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ratings for Drama and Comedy Movies in 2001"</span>) <span class="sc">+</span> <span class="do">##create a title for the graph</span></span>
-<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="do">##center the title</span></span>
-<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>figure_file2 <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>, <span class="st">"results"</span>, <span class="st">"figures"</span>, <span class="st">"movies_bargraph.png"</span>) <span class="do">##inform R on where to save the image</span></span>
-<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file2, <span class="at">plot =</span> bargraph) <span class="do">##save the image in the predefined location</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ensure the figure renders on the website</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-inf-mort-all.  ##create a label for the final figure</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "life expectancy by infant mortality, Africa, 1960-2016."  ##create a label for the final figure</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: FALSE  ##ensure these lines are not reproduced in the rendered version</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>,<span class="st">"figures"</span>,<span class="st">"movies_boxplot.png"</span>)) <span class="do">##tag the saved location</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="results/figures/movies_boxplot.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>bargraph <span class="ot">&lt;-</span> mymovies3 <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>genres, <span class="at">y=</span>rating)) <span class="sc">+</span> <span class="do">##visualize the ratings for each genre of movie</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> <span class="st">"mean"</span>) <span class="sc">+</span>  <span class="do">##use the mean of each rating for the bars</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ratings for Drama and Comedy Movies in 2001"</span>) <span class="sc">+</span> <span class="do">##create a title for the graph</span></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="do">##center the title</span></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>figure_file2 <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>, <span class="st">"results"</span>, <span class="st">"figures"</span>, <span class="st">"movies_bargraph.png"</span>) <span class="do">##inform R on where to save the image</span></span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file2, <span class="at">plot =</span> bargraph) <span class="do">##save the image in the predefined location</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Saving 7 x 5 in image</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="do">## knitr::kable(mymovies3) ##create a table to display movie titles with their ratings</span></span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="do">## comment out the first table so it will not show on the rendered website</span></span>
-<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>better_table <span class="ot">&lt;-</span> <span class="fu">arrange</span>(mymovies3, title) <span class="do">##organize the table by title </span></span>
-<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(better_table) <span class="do">##view new table with all ratings for each movie grouped together by title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ensure the figure renders on the website</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-inf-mort-all  ##create a label for the final figure</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "life expectancy by infant mortality, Africa, 1960-2016."  ##create a label for the final figure</span></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: FALSE  ##ensure these lines are not reproduced in the rendered version</span></span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>,<span class="st">"figures"</span>,<span class="st">"movies_bargraph.png"</span>)) <span class="do">##tag the saved location</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="results/figures/movies_bargraph.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="do">## knitr::kable(mymovies3) ##create a table to display movie titles with their ratings</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="do">## comment out the first table so it will not show on the rendered website</span></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>better_table <span class="ot">&lt;-</span> <span class="fu">arrange</span>(mymovies3, title) <span class="do">##organize the table by title </span></span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(better_table) <span class="do">##view new table with all ratings for each movie grouped together by title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <colgroup>
@@ -2532,10 +2556,10 @@ Figure&nbsp;8: linear regression of life expectancy by population size, Africa 2
 <h1>Simple statistical model</h1>
 <p>I decided to conduct a simple t test to determine if the mean ratings among movies in each genre are statistically different from one another. I created an object called ‘drama’ to pull the ratings for movies in the drama genre from the dataframe. I did the same thing for movies in the comedy genre and saved that object as ‘comedy’. I used the base R t.test() function to compare the average ratings between the two groups and printed the results.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>drama <span class="ot">&lt;-</span> mymovies3<span class="sc">$</span>rating[mymovies3<span class="sc">$</span>genres <span class="sc">==</span> <span class="st">"Drama"</span>] <span class="do">##create an object with ratings only for movies in drama genre</span></span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>comedy <span class="ot">&lt;-</span> mymovies3<span class="sc">$</span>rating[mymovies3<span class="sc">$</span>genres <span class="sc">==</span> <span class="st">"Comedy"</span>] <span class="do">##create an object with ratings only for movies in comedy genre</span></span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>t.test1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(drama, comedy) <span class="do">##run a two-sample t-test between the two numeric vectors</span></span>
-<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(t.test1) <span class="do">##show the results of the t-test</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>drama <span class="ot">&lt;-</span> mymovies3<span class="sc">$</span>rating[mymovies3<span class="sc">$</span>genres <span class="sc">==</span> <span class="st">"Drama"</span>] <span class="do">##create an object with ratings only for movies in drama genre</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>comedy <span class="ot">&lt;-</span> mymovies3<span class="sc">$</span>rating[mymovies3<span class="sc">$</span>genres <span class="sc">==</span> <span class="st">"Comedy"</span>] <span class="do">##create an object with ratings only for movies in comedy genre</span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>t.test1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(drama, comedy) <span class="do">##run a two-sample t-test between the two numeric vectors</span></span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(t.test1) <span class="do">##show the results of the t-test</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
