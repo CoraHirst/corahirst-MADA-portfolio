@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.537">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -79,13 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -94,7 +88,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -104,33 +97,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
 <link rel="stylesheet" href="../styles.css">
 </head>
 
@@ -138,9 +104,9 @@ window.Quarto = {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
+      <div class="navbar-brand-container">
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Cora Hirst Data Analysis Portfolio</span>
     </a>
@@ -152,28 +118,28 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../aboutme.html"> 
-<span class="menu-text">About Me</span></a>
+    <a class="nav-link" href="../aboutme.html" rel="" target="">
+ <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Projects</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-projects">    
         <li>
-    <a class="dropdown-item" href="../starter-analysis-exercise/products/report/starter-analysis-report.html">
+    <a class="dropdown-item" href="../starter-analysis-exercise/products/report/starter-analysis-report.html" rel="" target="">
  <span class="dropdown-text">Starter Analysis Exercise</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../coding-exercise/coding-exercise.html">
+    <a class="dropdown-item" href="../coding-exercise/coding-exercise.html" rel="" target="">
  <span class="dropdown-text">R Coding Exercise</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../presentation-exercise/presentation-exercise.html">
+    <a class="dropdown-item" href="../presentation-exercise/presentation-exercise.html" rel="" target="">
  <span class="dropdown-text">Presentation Exercise</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../tidytuesday-exercise/tidytuesday-exercise.html">
+    <a class="dropdown-item" href="../tidytuesday-exercise/tidytuesday-exercise.html" rel="" target="">
  <span class="dropdown-text">Tidy Tuesday Exercise</span></a>
   </li>  
     </ul>
@@ -181,14 +147,14 @@ window.Quarto = {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/CoraHirst/corahirst-MADA-portfolio"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/CoraHirst/corahirst-MADA-portfolio" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
-<span class="menu-text"></span></a>
+ <span class="menu-text"></span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
+          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -215,9 +181,7 @@ window.Quarto = {
   </div>
   
 
-
 </header>
-
 
 <section id="purpose" class="level1">
 <h1>Purpose</h1>
@@ -233,27 +197,44 @@ window.Quarto = {
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("tidyverse") #install and load tidyverse</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.3.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.3.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'stringr' was built under R version 4.3.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'lubridate' was built under R version 4.3.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.2     ✔ readr     2.1.4
-✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ dplyr     1.1.4     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
 ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
 ✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("here")</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("here")</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>here() starts at /Users/taylorglass/Documents/MADA /corahirst-MADA-portfolio</code></pre>
+<pre><code>here() starts at /Users/chirst/Desktop/Git/corahirst-MADA-portfolio</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("gtsummary")</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("flextable")</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("gtsummary")</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#Uighur</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("flextable")</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'flextable' was built under R version 4.3.1</code></pre>
+</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'flextable'
@@ -272,11 +253,11 @@ The following object is masked from 'package:purrr':
 <h1>Loading and checking the data</h1>
 <p>Below, we familiarize ourselves with the most recent dataset from the package <code>gapminder</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pull information on the gapminder package</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(gapminder) <span class="co">#open help file for gapminder dataset</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># structure of the gapminder dataset?</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(gapminder) <span class="co"># what is the class of the gapminder dataset? how many variables? class of each variable?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pull information on the gapminder package</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(gapminder) <span class="co">#open help file for gapminder dataset</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># structure of the gapminder dataset?</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(gapminder) <span class="co"># what is the class of the gapminder dataset? how many variables? class of each variable?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   10545 obs. of  9 variables:
  $ country         : Factor w/ 185 levels "Albania","Algeria",..: 1 2 3 4 5 6 7 8 9 10 ...
@@ -289,8 +270,8 @@ The following object is masked from 'package:purrr':
  $ continent       : Factor w/ 5 levels "Africa","Americas",..: 4 1 1 2 2 3 2 5 4 3 ...
  $ region          : Factor w/ 22 levels "Australia and New Zealand",..: 19 11 10 2 15 21 2 1 22 21 ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summarize the gapminder data</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gapminder) <span class="co">#gives summary statistics for each numeric variable and count information for each categorical variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summarize the gapminder data</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gapminder) <span class="co">#gives summary statistics for each numeric variable and count information for each categorical variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                country           year      infant_mortality life_expectancy
  Albania            :   57   Min.   :1960   Min.   :  1.50   Min.   :13.20  
@@ -317,8 +298,8 @@ The following object is masked from 'package:purrr':
  Southern Europe: 684  
  (Other)        :5586  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># although the str() function gives the dataset class, we can check with the function class()</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gapminder) <span class="co">#gives the class of the r object gapminder</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># although the str() function gives the dataset class, we can check with the function class()</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gapminder) <span class="co">#gives the class of the r object gapminder</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "data.frame"</code></pre>
 </div>
@@ -330,28 +311,28 @@ The following object is masked from 'package:purrr':
 <h1>Processing the data</h1>
 <p>Here, we are going to select and process data on african countries from the <code>gapminder</code> dataset.m</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subset rows from dataset containing factor level 'Africa' from column "continent"</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>africadata <span class="ot">=</span> gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">"Africa"</span>) <span class="co">#dplyr's filter() function accomplishes this</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create life expectancy subsets of africadata containing 1) infant mortality and life expectancy and 2) population and life expectancy </span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>africa.IMvsLE <span class="ot">=</span> africadata <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="st">"infant_mortality"</span>, <span class="st">"life_expectancy"</span>) <span class="co">#dplyrs select() function subsets columns</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>africa.PvsLE <span class="ot">=</span> africadata <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="st">"population"</span>, <span class="st">"life_expectancy"</span>) </span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># structure of the life expectancy subsets</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(africa.IMvsLE) <span class="co">#2907 observations, 2 columns (variables)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subset rows from dataset containing factor level 'Africa' from column "continent"</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>africadata <span class="ot">=</span> gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">"Africa"</span>) <span class="co">#dplyr's filter() function accomplishes this</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create life expectancy subsets of africadata containing 1) infant mortality and life expectancy and 2) population and life expectancy </span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>africa.IMvsLE <span class="ot">=</span> africadata <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="st">"infant_mortality"</span>, <span class="st">"life_expectancy"</span>) <span class="co">#dplyrs select() function subsets columns</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>africa.PvsLE <span class="ot">=</span> africadata <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="st">"population"</span>, <span class="st">"life_expectancy"</span>) </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co"># structure of the life expectancy subsets</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(africa.IMvsLE) <span class="co">#2907 observations, 2 columns (variables)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   2907 obs. of  2 variables:
  $ infant_mortality: num  148 208 187 116 161 ...
  $ life_expectancy : num  47.5 36 38.3 50.3 35.2 ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(africa.PvsLE) <span class="co">#2907 observations, 2 columns (variables)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(africa.PvsLE) <span class="co">#2907 observations, 2 columns (variables)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   2907 obs. of  2 variables:
  $ population     : num  11124892 5270844 2431620 524029 4829291 ...
  $ life_expectancy: num  47.5 36 38.3 50.3 35.2 ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary of variables in life expectancy subsets</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa.IMvsLE) <span class="co">#summary stats of both columns containing numerical values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary of variables in life expectancy subsets</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa.IMvsLE) <span class="co">#summary stats of both columns containing numerical values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> infant_mortality life_expectancy
  Min.   : 11.40   Min.   :13.20  
@@ -362,7 +343,7 @@ The following object is masked from 'package:purrr':
  Max.   :237.40   Max.   :77.60  
  NA's   :226                     </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa.PvsLE) <span class="co">#summary stats of both columns contain numerical values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa.PvsLE) <span class="co">#summary stats of both columns contain numerical values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   population        life_expectancy
  Min.   :    41538   Min.   :13.20  
@@ -380,25 +361,25 @@ The following object is masked from 'package:purrr':
 <h1>Plotting</h1>
 <p>The following code chunk generates two plots, visualizing the association of either <code>infant_mortality</code> or <code>population</code> with <code>life_expectancy</code> across Africa between 1960-2016.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#life_expectancy vs infant_mortality </span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> africa.IMvsLE, <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality, <span class="at">y =</span> life_expectancy)) <span class="sc">+</span> </span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"infant mortality"</span>, <span class="at">y =</span> <span class="st">"life expectancy"</span>, <span class="at">title =</span> <span class="st">"correlation between life expectancy and infant mortality in Africa, 1960 - 2016"</span>)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> africa.PvsLE, <span class="fu">aes</span>(<span class="at">x =</span> population, <span class="at">y =</span> life_expectancy)) <span class="sc">+</span> </span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">"log"</span>) <span class="sc">+</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"population"</span>, <span class="at">y =</span> <span class="st">"life expectancy"</span>, <span class="at">title =</span> <span class="st">"correlation between life expectancy and population size, 1960-2016"</span>)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"figures"</span>,<span class="st">"life_exp_inf_mort_all.png"</span>)</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot1) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#life_expectancy vs infant_mortality </span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> africa.IMvsLE, <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality, <span class="at">y =</span> life_expectancy)) <span class="sc">+</span> </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"infant mortality"</span>, <span class="at">y =</span> <span class="st">"life expectancy"</span>, <span class="at">title =</span> <span class="st">"correlation between life expectancy and infant mortality in Africa, 1960 - 2016"</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> africa.PvsLE, <span class="fu">aes</span>(<span class="at">x =</span> population, <span class="at">y =</span> life_expectancy)) <span class="sc">+</span> </span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">"log"</span>) <span class="sc">+</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"population"</span>, <span class="at">y =</span> <span class="st">"life expectancy"</span>, <span class="at">title =</span> <span class="st">"correlation between life expectancy and population size, 1960-2016"</span>)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"figures"</span>,<span class="st">"life_exp_inf_mort_all.png"</span>)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot1) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Saving 7 x 5 in image</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 226 rows containing missing values (`geom_point()`).</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"figures"</span>,<span class="st">"life_exp_pop_all.png"</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot2) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"figures"</span>,<span class="st">"life_exp_pop_all.png"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot2) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Saving 7 x 5 in image</code></pre>
 </div>
@@ -408,28 +389,20 @@ The following object is masked from 'package:purrr':
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-inf-mort-all" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-inf-mort-all-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="results/figures/life_exp_inf_mort_all.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-inf-mort-all-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: life expectancy by infant mortality, Africa, 1960-2016.
-</figcaption>
+<div id="fig-inf-mort-all" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="results/figures/life_exp_inf_mort_all.png" class="img-fluid figure-img" width="1050"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: life expectancy by infant mortality, Africa, 1960-2016.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-pop-all" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-pop-all-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="results/figures/life_exp_pop_all.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop-all-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: life expectancy by population size, Africa, 1960-2016.
-</figcaption>
+<div id="fig-pop-all" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="results/figures/life_exp_pop_all.png" class="img-fluid figure-img" width="1050"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: life expectancy by population size, Africa, 1960-2016.</figcaption>
 </figure>
 </div>
 </div>
@@ -437,24 +410,24 @@ Figure&nbsp;2: life expectancy by population size, Africa, 1960-2016.
 <p>Obviously, there appear to be clusters of data associated with the variables <code>infant_mortality</code> and <code>population</code>. These clusters may be the result of fixed effects from another associated variable, such as <code>year</code>.</p>
 <p>The code chunk below regenerates these figures, with points colored by the year during which the observations were reported. Notice that I am now using the <code>africadata</code> subset to generate these figures, as this dataset also contains the <code>year</code> variable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="do">## life_expectancy vs infant_mortality stratified by year</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>plot3 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> africadata, <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality, <span class="at">y =</span> life_expectancy, <span class="at">col =</span> <span class="fu">as.factor</span>(year))) <span class="sc">+</span> </span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"infant mortality"</span>, <span class="at">y =</span> <span class="st">"life expectancy"</span>, <span class="at">title =</span> <span class="st">"correlation between life expectancy and infant mortality in Africa, 1960 - 2016"</span>)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>plot4 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> africadata, <span class="fu">aes</span>(<span class="at">x =</span> population, <span class="at">y =</span> life_expectancy, <span class="at">col =</span> <span class="fu">as.factor</span>(year))) <span class="sc">+</span> </span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">"log"</span>) <span class="sc">+</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"population"</span>, <span class="at">y =</span> <span class="st">"life expectancy"</span>, <span class="at">title =</span> <span class="st">"correlation between life expectancy and population size, 1960-2016"</span>)</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"figures"</span>,<span class="st">"life_exp_inf_mort_byyears.png"</span>)</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot3) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="do">## life_expectancy vs infant_mortality stratified by year</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>plot3 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> africadata, <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality, <span class="at">y =</span> life_expectancy, <span class="at">col =</span> <span class="fu">as.factor</span>(year))) <span class="sc">+</span> </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"infant mortality"</span>, <span class="at">y =</span> <span class="st">"life expectancy"</span>, <span class="at">title =</span> <span class="st">"correlation between life expectancy and infant mortality in Africa, 1960 - 2016"</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>plot4 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> africadata, <span class="fu">aes</span>(<span class="at">x =</span> population, <span class="at">y =</span> life_expectancy, <span class="at">col =</span> <span class="fu">as.factor</span>(year))) <span class="sc">+</span> </span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">"log"</span>) <span class="sc">+</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"population"</span>, <span class="at">y =</span> <span class="st">"life expectancy"</span>, <span class="at">title =</span> <span class="st">"correlation between life expectancy and population size, 1960-2016"</span>)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"figures"</span>,<span class="st">"life_exp_inf_mort_byyears.png"</span>)</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot3) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Saving 7 x 5 in image</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 226 rows containing missing values (`geom_point()`).</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"figures"</span>,<span class="st">"life_exp_pop_byyears.png"</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot4) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"figures"</span>,<span class="st">"life_exp_pop_byyears.png"</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot4) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Saving 7 x 5 in image</code></pre>
 </div>
@@ -464,28 +437,20 @@ Figure&nbsp;2: life expectancy by population size, Africa, 1960-2016.
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-inf-mort-byyears" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-inf-mort-byyears-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="results/figures/life_exp_inf_mort_byyears.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-inf-mort-byyears-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: life expectancy by infant mortality, Africa, by year.
-</figcaption>
+<div id="fig-inf-mort-byyears" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="results/figures/life_exp_inf_mort_byyears.png" class="img-fluid figure-img" width="1050"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: life expectancy by infant mortality, Africa, by year.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-pop-byyears" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-pop-byyears-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="results/figures/life_exp_pop_byyears.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop-byyears-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: life expectancy by population size, Africa, by year.
-</figcaption>
+<div id="fig-pop-byyears" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="results/figures/life_exp_pop_byyears.png" class="img-fluid figure-img" width="1050"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: life expectancy by population size, Africa, by year.</figcaption>
 </figure>
 </div>
 </div>
@@ -496,10 +461,10 @@ Figure&nbsp;4: life expectancy by population size, Africa, by year.
 <h2 class="anchored" data-anchor-id="more-processing">More processing</h2>
 <p>The <code>infant_mortality</code> variable within <code>africandata</code> contains many NAs. The code below determines which years contain missing (NA) data for infant mortality.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="do">## determine which years contain missing infant mortality data</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>missing_IM_years <span class="ot">=</span> <span class="fu">levels</span>(<span class="fu">factor</span>(africadata[<span class="fu">is.na</span>(africadata<span class="sc">$</span>infant_mortality), <span class="st">"year"</span>])) <span class="co"># which levels of factor "year" contain missing data for vairable "infant mortality"?</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Infant mortality data is missing from the years"</span>, <span class="fu">paste</span>(missing_IM_years, <span class="at">collapse =</span> <span class="st">" "</span>))) <span class="co">#print these years</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="do">## determine which years contain missing infant mortality data</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>missing_IM_years <span class="ot">=</span> <span class="fu">levels</span>(<span class="fu">factor</span>(africadata[<span class="fu">is.na</span>(africadata<span class="sc">$</span>infant_mortality), <span class="st">"year"</span>])) <span class="co"># which levels of factor "year" contain missing data for vairable "infant mortality"?</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Infant mortality data is missing from the years"</span>, <span class="fu">paste</span>(missing_IM_years, <span class="at">collapse =</span> <span class="st">" "</span>))) <span class="co">#print these years</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Infant mortality data is missing from the years 1960 1961 1962 1963 1964 1965 1966 1967 1968 1969 1970 1971 1972 1973 1974 1975 1976 1977 1978 1979 1980 1981 2016"</code></pre>
 </div>
@@ -510,11 +475,11 @@ Figure&nbsp;4: life expectancy by population size, Africa, by year.
 <h2 class="anchored" data-anchor-id="more-plotting">More plotting</h2>
 <p>The variable <code>population</code> is not missing data from the year 2000, so we can also plot <code>life expectancy</code> against <code>population</code> for observations taken in 2000, as well.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="do">## extract observations from the year 2000 only and save in a new dataframe</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>africadata_2000 <span class="ot">=</span> africadata <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2000</span>)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="do">## check </span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(africadata_2000) <span class="co">#all variables from africadata included</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="do">## extract observations from the year 2000 only and save in a new dataframe</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>africadata_2000 <span class="ot">=</span> africadata <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2000</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="do">## check </span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(africadata_2000) <span class="co">#all variables from africadata included</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   51 obs. of  9 variables:
  $ country         : Factor w/ 185 levels "Albania","Algeria",..: 2 3 18 22 26 27 29 31 32 33 ...
@@ -527,7 +492,7 @@ Figure&nbsp;4: life expectancy by population size, Africa, by year.
  $ continent       : Factor w/ 5 levels "Africa","Americas",..: 1 1 1 1 1 1 1 1 1 1 ...
  $ region          : Factor w/ 22 levels "Australia and New Zealand",..: 11 10 20 17 20 5 10 20 10 10 ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africadata_2000) <span class="co">#and each variable is of the same class as corresponding africadata variables</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africadata_2000) <span class="co">#and each variable is of the same class as corresponding africadata variables</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         country        year      infant_mortality life_expectancy
  Algeria     : 1   Min.   :2000   Min.   : 12.30   Min.   :37.60  
@@ -554,25 +519,25 @@ Figure&nbsp;4: life expectancy by population size, Africa, by year.
  Australia and New Zealand: 0  
  (Other)                  : 0  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="do">## plot</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="do">## life_expectancy vs infant_mortality in the year 2000</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>plot5 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> africadata_2000, <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality, <span class="at">y =</span> life_expectancy)) <span class="sc">+</span> </span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> africadata_2000, <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality, <span class="at">y =</span> life_expectancy), <span class="at">method =</span> <span class="st">'lm'</span>) <span class="sc">+</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"infant mortality"</span>, <span class="at">y =</span> <span class="st">"life expectancy"</span>, <span class="at">title =</span> <span class="st">"correlation between life expectancy and infant mortality in Africa, year 2000"</span>)</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>plot6 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> africadata_2000, <span class="fu">aes</span>(<span class="at">x =</span> population, <span class="at">y =</span> life_expectancy)) <span class="sc">+</span> </span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">"log"</span>) <span class="sc">+</span></span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> africadata_2000, <span class="fu">aes</span>(<span class="at">x =</span> population, <span class="at">y =</span> life_expectancy), <span class="at">method =</span> <span class="st">'lm'</span>) <span class="sc">+</span></span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"population"</span>, <span class="at">y =</span> <span class="st">"life expectancy"</span>, <span class="at">title =</span> <span class="st">"correlation between life expectancy and population size, year 2000"</span>)</span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"figures"</span>,<span class="st">"life_exp_inf_mort_2000.png"</span>)</span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot5) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="do">## plot</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="do">## life_expectancy vs infant_mortality in the year 2000</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>plot5 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> africadata_2000, <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality, <span class="at">y =</span> life_expectancy)) <span class="sc">+</span> </span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> africadata_2000, <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality, <span class="at">y =</span> life_expectancy), <span class="at">method =</span> <span class="st">'lm'</span>) <span class="sc">+</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"infant mortality"</span>, <span class="at">y =</span> <span class="st">"life expectancy"</span>, <span class="at">title =</span> <span class="st">"correlation between life expectancy and infant mortality in Africa, year 2000"</span>)</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>plot6 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> africadata_2000, <span class="fu">aes</span>(<span class="at">x =</span> population, <span class="at">y =</span> life_expectancy)) <span class="sc">+</span> </span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">"log"</span>) <span class="sc">+</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> africadata_2000, <span class="fu">aes</span>(<span class="at">x =</span> population, <span class="at">y =</span> life_expectancy), <span class="at">method =</span> <span class="st">'lm'</span>) <span class="sc">+</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"population"</span>, <span class="at">y =</span> <span class="st">"life expectancy"</span>, <span class="at">title =</span> <span class="st">"correlation between life expectancy and population size, year 2000"</span>)</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"figures"</span>,<span class="st">"life_exp_inf_mort_2000.png"</span>)</span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot5) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Saving 7 x 5 in image
 `geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"figures"</span>,<span class="st">"life_exp_pop_2000.png"</span>)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot6) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"figures"</span>,<span class="st">"life_exp_pop_2000.png"</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot6) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Saving 7 x 5 in image
 `geom_smooth()` using formula = 'y ~ x'</code></pre>
@@ -580,28 +545,20 @@ Figure&nbsp;4: life expectancy by population size, Africa, by year.
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-inf-mort-2000" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-inf-mort-2000-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="results/figures/life_exp_inf_mort_2000.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-inf-mort-2000-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: life expectancy by infant mortality, Africa 2000.
-</figcaption>
+<div id="fig-inf-mort-2000" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="results/figures/life_exp_inf_mort_2000.png" class="img-fluid figure-img" width="1050"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: life expectancy by infant mortality, Africa 2000.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-pop-2000" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-pop-2000-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="results/figures/life_exp_pop_2000.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pop-2000-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: life expectancy by population size, Africa 2000.
-</figcaption>
+<div id="fig-pop-2000" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="results/figures/life_exp_pop_2000.png" class="img-fluid figure-img" width="1050"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: life expectancy by population size, Africa 2000.</figcaption>
 </figure>
 </div>
 </div>
@@ -612,14 +569,14 @@ Figure&nbsp;6: life expectancy by population size, Africa 2000.
 <h2 class="anchored" data-anchor-id="simple-model-fits">Simple model fits</h2>
 <p>The following code chunk utilizes the <code>lm()</code> function in R to determine the best-fit, simple linear regression model with <code>life_expectancy</code> in the year 2000 as the outcome variable and either <code>infant_mortality</code> or <code>population</code> as the predictor.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># linear regression, fixed effect, life expectancy ~ infant_mortality</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">data =</span> africadata_2000, life_expectancy <span class="sc">~</span> infant_mortality) <span class="co">#results saved in lm object `fit1`</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># linear regression, fixed effect, life expectancy ~ infant_mortality</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">data =</span> africadata_2000, life_expectancy <span class="sc">~</span> population) <span class="co">#results saved in lm object `fit2`</span></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="co"># print summary of lm objects fit1 and fit2</span></span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># linear regression, fixed effect, life expectancy ~ infant_mortality</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">data =</span> africadata_2000, life_expectancy <span class="sc">~</span> infant_mortality) <span class="co">#results saved in lm object `fit1`</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># linear regression, fixed effect, life expectancy ~ infant_mortality</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">data =</span> africadata_2000, life_expectancy <span class="sc">~</span> population) <span class="co">#results saved in lm object `fit2`</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="co"># print summary of lm objects fit1 and fit2</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -640,7 +597,7 @@ Residual standard error: 6.221 on 49 degrees of freedom
 Multiple R-squared:  0.4701,    Adjusted R-squared:  0.4593 
 F-statistic: 43.48 on 1 and 49 DF,  p-value: 2.826e-08</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -661,29 +618,25 @@ Residual standard error: 8.524 on 49 degrees of freedom
 Multiple R-squared:  0.005176,  Adjusted R-squared:  -0.01513 
 F-statistic: 0.2549 on 1 and 49 DF,  p-value: 0.6159</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">=</span> fit1 <span class="sc">%&gt;%</span> <span class="fu">tbl_regression</span>() <span class="co">#save summaries as tables using tbl_regression() function from flextable package</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>table2 <span class="ot">=</span> fit2 <span class="sc">%&gt;%</span> <span class="fu">tbl_regression</span>() <span class="co">#save summaries as tables using tbl_regression() function from flextable package</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="co"># save summary tables</span></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>summarytable_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"tables-files"</span>, <span class="st">"lm_life_exp_inf_mort.rds"</span>)</span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(table1, <span class="at">file =</span> summarytable_file)</span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>summarytable_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"tables-files"</span>, <span class="st">"lm_life_exp_pop.rds"</span>)</span>
-<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(table2, <span class="at">file =</span> summarytable_file)</span>
-<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="co"># extract p-values from summaries to display on figures</span></span>
-<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>p.infant_mortality <span class="ot">=</span> <span class="fu">unname</span>(<span class="fu">summary</span>(fit1)<span class="sc">$</span>coefficients[,<span class="st">"Pr(&gt;|t|)"</span>])[<span class="dv">2</span>]</span>
-<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>p.population <span class="ot">=</span> <span class="fu">unname</span>(<span class="fu">summary</span>(fit2)<span class="sc">$</span>coefficients[,<span class="st">"Pr(&gt;|t|)"</span>])[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">=</span> fit1 <span class="sc">%&gt;%</span> <span class="fu">tbl_regression</span>() <span class="co">#save summaries as tables using tbl_regression() function from flextable package</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>table2 <span class="ot">=</span> fit2 <span class="sc">%&gt;%</span> <span class="fu">tbl_regression</span>() <span class="co">#save summaries as tables using tbl_regression() function from flextable package</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co"># save summary tables</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>summarytable_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"tables-files"</span>, <span class="st">"lm_life_exp_inf_mort.rds"</span>)</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(table1, <span class="at">file =</span> summarytable_file)</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>summarytable_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"tables-files"</span>, <span class="st">"lm_life_exp_pop.rds"</span>)</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(table2, <span class="at">file =</span> summarytable_file)</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a><span class="co"># extract p-values from summaries to display on figures</span></span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>p.infant_mortality <span class="ot">=</span> <span class="fu">unname</span>(<span class="fu">summary</span>(fit1)<span class="sc">$</span>coefficients[,<span class="st">"Pr(&gt;|t|)"</span>])[<span class="dv">2</span>]</span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>p.population <span class="ot">=</span> <span class="fu">unname</span>(<span class="fu">summary</span>(fit2)<span class="sc">$</span>coefficients[,<span class="st">"Pr(&gt;|t|)"</span>])[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div id="tbl-lm_life_exp_inf_mort-2000" class="cell quarto-float anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-lm_life_exp_inf_mort-2000-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Linear regression model of life expectancy by infant mortality.
-</figcaption>
-<div aria-describedby="tbl-lm_life_exp_inf_mort-2000-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell table table-sm table-striped small">
+<div id="tbl-lm_life_exp_inf_mort-2000" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;1: Linear regression model of life expectancy by infant mortality.</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;"><strong>Characteristic</strong></th>
@@ -703,18 +656,12 @@ Table&nbsp;1: Linear regression model of life expectancy by infant mortality.
 </table>
 </div>
 </div>
-</figure>
-</div>
 </div>
 <div class="cell">
-<div id="tbl-lm_life_exp_pop-2000" class="cell quarto-float anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-lm_life_exp_pop-2000-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2: Linear regression model of life expectancy by population size.
-</figcaption>
-<div aria-describedby="tbl-lm_life_exp_pop-2000-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell table table-sm table-striped small">
+<div id="tbl-lm_life_exp_pop-2000" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;2: Linear regression model of life expectancy by population size.</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;"><strong>Characteristic</strong></th>
@@ -734,31 +681,29 @@ Table&nbsp;2: Linear regression model of life expectancy by population size.
 </table>
 </div>
 </div>
-</figure>
-</div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="do">## replot with pvals </span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="do">## life_expectancy vs infant_mortality in the year 2000</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>plot7 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> africadata_2000, <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality, <span class="at">y =</span> life_expectancy)) <span class="sc">+</span> </span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> africadata_2000, <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality, <span class="at">y =</span> life_expectancy), <span class="at">method =</span> <span class="st">'lm'</span>) <span class="sc">+</span></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">125</span>, <span class="at">y =</span> <span class="dv">70</span>, <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"p-value ="</span>, <span class="fu">signif</span>(p.infant_mortality, <span class="at">digits =</span> <span class="dv">3</span>)), <span class="at">color =</span> <span class="st">"forestgreen"</span>) <span class="sc">+</span></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"infant mortality"</span>, <span class="at">y =</span> <span class="st">"life expectancy"</span>, <span class="at">title =</span> <span class="st">"correlation between life expectancy and infant mortality in Africa, year 2000"</span>)</span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>plot8 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> africadata_2000, <span class="fu">aes</span>(<span class="at">x =</span> population, <span class="at">y =</span> life_expectancy)) <span class="sc">+</span> </span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">"log"</span>) <span class="sc">+</span></span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> africadata_2000, <span class="fu">aes</span>(<span class="at">x =</span> population, <span class="at">y =</span> life_expectancy), <span class="at">method =</span> <span class="st">'lm'</span>) <span class="sc">+</span></span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">163000</span>, <span class="at">y =</span> <span class="dv">40</span>, <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"p-value ="</span>, <span class="fu">signif</span>(p.population, <span class="at">digits =</span> <span class="dv">3</span>)), <span class="at">color =</span> <span class="st">"maroon"</span>) <span class="sc">+</span></span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"population"</span>, <span class="at">y =</span> <span class="st">"life expectancy"</span>, <span class="at">title =</span> <span class="st">"correlation between life expectancy and population size, year 2000"</span>)</span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"figures"</span>,<span class="st">"life_exp_inf_mort_reg.png"</span>)</span>
-<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot7) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="do">## replot with pvals </span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="do">## life_expectancy vs infant_mortality in the year 2000</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>plot7 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> africadata_2000, <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality, <span class="at">y =</span> life_expectancy)) <span class="sc">+</span> </span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> africadata_2000, <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality, <span class="at">y =</span> life_expectancy), <span class="at">method =</span> <span class="st">'lm'</span>) <span class="sc">+</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">125</span>, <span class="at">y =</span> <span class="dv">70</span>, <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"p-value ="</span>, <span class="fu">signif</span>(p.infant_mortality, <span class="at">digits =</span> <span class="dv">3</span>)), <span class="at">color =</span> <span class="st">"forestgreen"</span>) <span class="sc">+</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"infant mortality"</span>, <span class="at">y =</span> <span class="st">"life expectancy"</span>, <span class="at">title =</span> <span class="st">"correlation between life expectancy and infant mortality in Africa, year 2000"</span>)</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>plot8 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> africadata_2000, <span class="fu">aes</span>(<span class="at">x =</span> population, <span class="at">y =</span> life_expectancy)) <span class="sc">+</span> </span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">"log"</span>) <span class="sc">+</span></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> africadata_2000, <span class="fu">aes</span>(<span class="at">x =</span> population, <span class="at">y =</span> life_expectancy), <span class="at">method =</span> <span class="st">'lm'</span>) <span class="sc">+</span></span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">163000</span>, <span class="at">y =</span> <span class="dv">40</span>, <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"p-value ="</span>, <span class="fu">signif</span>(p.population, <span class="at">digits =</span> <span class="dv">3</span>)), <span class="at">color =</span> <span class="st">"maroon"</span>) <span class="sc">+</span></span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"population"</span>, <span class="at">y =</span> <span class="st">"life expectancy"</span>, <span class="at">title =</span> <span class="st">"correlation between life expectancy and population size, year 2000"</span>)</span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"figures"</span>,<span class="st">"life_exp_inf_mort_reg.png"</span>)</span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot7) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Saving 7 x 5 in image
 `geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"figures"</span>,<span class="st">"life_exp_pop_reg.png"</span>)</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot8) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>, <span class="st">"figures"</span>,<span class="st">"life_exp_pop_reg.png"</span>)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot8) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Saving 7 x 5 in image
 `geom_smooth()` using formula = 'y ~ x'</code></pre>
@@ -766,33 +711,25 @@ Table&nbsp;2: Linear regression model of life expectancy by population size.
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-reg-inf-mort-2000" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-reg-inf-mort-2000-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="results/figures/life_exp_inf_mort_reg.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reg-inf-mort-2000-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: linear regression of life expectancy by infant mortality, Africa 2000.
-</figcaption>
+<div id="fig-reg-inf-mort-2000" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="results/figures/life_exp_inf_mort_reg.png" class="img-fluid figure-img" width="1050"></p>
+<figcaption class="figure-caption">Figure&nbsp;7: linear regression of life expectancy by infant mortality, Africa 2000.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-reg-pop-2000" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-reg-pop-2000-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="results/figures/life_exp_pop_reg.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reg-pop-2000-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: linear regression of life expectancy by population size, Africa 2000.
-</figcaption>
+<div id="fig-reg-pop-2000" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="results/figures/life_exp_pop_reg.png" class="img-fluid figure-img" width="1050"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: linear regression of life expectancy by population size, Africa 2000.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Life expectancy appears to decrease with infant mortality, while decreasing only slightly with population size (<a href="#fig-reg-inf-mort-2000" class="quarto-xref">Figure&nbsp;7</a>, <a href="#fig-reg-pop-2000" class="quarto-xref">Figure&nbsp;8</a>). Using a definition of <span class="math inline">\(pvalue &lt; 0.05\)</span> as significance, it is evident that population size is a poor predictor of life expectancy (<span class="math inline">\(p = 0.6 &gt; 0.05\)</span>). However, infant mortality is in fact a better, significant predictor of life expectancy (<span class="math inline">\(p = 2 \times 10^{-8}\)</span>) (<a href="#tbl-lm_life_exp_inf_mort-2000" class="quarto-xref">Table&nbsp;1</a>, <a href="#tbl-lm_life_exp_pop-2000" class="quarto-xref">Table&nbsp;2</a>). Thus, we fail to reject the null hypothesis that life expectancy is not correlated with population size, but do reject the null hypothesis that life expectancy is not correlated with infant mortality rates.</p>
+<p>Life expectancy appears to decrease with infant mortality, while decreasing only slightly with population size (<a href="#fig-reg-inf-mort-2000">Figure&nbsp;7</a>, <a href="#fig-reg-pop-2000">Figure&nbsp;8</a>). Using a definition of <span class="math inline">\(pvalue &lt; 0.05\)</span> as significance, it is evident that population size is a poor predictor of life expectancy (<span class="math inline">\(p = 0.6 &gt; 0.05\)</span>). However, infant mortality is in fact a better, significant predictor of life expectancy (<span class="math inline">\(p = 2 \times 10^{-8}\)</span>) (<a href="#tbl-lm_life_exp_inf_mort-2000">Table&nbsp;1</a>, <a href="#tbl-lm_life_exp_pop-2000">Table&nbsp;2</a>). Thus, we fail to reject the null hypothesis that life expectancy is not correlated with population size, but do reject the null hypothesis that life expectancy is not correlated with infant mortality rates.</p>
 <section id="this-section-is-contributed-by-taylor-glass." class="level3">
 <h3 class="anchored" data-anchor-id="this-section-is-contributed-by-taylor-glass.">This section is contributed by Taylor Glass.</h3>
 </section>
@@ -802,8 +739,8 @@ Figure&nbsp;8: linear regression of life expectancy by population size, Africa 2
 <h1>Exploring the dataset</h1>
 <p>I chose to explore the ‘movie’ dataset in the dslabs package. I used the help() function to find the description of the dataset and an explanation of the 7 variables it includes. I used the str() function to determine there are 100,004 observations of 7 variables. There are 4 integer variables, 1 character variable, 1 numeric variable and one factor variable with 901 levels. I used the summary() function to examine the range of each numerical variable. The year the movie was released ranges from 1902 to 2016. There are 6 distinct genres along with an ‘other’ option. The mean rating for all 100,004 movies included in the dataset is 3.544.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="st">"movielens"</span>) <span class="do">##learn about the dataset</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(movielens) <span class="do">##determine dimensions of dataset</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="st">"movielens"</span>) <span class="do">##learn about the dataset</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(movielens) <span class="do">##determine dimensions of dataset</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   100004 obs. of  7 variables:
  $ movieId  : int  31 1029 1061 1129 1172 1263 1287 1293 1339 1343 ...
@@ -814,7 +751,7 @@ Figure&nbsp;8: linear regression of life expectancy by population size, Africa 2
  $ rating   : num  2.5 3 3 2 4 2 2 2 3.5 2 ...
  $ timestamp: int  1260759144 1260759179 1260759182 1260759185 1260759205 1260759151 1260759187 1260759148 1260759125 1260759131 ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(movielens) <span class="do">##explore ranges for numerical variables</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(movielens) <span class="do">##explore ranges for numerical variables</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    movieId          title                year     
  Min.   :     1   Length:100004      Min.   :1902  
@@ -839,9 +776,9 @@ Figure&nbsp;8: linear regression of life expectancy by population size, Africa 2
 <h1>Processing/cleaning data</h1>
 <p>I decided to create a subset of this data with movie ratings from just the year that I was born, 2001. I used the filter function to create a new object called ‘mymovies’ with 3442 observations of 7 variables. I decided to explore the ratings among different genres of movies during 2001. I created a boxplot using genres as the categorical variable, which was very messy and not helpful. I decided to filter the datset further by only including movies in the drama and comedy genres, which limited the dataset to 319 observations of 7 variables. I selected the title, genres, and rating columns because they are the only variables useful for this analysis. When I created the second boxplot with the final dataset called ‘mymovies3’, it became easy to view the spread in ratings for drama and comedy movies released in 2001. The average rating for comedy movies is a 3, while the average rating for drama movies is a 4.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>mymovies <span class="ot">&lt;-</span> movielens <span class="sc">%&gt;%</span> </span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2001</span>) <span class="do">##limit dataset to movies released in 2001</span></span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mymovies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>mymovies <span class="ot">&lt;-</span> movielens <span class="sc">%&gt;%</span> </span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2001</span>) <span class="do">##limit dataset to movies released in 2001</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mymovies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   3442 obs. of  7 variables:
  $ movieId  : int  4306 4308 4447 4718 4963 4995 4641 4975 4448 4886 ...
@@ -852,18 +789,14 @@ Figure&nbsp;8: linear regression of life expectancy by population size, Africa 2
  $ rating   : num  3.5 3.5 4.5 3.5 3 4.5 1.5 1.5 2.5 3.5 ...
  $ timestamp: int  1163374103 1163374354 1163375033 1163375131 1163373548 1163373616 1109258217 1109258226 1154400334 1154464808 ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>mymovies <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>genres,  <span class="at">y=</span>rating)) <span class="sc">+</span> <span class="do">##use genres as the categorical variable and rating as the numerical variable</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_boxplot</span>()   <span class="do">##create exploratory boxplot </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>mymovies <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>genres,  <span class="at">y=</span>rating)) <span class="sc">+</span> <span class="do">##use genres as the categorical variable and rating as the numerical variable</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_boxplot</span>()   <span class="do">##create exploratory boxplot </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="coding-exercise_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<p><img src="coding-exercise_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
-</div>
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>mymovies2 <span class="ot">&lt;-</span> mymovies <span class="sc">%&gt;%</span> </span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2001</span> <span class="sc">&amp;</span> genres <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Drama"</span>, <span class="st">"Comedy"</span>)) <span class="do">##further filter dataset to include 2 genres</span></span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mymovies2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>mymovies2 <span class="ot">&lt;-</span> mymovies <span class="sc">%&gt;%</span> </span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2001</span> <span class="sc">&amp;</span> genres <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Drama"</span>, <span class="st">"Comedy"</span>)) <span class="do">##further filter dataset to include 2 genres</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mymovies2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   319 obs. of  7 variables:
  $ movieId  : int  4718 4718 4225 4381 4388 4718 4723 4728 4816 4888 ...
@@ -874,9 +807,9 @@ Figure&nbsp;8: linear regression of life expectancy by population size, Africa 2
  $ rating   : num  3.5 3.5 1 2 3 4 3.5 4 3 3 ...
  $ timestamp: int  1163375131 1331379530 997937762 997937346 1416119736 1044348492 1054449465 1044348492 1166586875 1054449355 ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>mymovies3 <span class="ot">&lt;-</span> mymovies2 <span class="sc">%&gt;%</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="st">"title"</span>, <span class="st">"genres"</span>, <span class="st">"rating"</span>) <span class="do">##select 3 columns of useful information </span></span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mymovies3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>mymovies3 <span class="ot">&lt;-</span> mymovies2 <span class="sc">%&gt;%</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="st">"title"</span>, <span class="st">"genres"</span>, <span class="st">"rating"</span>) <span class="do">##select 3 columns of useful information </span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mymovies3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   319 obs. of  3 variables:
  $ title : chr  "American Pie 2" "American Pie 2" "Dish, The" "Closet, The (Placard, Le)" ...
@@ -889,16 +822,17 @@ Figure&nbsp;8: linear regression of life expectancy by population size, Africa 2
 <h1>Create a few exploratory figures</h1>
 <p>I created the second boxplot with the final dataset called ‘mymovies3’, and it became easy to view the spread in ratings for drama and comedy movies released in 2001. I added a title for the boxplot and centered it to make it easier to read. The average rating for comedy movies is a 3, while the average rating for drama movies is a 4. I practiced saving this image to the folder previously created by Cora using the here() and ggsave() functions. To create another visualization of this data, I used the mean ratings from each category in a bar graph. The means of the ratings for each genre are displayed with better precision in this visualization. The mean rating for comedy movies is a little less than 3 at about 2.9 while the average rating for drama movies seems lower at about 3.5. This discrepancy could be explained by the 2 outliers shown in the drama category on the boxplot because these observations are skewing the mean. I saved this graph to the same folder with the boxplot using the here() and ggsave() functions. I also created a table of my final dataset to include the movie titles of both genres with each of their ratings from reviewers. It is a little busy since there are multiple reviews for the some of the same movies, so I organized it by title to allow for quick review of all the ratings provided for each movie. The first table has been commented out, so it will not print on this rendered website. It is included to show the process of creating the better table.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>boxplot <span class="ot">&lt;-</span> mymovies3 <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>genres,  <span class="at">y=</span>rating)) <span class="sc">+</span>   <span class="do">##visualize the ratings for each genre of movie </span></span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_boxplot</span>() <span class="sc">+</span>    <span class="do">##create clean boxplot to compare ratings across genres in 2001</span></span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ratings for Drama and Comedy Movies in 2001 "</span>) <span class="sc">+</span>  <span class="do">##add a title to the graph</span></span>
-<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="do">##center the title </span></span>
-<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>, <span class="st">"results"</span>, <span class="st">"figures"</span>, <span class="st">"movies_boxplot.png"</span>) <span class="do">##inform R on where to save the image</span></span>
-<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot =</span> boxplot) <span class="do">##save the image in the predefined location </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>boxplot <span class="ot">&lt;-</span> mymovies3 <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>genres,  <span class="at">y=</span>rating)) <span class="sc">+</span>   <span class="do">##visualize the ratings for each genre of movie </span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_boxplot</span>() <span class="sc">+</span>    <span class="do">##create clean boxplot to compare ratings across genres in 2001</span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ratings for Drama and Comedy Movies in 2001 "</span>) <span class="sc">+</span>  <span class="do">##add a title to the graph</span></span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="do">##center the title </span></span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>, <span class="st">"results"</span>, <span class="st">"figures"</span>, <span class="st">"movies_boxplot.png"</span>) <span class="do">##inform R on where to save the image</span></span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot =</span> boxplot) <span class="do">##save the image in the predefined location </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Saving 7 x 5 in image</code></pre>
 </div>
+<<<<<<< Updated upstream
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ensure the figure renders on the website</span></span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-inf-mort-all.  ##create a label for the final figure</span></span>
 <span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "life expectancy by infant mortality, Africa, 1960-2016."  ##create a label for the final figure</span></span>
@@ -937,6 +871,22 @@ Figure&nbsp;8: linear regression of life expectancy by population size, Africa 2
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="do">## comment out the first table so it will not show on the rendered website</span></span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>better_table <span class="ot">&lt;-</span> <span class="fu">arrange</span>(mymovies3, title) <span class="do">##organize the table by title </span></span>
 <span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(better_table) <span class="do">##view new table with all ratings for each movie grouped together by title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>bargraph <span class="ot">&lt;-</span> mymovies3 <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>genres, <span class="at">y=</span>rating)) <span class="sc">+</span> <span class="do">##visualize the ratings for each genre of movie</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> <span class="st">"mean"</span>) <span class="sc">+</span>  <span class="do">##use the mean of each rating for the bars</span></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ratings for Drama and Comedy Movies in 2001"</span>) <span class="sc">+</span> <span class="do">##create a title for the graph</span></span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="do">##center the title</span></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>figure_file2 <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"coding-exercise"</span>, <span class="st">"results"</span>, <span class="st">"figures"</span>, <span class="st">"movies_bargraph.png"</span>) <span class="do">##inform R on where to save the image</span></span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file2, <span class="at">plot =</span> bargraph) <span class="do">##save the image in the predefined location</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="do">## knitr::kable(mymovies3) ##create a table to display movie titles with their ratings</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="do">## comment out the first table so it will not show on the rendered website</span></span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>better_table <span class="ot">&lt;-</span> <span class="fu">arrange</span>(mymovies3, title) <span class="do">##organize the table by title </span></span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(better_table) <span class="do">##view new table with all ratings for each movie grouped together by title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+>>>>>>> Stashed changes
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <colgroup>
@@ -2556,10 +2506,17 @@ Figure&nbsp;8: linear regression of life expectancy by population size, Africa 2
 <h1>Simple statistical model</h1>
 <p>I decided to conduct a simple t test to determine if the mean ratings among movies in each genre are statistically different from one another. I created an object called ‘drama’ to pull the ratings for movies in the drama genre from the dataframe. I did the same thing for movies in the comedy genre and saved that object as ‘comedy’. I used the base R t.test() function to compare the average ratings between the two groups and printed the results.</p>
 <div class="cell">
+<<<<<<< Updated upstream
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>drama <span class="ot">&lt;-</span> mymovies3<span class="sc">$</span>rating[mymovies3<span class="sc">$</span>genres <span class="sc">==</span> <span class="st">"Drama"</span>] <span class="do">##create an object with ratings only for movies in drama genre</span></span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>comedy <span class="ot">&lt;-</span> mymovies3<span class="sc">$</span>rating[mymovies3<span class="sc">$</span>genres <span class="sc">==</span> <span class="st">"Comedy"</span>] <span class="do">##create an object with ratings only for movies in comedy genre</span></span>
 <span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>t.test1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(drama, comedy) <span class="do">##run a two-sample t-test between the two numeric vectors</span></span>
 <span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(t.test1) <span class="do">##show the results of the t-test</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+=======
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>drama <span class="ot">&lt;-</span> mymovies3<span class="sc">$</span>rating[mymovies3<span class="sc">$</span>genres <span class="sc">==</span> <span class="st">"Drama"</span>] <span class="do">##create an object with ratings only for movies in drama genre</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>comedy <span class="ot">&lt;-</span> mymovies3<span class="sc">$</span>rating[mymovies3<span class="sc">$</span>genres <span class="sc">==</span> <span class="st">"Comedy"</span>] <span class="do">##create an object with ratings only for movies in comedy genre</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>t.test1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(drama, comedy) <span class="do">##run a two-sample t-test between the two numeric vectors</span></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(t.test1) <span class="do">##show the results of the t-test</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+>>>>>>> Stashed changes
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -2662,9 +2619,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2674,17 +2632,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2697,120 +2646,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      return note.innerHTML;
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -2854,7 +2689,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -2880,32 +2714,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2966,7 +2774,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-
 
 
 
