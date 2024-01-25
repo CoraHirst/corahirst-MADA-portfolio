@@ -336,6 +336,12 @@ boxplot <- mymovies3 %>% ggplot(aes(x=genres,  y=rating)) +   ##visualize the ra
 figure_file <- here("coding-exercise", "results", "figures", "movies_boxplot.png") ##inform R on where to save the image
 ggsave(filename = figure_file, plot = boxplot) ##save the image in the predefined location 
 
+## ensure the figure renders on the website
+#| label: fig-inf-mort-all.  ##create a label for the final figure
+#| fig-cap: "life expectancy by infant mortality, Africa, 1960-2016."  ##create a label for the final figure
+#| echo: FALSE  ##ensure these lines are not reproduced in the rendered version
+knitr::include_graphics(here("coding-exercise","results","figures","movies_boxplot.png")) ##tag the saved location
+
 bargraph <- mymovies3 %>% ggplot(aes(x=genres, y=rating)) + ##visualize the ratings for each genre of movie
                 geom_bar(stat = "summary", fun = "mean") +  ##use the mean of each rating for the bars
                 labs(title = "Ratings for Drama and Comedy Movies in 2001") + ##create a title for the graph
@@ -343,6 +349,12 @@ bargraph <- mymovies3 %>% ggplot(aes(x=genres, y=rating)) + ##visualize the rati
 
 figure_file2 <- here("coding-exercise", "results", "figures", "movies_bargraph.png") ##inform R on where to save the image
 ggsave(filename = figure_file2, plot = bargraph) ##save the image in the predefined location
+
+## ensure the figure renders on the website
+#| label: fig-inf-mort-all  ##create a label for the final figure
+#| fig-cap: "life expectancy by infant mortality, Africa, 1960-2016."  ##create a label for the final figure
+#| echo: FALSE  ##ensure these lines are not reproduced in the rendered version
+knitr::include_graphics(here("coding-exercise","results","figures","movies_bargraph.png")) ##tag the saved location
 
 ## knitr::kable(mymovies3) ##create a table to display movie titles with their ratings
 ## comment out the first table so it will not show on the rendered website
