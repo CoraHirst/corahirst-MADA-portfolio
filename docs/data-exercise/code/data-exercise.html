@@ -143,6 +143,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../../tidytuesday-exercise/tidytuesday-exercise.html" rel="" target="">
  <span class="dropdown-text">Tidy Tuesday Exercise</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../data-exercise/code/data-exercise.html" rel="" target="">
+ <span class="dropdown-text">Data Exercise</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -210,9 +214,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("openxlsx")</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("here")</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("gtsummary")</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("flextable")</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("here")</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="purpose" class="level1">
+<h1>Purpose</h1>
+<p>The purpose of this exercise is two-fold:</p>
+<ol type="1">
+<li>I would like to demosntrate how to generate a synthetic dataset with hidden assocaitions between variables, and how we can uncover those variables through statistical techniques we employ on “real”-world, observational datasets, and</li>
+<li>I would like to make a comment about the difference between using statistics to <em>make predictive models</em> and using statistics to <em>infer causality</em>; how do we design a data analysis that allows us to generate hypotheses about the relationships between variables, and to begin to explore and test these hypotheses?</li>
+</ol>
+<p>To do so, I am going to generate a synthetic dataset of a hypothetical group of patients who have tested postitive for some infection. These patients will have given us information about their age, the date of their post recent vaccination against this infection, and the approximate date they believed they were infected. Lastly, the severity of their illness will be reported on a 1-10 scale.</p>
+<p>Disease severity will be assigned to each individual probabilistically, given their age and the <strong>time between the date of their vaccination and the date of their infection</strong>.</p>
+<p>In my analysis, I will demonstrate that good predictive models can be built with simply the reported variables (<code>age</code>, <code>time_post_vaccination</code>, and <code>time_post_infection</code>.)</p>
+<p>However, I will show that the best fitting model is that which incorporates two varaibles only: age, and a manipulated variable representing the time between vaccination and infection. This is the <em>true</em> predictor, or the two variables I used to generate disease severity.</p>
+<p>The best model thus becomes a topic for discussion: do we want the simplest model (fewest variables) which can predict diesease severity? Do we want to best fitting model that utilizes only the reported variables? Do we want to develop a model to test a hypothesis - for instance, that individuals who were more recently vaccinated before they were infected have a better outcome?</p>
+</section>
 <section id="generating-a-synthetic-dataset" class="level1">
 <h1>Generating a synthetic dataset</h1>
 <p>For this assignment, I will be generating a synthetic dataset with built-in associations between variables. Then, I will be recovering these associations.</p>
@@ -466,16 +489,265 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="synthetic-data-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="synthetic-data-analysis">Synthetic Data Analysis</h2>
-<p>Lets do 3 things:</p>
-<ol type="1">
-<li><p>fixed effects regression for severity~age</p></li>
-<li><p>fixed effects regression for severity~time_post_vaccination</p></li>
-<li><p>mixed effects regression for severity~time_post_vaccination with age and ID as effect</p></li>
-<li><p>Repeat fixed and mixed effect models for severity~time_between, and severity~time_between with age/ID as effect</p></li>
-</ol>
-
-
+<p>Visually, I have recovered some association between <code>disease_severity</code> and <code>age</code>, as well as <code>disease_severity</code> and <code>time_post_vaccination</code>. I use the following linear regression model to determine the significance of these correlations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># determine best fit linear models </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">data =</span> data, <span class="fu">as.numeric</span>(<span class="fu">levels</span>(disease_severity))[disease_severity]<span class="sc">~</span>age) <span class="co">#how good is age at predicting disease severity (linearly)</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">data =</span> data, <span class="fu">as.numeric</span>(<span class="fu">levels</span>(disease_severity))[disease_severity]<span class="sc">~</span>time_post_vaccination) <span class="co">#how good is time post vaccination at estimating disease severity? </span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># generate tables to present</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">=</span> fit1 <span class="sc">%&gt;%</span> gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>() <span class="co">#save summaries as tables using tbl_regression() function from gtsummary package</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>table2 <span class="ot">=</span> fit2 <span class="sc">%&gt;%</span> gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>() <span class="co">#save summaries as tables using tbl_regression() function from gtsummary package</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># save summary tables</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>summarytable_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"data-exercise"</span>, <span class="st">"tables"</span>, <span class="st">"lm_severity_age.rds"</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(table1, <span class="at">file =</span> summarytable_file)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>summarytable_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"data-exercise"</span>, <span class="st">"tables"</span>, <span class="st">"lm_severity_time_post_vacc.rds"</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(table1, <span class="at">file =</span> summarytable_file)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co"># extract p-values from summaries to display on figures</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>p.age <span class="ot">=</span> <span class="fu">unname</span>(<span class="fu">summary</span>(fit1)<span class="sc">$</span>coefficients[,<span class="st">"Pr(&gt;|t|)"</span>])[<span class="dv">2</span>]</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>p.time_post_vaccination <span class="ot">=</span> <span class="fu">unname</span>(<span class="fu">summary</span>(fit2)<span class="sc">$</span>coefficients[,<span class="st">"Pr(&gt;|t|)"</span>])[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-lm-severity-age" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;1: Linear regression model of disease severity by age.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Characteristic</strong></th>
+<th style="text-align: left;"><strong>Beta</strong></th>
+<th style="text-align: left;"><strong>95% CI</strong></th>
+<th style="text-align: left;"><strong>p-value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">age</td>
+<td style="text-align: left;">0.08</td>
+<td style="text-align: left;">0.06, 0.09</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-lm-severity-time-post-vacc" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;2: Linear regression model of disease severity by time elapsed since vaccination.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Characteristic</strong></th>
+<th style="text-align: left;"><strong>Beta</strong></th>
+<th style="text-align: left;"><strong>95% CI</strong></th>
+<th style="text-align: left;"><strong>p-value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">age</td>
+<td style="text-align: left;">0.08</td>
+<td style="text-align: left;">0.06, 0.09</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Both the association between disease severity and age as well as disease severity and time post vaccination are significant (<span class="math inline">\(p&lt;0.05\)</span>; <a href="#tbl-lm-severity-age">Table&nbsp;1</a>, <a href="#tbl-lm-severity-time-post-vacc">Table&nbsp;2</a>.) Thus, either variable appears to be a pretty good predictor of disease severity.</p>
+<p>But, we know from figures <a href="#fig-age-severity-scatter">Figure&nbsp;4</a> and, especially, <a href="#fig-time-post-vacc-severity-scatter">Figure&nbsp;5</a> that the interaction between these terms may be an even better predictor of disease severity. If our goal is to generate the best model to help <em>predict</em> the disease severity of a patient, we might want to fit a linear model with <em>both</em> of these variables as predictors.</p>
+<p>The following code chunk fits this multi-variable linear model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># determine best fit models</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">=</span> <span class="fu">lm</span>(<span class="fu">as.numeric</span>(<span class="fu">levels</span>(disease_severity))[disease_severity] <span class="sc">~</span> time_post_vaccination <span class="sc">+</span> time_post_infection <span class="sc">+</span> age, <span class="at">data=</span>data)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># generate tables to present</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">=</span> model1 <span class="sc">%&gt;%</span> gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>() <span class="co">#save summaries as tables using tbl_regression() function from gtsummary package</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># save summary tables</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>summarytable_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"data-exercise"</span>, <span class="st">"tables"</span>, <span class="st">"lm_severity_all.rds"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(table1, <span class="at">file =</span> summarytable_file)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># extract p-values from summaries to display on figures</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>p.all <span class="ot">=</span> <span class="fu">unname</span>(<span class="fu">summary</span>(model1)<span class="sc">$</span>coefficients[,<span class="st">"Pr(&gt;|t|)"</span>])[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-lm-severity-all" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;3: Linear regression model of disease severity by age, time elapsed since vaccination, and time elapsed since infection.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Characteristic</strong></th>
+<th style="text-align: left;"><strong>Beta</strong></th>
+<th style="text-align: left;"><strong>95% CI</strong></th>
+<th style="text-align: left;"><strong>p-value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">age</td>
+<td style="text-align: left;">0.08</td>
+<td style="text-align: left;">0.06, 0.09</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>This model also provides a significant p-value. But how different are the p-values for these three models: disease severity ~ age, disease severity ~ time post vaccination, and disease severity ~ age + time post vaccination + time post infection?</p>
+<table class="table">
+<caption>comparing p-values for different linear predictors of disease severity</caption>
+<colgroup>
+<col style="width: 30%">
+<col style="width: 20%">
+<col style="width: 23%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>age</th>
+<th style="text-align: left;">time_post_vaccination</th>
+<th style="text-align: right;">age + time_post_infection + time_post_vaccination</th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>5.7339746^{-14}</td>
+<td style="text-align: left;">2.5827222^{-15}</td>
+<td style="text-align: right;">4.3594356^{-17}</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p>It looks like the multivariable linear regression of disease severity with age, time post vaccination, and time post infection fits the model significantly better than either age or time post vaccination alone.</p>
+<p>If I were to receive this dataset without knowing the associations I built into (and if I weren’t particularly clever, jury’s out on that one!), I might stop there and say that either variable is a good predictor of illness.</p>
+<p>But, I know that the true predictor of disease severity is the difference between <code>time_post_vaccination</code> and <code>time_post_infection</code>; that is, I wanted to generate the data so that individuals who were most recently vaccinated had a better disease outcome than those who were vaccinated a longer time before infection. In the following code chunk, I add the variable <span class="math inline">\(diff_between\)</span> to the dataset - this is the time between vaccination and infection.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add variable for time between vaccination and infection </span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>diff_between <span class="ot">=</span> data<span class="sc">$</span>time_post_vaccination<span class="sc">-</span>data<span class="sc">$</span>time_post_infection</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># determine best fit models</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">=</span> <span class="fu">lm</span>(<span class="fu">as.numeric</span>(<span class="fu">levels</span>(disease_severity))[disease_severity] <span class="sc">~</span> diff_between, <span class="at">data=</span>data)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">=</span> <span class="fu">lm</span>(<span class="fu">as.numeric</span>(<span class="fu">levels</span>(disease_severity))[disease_severity] <span class="sc">~</span> diff_between <span class="sc">+</span> age, <span class="at">data=</span>data)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># generate tables to present</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>table2 <span class="ot">=</span> model2 <span class="sc">%&gt;%</span> gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>() <span class="co">#save summaries as tables using tbl_regression() function from gtsummary package</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>table3 <span class="ot">=</span> model3 <span class="sc">%&gt;%</span> gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>() <span class="co">#save summaries as tables using tbl_regression() function from gtsummary package</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># save summary tables</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>summarytable_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"data-exercise"</span>, <span class="st">"tables"</span>, <span class="st">"lm_severity_diff_between.rds"</span>)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(table2, <span class="at">file =</span> summarytable_file)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co"># save summary tables</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>summarytable_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"data-exercise"</span>, <span class="st">"tables"</span>, <span class="st">"lm_severity_diff_between_age.rds"</span>)</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(table3, <span class="at">file =</span> summarytable_file)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="co"># extract p-values from summaries to display on figures</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>p.diff_between <span class="ot">=</span> <span class="fu">unname</span>(<span class="fu">summary</span>(model2)<span class="sc">$</span>coefficients[,<span class="st">"Pr(&gt;|t|)"</span>])[<span class="dv">2</span>]</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>p.diff_between_age <span class="ot">=</span> <span class="fu">unname</span>(<span class="fu">summary</span>(model3)<span class="sc">$</span>coefficients[,<span class="st">"Pr(&gt;|t|)"</span>])[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-lm-diff-between" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;4: Linear regression model of disease severity by difference betweem time of vaccination and time of infection.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Characteristic</strong></th>
+<th style="text-align: left;"><strong>Beta</strong></th>
+<th style="text-align: left;"><strong>95% CI</strong></th>
+<th style="text-align: left;"><strong>p-value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">diff_between</td>
+<td style="text-align: left;">0.04</td>
+<td style="text-align: left;">0.03, 0.05</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-lm-diff-between-age" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;5: Linear regression model of disease severity by age and difference betweem time of vaccination and time of infection.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Characteristic</strong></th>
+<th style="text-align: left;"><strong>Beta</strong></th>
+<th style="text-align: left;"><strong>95% CI</strong></th>
+<th style="text-align: left;"><strong>p-value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">diff_between</td>
+<td style="text-align: left;">0.03</td>
+<td style="text-align: left;">0.03, 0.04</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">age</td>
+<td style="text-align: left;">0.06</td>
+<td style="text-align: left;">0.04, 0.07</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Tables <a href="#tbl-lm-diff-between">Table&nbsp;4</a> and <a href="#tbl-lm-diff-between-age">Table&nbsp;5</a> reveal that these models are also significant predictive models. Lets compare these fits with the best fit multi-variable model:</p>
+<table class="table">
+<caption>comparing p-values for different linear predictors of disease severity</caption>
+<colgroup>
+<col style="width: 30%">
+<col style="width: 20%">
+<col style="width: 23%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>age + time_post_infection + time_post_vaccination</th>
+<th style="text-align: left;">diff_between</th>
+<th style="text-align: right;">diff_between + age</th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4.3594356^{-17}</td>
+<td style="text-align: left;">1.1779262^{-16}</td>
+<td style="text-align: right;">2.3592392^{-17}</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p>We can see that the time between vaccination and infection (<code>diff_between</code>) is a better predictor of disease severity than either age or time elapsed since vaccination, though the mutli variable model with the three variable <code>age</code>, <code>time_post_vaccination</code>, and <code>time_post_infection</code> is still a better predictor than <code>diff_between</code>.</p>
+<p>However, the <em>best</em> predictor is actually the multi-variable model with fewer variables! <code>diff_between</code> and <code>age</code> predict disease severity better than all three variables, <code>age</code>, <code>time_post_vaccination</code>, and <code>time_post_infection</code>. Plus, we know (because I generated the model!) that there is some <em>causal</em> motivation for creating this fourth variable, <code>diff_between</code>.</p>
 </section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>I want to make a note here that the most complex model <em>might not always</em> be the best fitting model, and furthermore, that we might miss some interesting interactions between variables if we don’t consider how the interactions between them can help predict our outcome when we build our models!</p>
+<p>I also want to note that a “significant p-value” doesn’t mean that the biological/natural motivation behind your model is actually the truth; in fact, all of the regressions I performed predicted disease severity pretty well! If our goal is to make predictions about outcomes given predictor variables, then we might be motivated either to chose the <em>simplest model</em> that gives us the most robust output, or the <em>best fitting model</em> without assumptions of causality. But, if we want to begin testing hypotheses about <em>why these variables are correlated with disease outcome</em>, then we want to begin being clever about manipulations we can conduct with our variables to infer causality! (and then, of course, less observational and more causal studies, where we can! Cohort, etc…)</p>
+
+
 </section>
 
 </main> <!-- /main -->

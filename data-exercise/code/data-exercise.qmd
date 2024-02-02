@@ -27,10 +27,33 @@ library(readxl)
 #install.packages("openxlsx")
 library(openxlsx)
 
+# install.packages("gtsummary")
+library(gtsummary)
+
+# install.packages("flextable")
+library(flextable)
+
 #install.packages("here")
 library(here)
 
 ```
+
+# Purpose
+
+The purpose of this exercise is two-fold: 
+
+1) I would like to demosntrate how to generate a synthetic dataset with hidden assocaitions between variables, and how we can uncover those variables through statistical techniques we employ on "real"-world, observational datasets, and
+2) I would like to make a comment about the difference between using statistics to *make predictive models* and using statistics to *infer causality*; how do we design a data analysis that allows us to generate hypotheses about the relationships between variables, and to begin to explore and test these hypotheses?
+
+To do so, I am going to generate a synthetic dataset of a hypothetical group of patients who have tested postitive for some infection. These patients will have given us information about their age, the date of their post recent vaccination against this infection, and the approximate date they believed they were infected. Lastly, the severity of their illness will be reported on a 1-10 scale. 
+
+Disease severity will be assigned to each individual probabilistically, given their age and the **time between the date of their vaccination and the date of their infection**. 
+
+In my analysis, I will demonstrate that good predictive models can be built with simply the reported variables (`age`, `time_post_vaccination`, and `time_post_infection`.) 
+
+However, I will show that the best fitting model is that which incorporates two varaibles only: age, and a manipulated variable representing the time between vaccination and infection. This is the *true* predictor, or the two variables I used to generate disease severity. 
+
+The best model thus becomes a topic for discussion: do we want the simplest model (fewest variables) which can predict diesease severity? Do we want to best fitting model that utilizes only the reported variables? Do we want to develop a model to test a hypothesis - for instance, that individuals who were more recently vaccinated before they were infected have a better outcome?
 
 # Generating a synthetic dataset
 
@@ -265,14 +288,148 @@ knitr::include_graphics(here("data-exercise","figures","time_post_inf_severity_s
 
 ## Synthetic Data Analysis
 
-Lets do 3 things:
+Visually, I have recovered some association between `disease_severity` and `age`, as well as `disease_severity` and `time_post_vaccination`. I use the following linear regression model to determine the significance of these correlations. 
 
-1)  fixed effects regression for severity\~age
+```{r fixed-effects-models}
+# determine best fit linear models 
+fit1 = lm(data = data, as.numeric(levels(disease_severity))[disease_severity]~age) #how good is age at predicting disease severity (linearly)
+fit2 = lm(data = data, as.numeric(levels(disease_severity))[disease_severity]~time_post_vaccination) #how good is time post vaccination at estimating disease severity? 
 
-2)  fixed effects regression for severity\~time_post_vaccination
+# generate tables to present
+table1 = fit1 %>% gtsummary::tbl_regression() #save summaries as tables using tbl_regression() function from gtsummary package
+table2 = fit2 %>% gtsummary::tbl_regression() #save summaries as tables using tbl_regression() function from gtsummary package
 
-3)  mixed effects regression for severity\~time_post_vaccination with age and ID as effect
+# save summary tables
+summarytable_file = here("data-exercise", "tables", "lm_severity_age.rds")
+saveRDS(table1, file = summarytable_file)
 
-4)  Repeat fixed and mixed effect models for severity\~time_between, and severity\~time_between with age/ID as effect
+summarytable_file = here("data-exercise", "tables", "lm_severity_time_post_vacc.rds")
+saveRDS(table1, file = summarytable_file)
+
+# extract p-values from summaries to display on figures
+p.age = unname(summary(fit1)$coefficients[,"Pr(>|t|)"])[2]
+p.time_post_vaccination = unname(summary(fit2)$coefficients[,"Pr(>|t|)"])[2]
+```
+
+```{r load-table-lm-severity-age}
+#| label: tbl-lm-severity-age
+#| tbl-cap: "Linear regression model of disease severity by age."
+#| echo: FALSE
+resulttable=readRDS(here("data-exercise","tables", "lm_severity_age.rds"))
+knitr::kable(resulttable)
+```
+
+```{r load-table-lm-severity-time-post-vacc}
+#| label: tbl-lm-severity-time-post-vacc
+#| tbl-cap: "Linear regression model of disease severity by time elapsed since vaccination."
+#| echo: FALSE
+resulttable=readRDS(here("data-exercise","tables", "lm_severity_time_post_vacc.rds"))
+knitr::kable(resulttable)
+```
+
+Both the association between disease severity and age as well as disease severity and time post vaccination are significant ($p<0.05$; @tbl-lm-severity-age, @tbl-lm-severity-time-post-vacc.) Thus, either variable appears to be a pretty good predictor of disease severity. 
+
+But, we know from figures @fig-age-severity-scatter and, especially, @fig-time-post-vacc-severity-scatter that the interaction between these terms may be an even better predictor of disease severity. If our goal is to generate the best model to help *predict* the disease severity of a patient, we might want to fit a linear model with *both* of these variables as predictors.
+
+The following code chunk fits this multi-variable linear model: 
+
+```{r fixed-effects-all-vars-model}
+
+# determine best fit models
+model1 = lm(as.numeric(levels(disease_severity))[disease_severity] ~ time_post_vaccination + time_post_infection + age, data=data)
+
+# generate tables to present
+table1 = model1 %>% gtsummary::tbl_regression() #save summaries as tables using tbl_regression() function from gtsummary package
+
+# save summary tables
+summarytable_file = here("data-exercise", "tables", "lm_severity_all.rds")
+saveRDS(table1, file = summarytable_file)
+
+# extract p-values from summaries to display on figures
+p.all = unname(summary(model1)$coefficients[,"Pr(>|t|)"])[2]
+```
+
+```{r load-table-lm-severity-all}
+#| label: tbl-lm-severity-all
+#| tbl-cap: "Linear regression model of disease severity by age, time elapsed since vaccination, and time elapsed since infection."
+#| echo: FALSE
+resulttable=readRDS(here("data-exercise","tables", "lm_severity_age.rds"))
+knitr::kable(resulttable)
+```
+
+This model also provides a significant p-value. But how different are the p-values for these three models: disease severity ~ age, disease severity ~ time post vaccination, and disease severity ~ age + time post vaccination + time post infection? 
+
+| age | time_post_vaccination | age + time_post_infection + time_post_vaccination | 
+|---------|:-----|------:|:------:|
+|`r p.age`  | `r p.time_post_vaccination` |  `r p.all` |  
+
+: comparing p-values for different linear predictors of disease severity
+
+It looks like the multivariable linear regression of disease severity with age, time post vaccination, and time post infection fits the model significantly better than either age or time post vaccination alone. 
+
+If I were to receive this dataset without knowing the associations I built into (and if I weren't particularly clever, jury's out on that one!), I might stop there and say that either variable is a good predictor of illness.
+
+But, I know that the true predictor of disease severity is the difference between `time_post_vaccination` and `time_post_infection`; that is, I wanted to generate the data so that individuals who were most recently vaccinated had a better disease outcome than those who were vaccinated a longer time before infection. In the following code chunk, I add the variable $diff_between$ to the dataset - this is the time between vaccination and infection. 
+
+```{r fixed-effects-diff-between-models}
+
+# add variable for time between vaccination and infection 
+data$diff_between = data$time_post_vaccination-data$time_post_infection
+
+# determine best fit models
+model2 = lm(as.numeric(levels(disease_severity))[disease_severity] ~ diff_between, data=data)
+model3 = lm(as.numeric(levels(disease_severity))[disease_severity] ~ diff_between + age, data=data)
+
+# generate tables to present
+
+table2 = model2 %>% gtsummary::tbl_regression() #save summaries as tables using tbl_regression() function from gtsummary package
+table3 = model3 %>% gtsummary::tbl_regression() #save summaries as tables using tbl_regression() function from gtsummary package
+
+# save summary tables
+summarytable_file = here("data-exercise", "tables", "lm_severity_diff_between.rds")
+saveRDS(table2, file = summarytable_file)
+
+# save summary tables
+summarytable_file = here("data-exercise", "tables", "lm_severity_diff_between_age.rds")
+saveRDS(table3, file = summarytable_file)
+
+# extract p-values from summaries to display on figures
+p.diff_between = unname(summary(model2)$coefficients[,"Pr(>|t|)"])[2]
+p.diff_between_age = unname(summary(model3)$coefficients[,"Pr(>|t|)"])[2]
+
+```
 
 
+```{r load-table-lm-severity-diff-between}
+#| label: tbl-lm-diff-between
+#| tbl-cap: "Linear regression model of disease severity by difference betweem time of vaccination and time of infection."
+#| echo: FALSE
+resulttable=readRDS(here("data-exercise","tables", "lm_severity_diff_between.rds"))
+knitr::kable(resulttable)
+```
+
+```{r load-table-lm-severity-diff-between_age}
+#| label: tbl-lm-diff-between-age
+#| tbl-cap: "Linear regression model of disease severity by age and difference betweem time of vaccination and time of infection."
+#| echo: FALSE
+resulttable=readRDS(here("data-exercise","tables", "lm_severity_diff_between_age.rds"))
+knitr::kable(resulttable)
+```
+
+Tables @tbl-lm-diff-between and @tbl-lm-diff-between-age reveal that these models are also significant predictive models. Lets compare these fits with the best fit multi-variable model: 
+
+| age + time_post_infection + time_post_vaccination | diff_between | diff_between + age | 
+|---------|:-----|------:|:------:|
+|`r p.all`  | `r p.diff_between` |  `r p.diff_between_age` |  
+
+: comparing p-values for different linear predictors of disease severity
+
+We can see that the time between vaccination and infection (`diff_between`) is a better predictor of disease severity than either age or time elapsed since vaccination, though the mutli variable model with the three variable `age`, `time_post_vaccination`, and `time_post_infection` is still a better predictor than `diff_between`. 
+
+However, the *best* predictor is actually the multi-variable model with fewer variables! `diff_between` and `age` predict disease severity better than all three variables, `age`, `time_post_vaccination`, and `time_post_infection`. Plus, we know (because I generated the model!) that there is some *causal* motivation for creating this fourth variable, `diff_between`. 
+
+# Conclusion 
+
+I want to make a note here that the most complex model *might not always* be the best fitting model, and furthermore, that we might miss some interesting interactions between variables if we don't consider how the interactions between them can help predict our outcome when we build our models! 
+
+I also want to note that a "significant p-value" doesn't mean that the biological/natural motivation behind your model is actually the truth; in fact, all of the regressions I performed predicted disease severity pretty well! If our goal is to make predictions about outcomes given predictor variables, then we might be motivated either to chose the *simplest model* that gives us the most robust output, or the *best fitting model* without assumptions of causality. But, if we want to begin testing hypotheses about *why these variables are correlated with disease outcome*, then we want to begin being clever about manipulations we can conduct with our variables to infer causality! (and then, of course, less observational and more causal studies, where we can! Cohort, etc...)
