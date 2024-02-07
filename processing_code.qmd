@@ -1,5 +1,0 @@
----
-title: "Ferret Responses to Influenza A Infection"
-author: "Cora Hirst"
-editor: visual
----

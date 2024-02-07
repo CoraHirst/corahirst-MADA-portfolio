@@ -1,0 +1,195 @@
+---
+title: "cdcdata-exercise"
+author: "Cora Hirst"
+editor: visual
+---
+
+```{r setup}
+#install.packages("ggplot2")
+library(ggplot2)
+
+#install.packages("dplyr")
+library(dplyr)
+
+#install.packages("here")
+library(here)
+
+```
+
+# What's the Dataset?
+
+The following is a dataset containing measurements of morbitiy, mortality, and viral titre for 717 ferrets inoculated with 125 different Influenza A virus strains. Each observation contains data on a single ferret - thus, thre are 717 observations.
+
+Viral titres were measured from nasal washes (NW)  every-other day after incolution, and are given in columns `d#_inoc`, where `d#` indicates the number of days elapsed since inoculation. `units` indicates whether titres are reported in PFU or EID50 (tirated in cells or eggs!). 
+
+The `virus` column contains the unique identifier for the virus used to inoculate the ferret. Column `lethal` contains binary information, indicating whether the ferret survived (`FALSE`) the 14-day period or was humanely euthanized once titres reached humane endpoint criteria (`TRUE`). 
+
+`HPAI` inicates whether the virus has been classified as highly pathogenic avian influenza (`TRUE`) or is either low pathogenic avian influenza or non-avian (`FALSE`). `HPAI_MBAA` indicates whether the virus, if HPAI, has a multibasic amino acid cleavage site. 
+
+The `HA` and `NA.` columns depict the subtypes of hemaglutinin or neuraminidase (H#N#) of the inoculated virus. 
+
+The `wt_loss` and `wt_loss_day` columns indicate the maximum percentage weight loss the ferret experienced, and the day at which this maximum weight loss was reached. 
+
+Laslty, `temp` and `temp_day` report the maximum temperature experienced by the ferret, and the day that temperature was reached.
+
+There are a few other columns in the dataset I will *not* be considering for the purpose of this exercise, including information about respiratory transmission, from where the virus was isolated, etc. 
+
+The public dataset was obtained from the CDC's National Center for Immunization and Respiratory Diseases, [here](https://data.cdc.gov/National-Center-for-Immunization-and-Respiratory-D/An-aggregated-dataset-of-serially-collected-influe/cr56-k9wj/about_data). 
+
+# Data Processing
+
+The dataset is loaded, viewed, and processed accordingly in the following section. 
+
+## Loading the data and selecting variables of interest
+
+The following code chunk solely loads the data and visualizes all 28 variables. 
+
+```{r load-data}
+# load dataset
+ferret_IAV_data <- read.csv(here("cdc-exercise", "data", "IAV_morbidity_and_titer_measurements_ferrets.csv"))
+
+# view dataset 
+str(ferret_IAV_data)
+```
+
+Now, I would like to subset the dataset for only the variables of interest: 
+
+```{r select-data}
+# select variables from dataset
+ferret_IAV_data = ferret_IAV_data %>%
+  select(-c("expt", "NW_typical", "RD_trans", "Origin", "temp_5", "temp_5_day"))
+
+# view pruned dataset
+str(ferret_IAV_data) #
+
+summary(ferret_IAV_data)
+```
+
+## Processing
+
+All titre variables (`d#_inoc`), `wt_loss`, and `temp` are numeric, as they should be. Similarly, the ID variables `Ferret` and `Virus` are similarly loaded correctly as character. Lastly, any time variable counting days post inoculation, `lethal_day`, `wt_loss_day`, and `temp_day` are integers, as days are counted discretely. 
+
+`HA` and `NA.`, referring to the head and neuraminidase subtypes of the virus used in each observation, were loaded as character. While they are character variables inherently, different virus can have different combinations of HA and NA, and can be grouped by either. The type of units titres were measured with, `units`, is also a categorical variable, as observations can contain one of two values, "EID" or "PFU". Thus, we can treat `units`, `HA`, and `NA.` as categorical, and *factor them.*
+
+All binary variables - `lethal`, `HPAI`, and `HPAI_MBAA` - are loaded as characters and not as logical. We can fix that, too. 
+
+The following code chunk factors the categorical variables and replaces binary character variables with logical values. 
+
+```{r processing-data}
+# first, lets factor categorical variables
+ferret_IAV_data = ferret_IAV_data %>%
+  mutate("units" = factor(units), "HA" = factor(HA), "NA." = factor(NA.)) 
+
+# now, lets replace binary character variables with logical values
+ferret_IAV_data = ferret_IAV_data %>%
+  mutate("lethal" = case_when(lethal == "true" ~ TRUE, lethal == "false" ~ FALSE),
+         "HPAI" = case_when(HPAI == "true" ~ TRUE, HPAI == "false" ~ FALSE), 
+         "HPAI_MBAA" = case_when(HPAI_MBAA == "true" ~ TRUE, HPAI_MBAA == "false" ~ FALSE))
+
+# let's check that worked!
+str(ferret_IAV_data)
+summary(ferret_IAV_data) #logicals are locicals and factors are factors, both with count information
+
+#note that we could have accomplished both in the same "pipe" - I've separated them here to make it clear what manipulation is being preformed on which columns :)
+```
+
+Now, let's think about our `units` variable. "PFU" and "EID50" are both measurements of virus titres, but come from different titration methods - essentially, this means that they cannot be compared. 
+
+I'd like to make some correlations between virus titres and other variables included in the dataset. I can't do that with a mixture of titration methods! So, I am only going to include observations where viral titres were measured via the titration method with the greatest number of observations. 
+
+In the following code chunk, I determine which titration `unit`, "PFU" or "EID", has the greatest number of observations. Then, I am going to filter my dataset to only include observations where titres are measured with that method. I'll keep that variable around, though there will only be observations for one factor level, just as a reminder which units the titres are measured in. 
+
+```{r more-processing-data}
+# which factor level of units has the greatest number of observations? 
+units.counts = (summary(ferret_IAV_data$units)) #a named vector of counts of the number of observations for each level of variable "units"
+which.units.max = names(units.counts)[which.max(units.counts)] #the name of the level of variable "units" with the greatest number of observations
+
+# filtering for observations with titres given in units which.units.max 
+ferret_IAV_data = ferret_IAV_data %>%
+  filter(units == which.units.max)
+
+# let's check that worked!
+str(ferret_IAV_data)
+summary(ferret_IAV_data)
+```
+
+It seems that the majority of titres were measured in `r which.units.max` units (meaning that titrations were done in eggs!), so only observations where titres were measured in `r which.units.max` are being included in the processed dataset. Please note that all observations and variables remain in the file "cdc-exercise/data/IAV_morbidity_and_titer_measurements_ferrets.csv", so we can reconduct this processing and analysis *excluding* all observations measured in `r which.units.max` instead, if we want!
+
+At this point, we should have `r nrow(ferret_IAV_data)` observations remaining. 
+
+Lastly, looking at the column `lethal_day`, ferrets that survived there infection are given a 0 for lethal_day. But that will skew our data quite a bit toward early lethality! So, I want to replace all "0" values for `lethal_day` with "NA". 
+
+```{r even-more-processing-data}
+ferret_IAV_data = ferret_IAV_data %>%
+  mutate(lethal_day = case_when(lethal_day == 0 ~ NA, .default = lethal_day))
+```
+
+# Preliminary Analysis
+Now, I have a dataset containing: 
+
+- The ID of the `Ferret` inocultated, and the ID of the `Virus` used to inoculated; 
+- whether the infection was `lethal`;
+- if the infection was lethal, when the ferret died (`lethal_day`);
+- whether the virus is a highly virulant avian `HPAI`; 
+- if the virus is highly virulent `HPAI`, whether it has a multi-basic amino acid cleavage site at HA, or an `HPAI_MBAA`;
+- the identity of the virus's `HA` and `NA` subtypes;
+- the maximum percentage `wt_loss` of the ferret and which day this maximum was measured (`wt_loss_day`); 
+- the maximum temperature `temp` of the ferret and which day this maximum was measured (`temp_day`), and 
+- a time series of viral titres, given in columns `d1_inoc` through `d9_inoc`
+
+This is a lot of information! Yay! What would we like to know about each of these variables?
+
+I'd like to know the proportion of ferrets that died after inoculation, and of these, the distribution in how long they survived:
+
+```{r exploration-lethality}
+plot1 = ggplot() + geom_bar(data = ferret_IAV_data, aes(x = lethal, y = (..count..)/sum(..count..))) + 
+  stat_count(data = ferret_IAV_data, geom = "text", colour = "white", size = 3.5, aes(x = lethal, label = ..count.., y = ..count../(2*nrow(ferret_IAV_data)))) +
+  labs(x = "ferret died", y = "frequency")
+
+plot1
+
+plot2 = ferret_IAV_data %>%
+  filter(lethal == T) %>%
+  ggplot() + geom_boxplot(aes(y = lethal_day)) + 
+  annotate(geom = "text", x = 0, y = 7.5, label = paste(sum(ferret_IAV_data$lethal==TRUE), "lethal observations")) +
+  labs(x = "", y = "days survived")
+
+plot2
+```
+
+I'd also like to know how many strains are categorized as highly virulent/pathogenic, and how many ferrets died when infected with them: 
+
+```{r exploration-virulence}
+
+table = ferret_IAV_data %>%
+  select("HPAI", "lethal") %>%
+  group_by(HPAI) %>%
+  count(lethal)
+
+plot3 = ferret_IAV_data %>%
+  select("HPAI", "lethal") %>%
+  filter(lethal == T) %>%
+  ggplot() + geom_bar(aes(x = HPAI, y = (..count..)/sum(..count..))) + 
+  stat_count(geom = "text", colour = "black", size = 3.5, aes(x = HPAI, label = paste(..count.., "observations"), y = ..count../(sum(ferret_IAV_data$lethal==T)))) +
+  labs(x = "highly pathogenic HPAI", y = "frequency", title = "Percentage of dead ferrets infected with highly pathogenic HPAI")
+
+plot4 = ferret_IAV_data %>%
+  select("HPAI", "lethal") %>%
+  filter(HPAI == T) %>%
+  ggplot() + geom_bar(aes(x = lethal, y = (..count..)/sum(..count..))) + 
+  stat_count(geom = "text", colour = "white", size = 3.5, aes(x = lethal, label = paste(..count.., "observations"), y = ..count../(2*sum(ferret_IAV_data$HPAI==T)))) +
+  labs(x = "ferret died", y = "frequency", title = "Percentage ferrets infected with highly pathogenic HPAI that died")
+
+```
+
+How many highly virulent strains have the weird molecular thing going on? 
+
+
+Okay, now that that is over - 
+
+1) Diveristy of NA and HA; how many combinations, and representation of each combination? 
+2) Overall, how much weight loss? Stratified by whether they died? 
+3) Diversity in temperatures for dead/not dead? highly virulent vs not? 
+4) does day of max weight loss correlate with day of max temp?
+
+5)plotting time series of viral titres for each ferret!
