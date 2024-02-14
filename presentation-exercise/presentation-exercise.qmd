@@ -1,5 +1,8 @@
 ---
 title: "Presentation Exercise"
+execute: 
+  warning: false
+  message: false
 ---
 
 ```{r setup}
@@ -16,11 +19,12 @@ library(dplyr)
 library(ggplot2)
 
 
+
 ```
 
 # Purpose
 
-In this exercise, I would like to try to recreate THIS FIGURE. 
+In this exercise, I would like to try to recreate THIS FIGURE, from [this New York Times arcticle](https://www.nytimes.com/interactive/2024/01/31/us/pandemic-learning-loss-recovery.html)
 
 I'm unsure whether the scores were year standardized or grade year standardized for this estimate, but I will use the grade year standardized dataset.
 
