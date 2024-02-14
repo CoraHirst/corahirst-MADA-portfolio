@@ -2,4 +2,142 @@
 title: "Presentation Exercise"
 ---
 
-Placeholder file for the future data/results presentation exercise.
+```{r setup}
+#install.packages("here")
+library(here)
+
+#install.packages("tidyverse")
+library(tidyverse)
+
+#install.packages("dplyr")
+library(dplyr)
+
+#install.packages("ggplot2")
+library(ggplot2)
+
+
+```
+
+# Purpose
+
+In this exercise, I would like to try to recreate THIS FIGURE. 
+
+I'm unsure whether the scores were year standardized or grade year standardized for this estimate, but I will use the grade year standardized dataset.
+
+To recreate (FIGURE X), Math scores in Weakley County, Tennesee, 2016-2023; includes US Average
+
+```{r load-data}
+# load mean scores by state
+scores_state2023 = read.csv(here::here("presentation-exercise", "data", "seda2023_state_ys.csv")) #test score data by state
+
+# load mean scores by counties within states
+scores_admindis2023 = read.csv(here::here("presentation-exercise", "data", "seda2023_admindist_ys.csv")) #test score data by county 
+```
+
+```{r format-data}
+### Weakley Country mean test scores by year
+# create subset of district scores dataset for Weakley County, TN, only 
+weakley_county = scores_admindis2023 %>%
+  filter(stateabb == "TN", sedaadminname == "Weakley County", subject == "mth" ) %>% #filter for weakley county math data
+  select("stateabb", "sedaadminname", "subject", "subgroup",  #include state, county, and subject name to ensure the filters were correct; include subgroup to filter on the poor
+        colnames(scores_admindis2023)[grep( '_ol$', colnames(scores_admindis2023))])
+
+# let's see how this looks 
+head(weakley_county) #missing 2016 data is curious. I'll have to come back to this.
+
+# I want to remove the measurements from 1922, 1923, and 2223
+weakley_county = weakley_county %>%
+  select(-c("ys_mn_1922_ol", "ys_mn_1923_ol", "ys_mn_2223_ol")) # I couldn't think of a clever way to use grep to do this, oh well!
+
+### Tenessee and US mean test scores by Year
+## US
+# First, I am creating a vector of the columns (mean scores for each state, by year) for which to take the mean across all states
+score_column_names = colnames(scores_state2023)[grep( '_ol$', colnames(scores_state2023))]
+score_column_names = score_column_names[-grep("ys_mn_1922_ol|ys_mn_1923_ol|ys_mn_2223_ol", score_column_names)] #yes, i'm doing it this way so that if any columns had been added to the dataset, I wouldn't have to readjust the indices!
+
+# vector of US means by Year
+US_means = scores_state2023 %>%
+  filter(subgroup=="all") %>%
+  select(colnames(scores_state2023)[grep('^ys_mn_20.*._ol$', colnames(scores_state2023))]) %>%
+  colMeans(na.rm = T)
+
+
+## TN
+# vector of TN means by year 
+TN_means = scores_state2023 %>%
+  filter(stateabb == "TN") %>%
+  filter( subgroup == "all") %>%
+  select(colnames(scores_state2023)[grep('^ys_mn_20.*._ol$', colnames(scores_state2023))]) %>%
+  #I figured out how to exclude the 22__ and 19__ years!
+  colMeans(na.rm=T)
+
+# now I need a data frame that puts this data into longform by subgroup; that is, I need to repeat a vector of the years scores were collected the number of times we have subgroups, i.e c(2016,2017,2018,2019...2016,2017,2018,2019...); the subgroups we have EACH the number of years that were observed, i.e (all, all, all, all...wht, wht, wht....); and the scores we have across the year columns need to be collapsed into a vector of c(subgroup 1 measurements across years, subgroup 2 measurements across years...)
+
+years = c(2016,2017,2018,2019,2022,2023)
+
+timeseries_weakley_county = data.frame("Year" = rep(years, times = length(weakley_county$subgroup)),
+                "Subgroup" = rep(weakley_county$subgroup, each = length(years)),
+                "dis_score" = as.vector(t(weakley_county[,grep( '_ol$', colnames(weakley_county))])),  #the grep function returns the indices of the vector elements which match some pattern; adding $ to the end of my pattern returns elements that END WITH the pattern! #the t() function transposes my dataframe so that the functionas.vector, which converts a dataframe into a vector columnwise, will instead return the vector rowwise
+                "state_score" = rep(TN_means, times = length(weakley_county$subgroup)),
+                "US_score" = rep(US_means, times = length(weakley_county$subgroup)))
+      
+
+```
+
+```{r simple-plots}
+
+ggplot() + geom_point(data=timeseries_weakley_county, aes(x=Year, y = dis_score, col = Subgroup)) + 
+  geom_line(data=timeseries_weakley_county, aes(x=Year, y = dis_score, col = Subgroup)) + 
+  geom_line(data=timeseries_weakley_county, aes(x=Year, y = state_score), alpha = 0.5, linetype = "dashed") +
+  geom_line(data=timeseries_weakley_county, aes(x=Year, y = US_score), alpha = 0.5, linetype = "dotted")
+
+```
+
+```{r recreate-plots}
+
+plot = timeseries_weakley_county %>%
+  filter(Subgroup == "all") %>%
+  ggplot() + 
+  annotate("rect",
+           xmin = 2020, xmax = 2022, 
+           ymin = -Inf, ymax = Inf, 
+           fill = "goldenrod", alpha = 0.5) + #this is where I am using github copilot!
+  theme_classic() +
+  theme(panel.grid.major.y = element_line(colour = "grey", size = 0.5),
+        axis.ticks.y = element_blank(),
+        axis.line = element_blank()) + #and here
+  geom_point(aes(x = Year, y = dis_score), 
+             col = "goldenrod") + 
+  geom_line(aes(x = Year, y = dis_score), 
+            lwd = 1, 
+            col = "goldenrod") +
+  geom_point(aes(x = Year, y = state_score), 
+             col = "black") + 
+  geom_line(aes(x = Year, y = state_score), 
+            lwd = 1, col = "black") +
+  geom_point(aes(x = Year, y = US_score), 
+             col = "darkgrey") +
+  geom_line(aes(x = Year, y = US_score), 
+            lwd = 1, 
+            col = "darkgrey") +
+  geom_hline(yintercept = 0) +
+  scale_y_continuous(limits = c(-0.25, 0.25), 
+                     breaks = NULL) + #and here
+  scale_x_continuous(breaks = seq(min(timeseries_weakley_county$Year), max(timeseries_weakley_county$Year), by = 1), 
+                     labels = paste0("'", seq(min(timeseries_weakley_county$Year)-2000, max(timeseries_weakley_county$Year)-2000, by = 1)), 
+                     expand = c(0.25, 0)) +
+  annotate("text", x = rep(2023, 3), 
+           y = as.vector(t(timeseries_weakley_county %>% 
+                             filter(Subgroup == "all", Year == 2023) %>% 
+                             select(dis_score,state_score,US_score))),
+           label = c("Weakley", "Tennessee \n avg.", "US \navg."), 
+           hjust = c(-0.05,-0.05,-0.2), 
+           vjust = c(-0.5,-0.25, 1), 
+           size = 4, 
+           col = c("goldenrod", "black", "darkgrey"), 
+           fontface = c(2,1,1)) #and here!
+  
+ 
+plot
+
+```

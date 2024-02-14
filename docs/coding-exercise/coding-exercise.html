@@ -255,7 +255,11 @@ window.Quarto = {
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("here")</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
+<<<<<<< Updated upstream
 <pre><code>here() starts at /Users/taylorglass/Documents/MADA /corahirst-MADA-portfolio</code></pre>
+=======
+<pre><code>here() starts at /Users/chirst/Desktop/Git/corahirst-MADA-portfolio</code></pre>
+>>>>>>> Stashed changes
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("gtsummary")</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
@@ -868,7 +872,10 @@ Figure&nbsp;8: linear regression of life expectancy by population size, Africa 2
 <p><img src="coding-exercise_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
+<<<<<<< Updated upstream
 </div>
+=======
+>>>>>>> Stashed changes
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>mymovies2 <span class="ot">&lt;-</span> mymovies <span class="sc">%&gt;%</span> </span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2001</span> <span class="sc">&amp;</span> genres <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Drama"</span>, <span class="st">"Comedy"</span>)) <span class="do">##further filter dataset to include 2 genres</span></span>
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mymovies2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -913,11 +920,15 @@ Figure&nbsp;8: linear regression of life expectancy by population size, Africa 2
 <span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: FALSE  ##ensure these lines are not reproduced in the rendered version</span></span>
 <span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="fu">here</span>(<span class="st">"coding-exercise"</span>,<span class="st">"results"</span>,<span class="st">"figures"</span>,<span class="st">"movies_boxplot.png"</span>)) <span class="do">##tag the saved location</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
+<<<<<<< Updated upstream
 <div>
 <figure class="figure">
 <p><img src="results/figures/movies_boxplot.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
+=======
+<p><img src="results/figures/movies_boxplot.png" class="img-fluid" width="1050"></p>
+>>>>>>> Stashed changes
 </div>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>bargraph <span class="ot">&lt;-</span> mymovies3 <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>genres, <span class="at">y=</span>rating)) <span class="sc">+</span> <span class="do">##visualize the ratings for each genre of movie</span></span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> <span class="st">"mean"</span>) <span class="sc">+</span>  <span class="do">##use the mean of each rating for the bars</span></span>
@@ -940,7 +951,10 @@ Figure&nbsp;8: linear regression of life expectancy by population size, Africa 2
 <p><img src="results/figures/movies_bargraph.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
+<<<<<<< Updated upstream
 </div>
+=======
+>>>>>>> Stashed changes
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="do">## knitr::kable(mymovies3) ##create a table to display movie titles with their ratings</span></span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="do">## comment out the first table so it will not show on the rendered website</span></span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>better_table <span class="ot">&lt;-</span> <span class="fu">arrange</span>(mymovies3, title) <span class="do">##organize the table by title </span></span>
