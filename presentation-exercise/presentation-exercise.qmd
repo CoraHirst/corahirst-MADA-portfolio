@@ -32,10 +32,10 @@ To recreate (FIGURE X), Math scores in Weakley County, Tennesee, 2016-2023; incl
 
 ```{r load-data}
 # load mean scores by state
-scores_state2023 = read.csv(here("presentation-exercise", "data", "seda2023_state_ys.csv")) #test score data by state
+scores_state2023 = read.csv(here("presentation-exercise","seda2023_state_ys.csv")) #test score data by state
 
 # load mean scores by counties within states
-scores_admindis2023 = read.csv(here("presentation-exercise", "data", "seda2023_admindist_ys.csv")) #test score data by county 
+scores_admindis2023 = read.csv(here("presentation-exercise", "seda2023_admindist_ys.csv")) #test score data by county 
 ```
 
 ```{r format-data}
