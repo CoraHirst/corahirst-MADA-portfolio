@@ -173,7 +173,8 @@ plot = timeseries_weakley_county %>%
            ymin = -Inf, ymax = Inf, 
            fill = "goldenrod", alpha = 0.5) + #this is where I am using github copilot!
   theme_classic() +
-  theme(panel.grid.major.y = element_line(colour = "grey", size = 0.5),
+  theme(plot.background = element_rect(color = "white", fill = "white"),
+    panel.grid.major.y = element_line(colour = "grey", size = 0.5),
         axis.ticks.y = element_blank(),
         axis.line = element_blank()) + #and here
   geom_point(aes(x = Year, y = dis_score), 
@@ -196,6 +197,7 @@ plot = timeseries_weakley_county %>%
   scale_x_continuous(breaks = seq(min(timeseries_weakley_county$Year), max(timeseries_weakley_county$Year), by = 1), 
                      labels = paste0("'", seq(min(timeseries_weakley_county$Year)-2000, max(timeseries_weakley_county$Year)-2000, by = 1)), 
                      expand = c(0.25, 0)) +
+  annotate("text", x = 2021, y = 0.5, label = "COVID")+
   annotate("text", x = rep(2023, 3), 
            y = as.vector(t(timeseries_weakley_county %>% 
                              filter(Subgroup == "all", Year == 2023) %>% 
@@ -205,7 +207,9 @@ plot = timeseries_weakley_county %>%
            vjust = c(-0.5,-0.25, 1), 
            size = 4, 
            col = c("goldenrod", "black", "darkgrey"), 
-           fontface = c(2,1,1)) #and here!
+           fontface = c(2,1,1)) + #and here!
+  labs(x = "", y = "")
+plot
 
 figure_file = here("figures","regenereated.png")
 ggsave(filename = figure_file, plot=plot) 
