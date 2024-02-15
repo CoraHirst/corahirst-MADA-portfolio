@@ -193,7 +193,7 @@
     "href": "presentation-exercise/presentation-exercise.html#loading-the-dataset",
     "title": "Presentation Exercise",
     "section": "Loading the dataset",
-    "text": "Loading the dataset\nThe following codechunk loads the SEDA datasets:\n\n# load mean scores by state\nscores_state2023 = read.csv(here( \"data\", \"seda2023_state_ys.csv\")) #test score data by state\n\n# load mean scores by counties within states\nscores_admindis2023 = read.csv(here(\"data\", \"seda2023_admindist_ys.csv\")) #test score data by county"
+    "text": "Loading the dataset\nThe following codechunk loads the SEDA datasets:\n\n# load mean scores by state\nscores_state2023 = read.csv(here(\"data\", \"seda2023_state_ys.csv\")) #test score data by state\n\n# load mean scores by counties within states\nscores_admindis2023 = read.csv(here(\"data\", \"seda2023_admindist_ys.csv\")) #test score data by county"
   },
   {
     "objectID": "presentation-exercise/presentation-exercise.html#subsetting-and-generating-relavent-information",
