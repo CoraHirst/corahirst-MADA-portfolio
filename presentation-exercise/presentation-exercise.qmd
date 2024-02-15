@@ -213,7 +213,7 @@ plot = timeseries_weakley_county %>%
            fontface = c(2,1,1)) + #and here!
   labs(x = "", y = "")
 
-figure_file = here("figures","regenereated.png")
+figure_file = here("figures","regenerated.png")
 ggsave(filename = figure_file, plot=plot) 
 ```
 
