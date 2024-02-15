@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,9 +17,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -46,43 +47,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -118,7 +89,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -140,42 +112,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <span class="navbar-title">Cora Hirst Data Analysis Portfolio</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../aboutme.html">
+    <a class="nav-link" href="../aboutme.html" rel="" target="">
  <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Projects</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-projects">    
         <li>
-    <a class="dropdown-item" href="../starter-analysis-exercise/products/report/starter-analysis-report.html">
+    <a class="dropdown-item" href="../starter-analysis-exercise/products/report/starter-analysis-report.html" rel="" target="">
  <span class="dropdown-text">Starter Analysis Exercise</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../coding-exercise/coding-exercise.html">
+    <a class="dropdown-item" href="../coding-exercise/coding-exercise.html" rel="" target="">
  <span class="dropdown-text">R Coding Exercise</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../presentation-exercise/presentation-exercise.html">
+    <a class="dropdown-item" href="../presentation-exercise/presentation-exercise.html" rel="" target="">
  <span class="dropdown-text">Presentation Exercise</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../tidytuesday-exercise/tidytuesday-exercise.html">
+    <a class="dropdown-item" href="../tidytuesday-exercise/tidytuesday-exercise.html" rel="" target="">
  <span class="dropdown-text">Tidy Tuesday Exercise</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../data-exercise/code/data-exercise.html">
+    <a class="dropdown-item" href="../data-exercise/code/data-exercise.html" rel="" target="">
  <span class="dropdown-text">Data Exercise</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../cdc-exercise/code/cdcdata-exercise.html">
+    <a class="dropdown-item" href="../cdc-exercise/code/cdcdata-exercise.html" rel="" target="">
  <span class="dropdown-text">Data Analysis Exercise</span></a>
   </li>  
     </ul>
@@ -183,12 +156,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/CoraHirst/corahirst-MADA-portfolio"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/CoraHirst/corahirst-MADA-portfolio" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -229,7 +203,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("ggplot2")</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("kableExtra")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="purpose" class="level1">
 <h1>Purpose</h1>
@@ -239,7 +215,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fig-New-York-fig" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="supplemental-figs/New-York-Times-fig.png" class="img-fluid figure-img" width="687"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: Figure generated by SEDA data, Stanford University</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Figure generated by SEDA data, Stanford University</figcaption>
 </figure>
 </div>
 </div>
@@ -353,12 +329,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fig-simple-lineplot" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="figures/simple_lineplot.png" class="img-fluid figure-img" width="1050"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2: A simple lineplot showing the data to be plotted using AI, but stratified by subgroup</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;2: A simple lineplot showing the data to be plotted using AI, but stratified by subgroup</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>I am going to use CoPilot to turn <a href="#fig-simple-lineplot">Figure&nbsp;2</a> into a close rendition of <strong>?@fig-New-York-Times-fig</strong>.</p>
+<p>I am going to use CoPilot to turn <a href="#fig-simple-lineplot">Figure&nbsp;2</a> into a close rendition of <a href="#fig-New-York-fig">Figure&nbsp;1</a>.</p>
 </section>
 </section>
 <section id="using-github-copilot-to-learn-how-to-generate-more-visually-effective-plots" class="level1">
@@ -366,13 +342,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>GitHub offers a wonderful feature for free to students, teachers, and popular public repository runners called “CoPilot”.</p>
 <p>CoPilot functions almost identically to an RStudio terminal, with the added benefit that one can ask questions (or really, make demands!) via comments. And, it’s not only limited to coding in R!</p>
 <p>I am posting a link to the CoPilot main page <a href="https://github.com/features/copilot?ef_id=_k_Cj0KCQiA5rGuBhCnARIsAN11vgR09l_mZYGoUS271L8shDAAcjYYOFUVCpzWeonp5osUCQ0HJ87et0saAjDDEALw_wcB_k_&amp;OCID=AIDcmmc3fhtaow_SEM__k_Cj0KCQiA5rGuBhCnARIsAN11vgR09l_mZYGoUS271L8shDAAcjYYOFUVCpzWeonp5osUCQ0HJ87et0saAjDDEALw_wcB_k_&amp;gad_source=1&amp;gclid=Cj0KCQiA5rGuBhCnARIsAN11vgR09l_mZYGoUS271L8shDAAcjYYOFUVCpzWeonp5osUCQ0HJ87et0saAjDDEALw_wcB">here</a>.</p>
-<p><strong>?@fig-copilot-example.png</strong> shows an example of the copilot interface. Here, I didn’t know how to generate the yellow rectangle in the New York Times figure - so, I asked!</p>
+<p><a href="#fig-copilot-example">Figure&nbsp;3</a> shows an example of the copilot interface. Here, I didn’t know how to generate the yellow rectangle in the New York Times figure - so, I asked!</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-copilot-example" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="supplemental-figs/copilot-example.png" class="img-fluid figure-img" width="2111"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3: Copilot rmarkdown file</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Copilot rmarkdown file</figcaption>
 </figure>
 </div>
 </div>
@@ -387,57 +363,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">ymin =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">ymax =</span> <span class="cn">Inf</span>, </span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">"goldenrod"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="co">#this is where I am using github copilot!</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">fill =</span> <span class="st">"white"</span>),</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.5</span>),</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> <span class="co">#and here</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> dis_score), </span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"goldenrod"</span>) <span class="sc">+</span> </span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> dis_score), </span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="dv">1</span>, </span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="st">"goldenrod"</span>) <span class="sc">+</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> state_score), </span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span> </span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> state_score), </span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> US_score), </span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> US_score), </span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="dv">1</span>, </span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.25</span>, <span class="fl">0.25</span>), </span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span> <span class="co">#and here</span></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fu">min</span>(timeseries_weakley_county<span class="sc">$</span>Year), <span class="fu">max</span>(timeseries_weakley_county<span class="sc">$</span>Year), <span class="at">by =</span> <span class="dv">1</span>), </span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="st">"'"</span>, <span class="fu">seq</span>(<span class="fu">min</span>(timeseries_weakley_county<span class="sc">$</span>Year)<span class="sc">-</span><span class="dv">2000</span>, <span class="fu">max</span>(timeseries_weakley_county<span class="sc">$</span>Year)<span class="sc">-</span><span class="dv">2000</span>, <span class="at">by =</span> <span class="dv">1</span>)), </span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">2021</span>, <span class="at">y =</span> <span class="fl">0.5</span>, <span class="at">label =</span> <span class="st">"COVID"</span>)<span class="sc">+</span></span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">rep</span>(<span class="dv">2023</span>, <span class="dv">3</span>), </span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fu">as.vector</span>(<span class="fu">t</span>(timeseries_weakley_county <span class="sc">%&gt;%</span> </span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">filter</span>(Subgroup <span class="sc">==</span> <span class="st">"all"</span>, Year <span class="sc">==</span> <span class="dv">2023</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">select</span>(dis_score,state_score,US_score))),</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Weakley"</span>, <span class="st">"Tennessee </span><span class="sc">\n</span><span class="st"> avg."</span>, <span class="st">"US </span><span class="sc">\n</span><span class="st">avg."</span>), </span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>,<span class="sc">-</span><span class="fl">0.05</span>,<span class="sc">-</span><span class="fl">0.2</span>), </span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>           <span class="at">vjust =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>,<span class="sc">-</span><span class="fl">0.25</span>, <span class="dv">1</span>), </span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="dv">4</span>, </span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>           <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"goldenrod"</span>, <span class="st">"black"</span>, <span class="st">"darkgrey"</span>), </span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>           <span class="at">fontface =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>)) <span class="sc">+</span> <span class="co">#and here!</span></span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">""</span>)</span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"figures"</span>,<span class="st">"regenereated.png"</span>)</span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.5</span>),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> <span class="co">#and here</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> dis_score), </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"goldenrod"</span>) <span class="sc">+</span> </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> dis_score), </span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="dv">1</span>, </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="st">"goldenrod"</span>) <span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> state_score), </span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span> </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> state_score), </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> US_score), </span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> US_score), </span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="dv">1</span>, </span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.25</span>, <span class="fl">0.25</span>),</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="cn">NULL</span>) <span class="sc">+</span> <span class="co">#and here, latest update!</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fu">min</span>(timeseries_weakley_county<span class="sc">$</span>Year), <span class="fu">max</span>(timeseries_weakley_county<span class="sc">$</span>Year), <span class="at">by =</span> <span class="dv">1</span>), </span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="st">"'"</span>, <span class="fu">seq</span>(<span class="fu">min</span>(timeseries_weakley_county<span class="sc">$</span>Year)<span class="sc">-</span><span class="dv">2000</span>, <span class="fu">max</span>(timeseries_weakley_county<span class="sc">$</span>Year)<span class="sc">-</span><span class="dv">2000</span>, <span class="at">by =</span> <span class="dv">1</span>)), </span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">2016</span>, <span class="dv">2016</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.19</span>, <span class="fl">0.21</span>), </span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"0.2 yrs. behind"</span>, <span class="st">"0.2 yrs. ahead"</span>),</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>           <span class="at">vjust =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">2021</span>, <span class="at">y =</span> <span class="fl">0.25</span>, </span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">"COVID"</span>)<span class="sc">+</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">rep</span>(<span class="dv">2023</span>, <span class="dv">3</span>), </span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fu">as.vector</span>(<span class="fu">t</span>(timeseries_weakley_county <span class="sc">%&gt;%</span> </span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">filter</span>(Subgroup <span class="sc">==</span> <span class="st">"all"</span>, Year <span class="sc">==</span> <span class="dv">2023</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">select</span>(dis_score,state_score,US_score))),</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Weakley"</span>, <span class="st">"Tennessee </span><span class="sc">\n</span><span class="st"> avg."</span>, <span class="st">"US </span><span class="sc">\n</span><span class="st">avg."</span>), </span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>,<span class="sc">-</span><span class="fl">0.05</span>,<span class="sc">-</span><span class="fl">0.2</span>), </span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>           <span class="at">vjust =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>,<span class="sc">-</span><span class="fl">0.25</span>, <span class="dv">1</span>), </span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="dv">4</span>, </span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>           <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"goldenrod"</span>, <span class="st">"black"</span>, <span class="st">"darkgrey"</span>), </span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>           <span class="at">fontface =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>)) <span class="sc">+</span> <span class="co">#and here!</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">""</span>)</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"figures"</span>,<span class="st">"regenereated.png"</span>)</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-regenerated" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="figures/regenereated.png" class="img-fluid figure-img" width="1050"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;4: Regenerated New York Times article figure using CoPilot</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Regenerated New York Times article figure using CoPilot</figcaption>
 </figure>
 </div>
 </div>
 </div>
+<p>Curiously, I’ve noticed that the data I’m finding (in either the ‘gys’ or ‘ys’ version of the dataset) does not match what was reported. I’m curious which subgorup was being explored (the captions says “poor”, but the data for <code>ecd</code> (economically challenged) subgroup REALLY doesn’t match the plot). It would be nice to see what manipulations were done to produce the orginial figure!</p>
 </section>
 <section id="generating-a-nice-table-with-kableextra" class="level1">
 <h1>Generating a nice table with KableExtra</h1>
@@ -451,62 +430,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Subgroup <span class="sc">==</span> <span class="st">"all"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<table>
- <thead>
-  <tr>
-   <th style="text-align:right;"> Year </th>
-   <th style="text-align:left;"> Subgroup </th>
-   <th style="text-align:right;"> dis_score </th>
-   <th style="text-align:right;"> state_score </th>
-   <th style="text-align:right;"> US_score </th>
-  </tr>
- </thead>
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Year</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Subgroup</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">dis_score</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">state_score</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">US_score</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:right;"> 2016 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> -0.0239534 </td>
-   <td style="text-align:right;"> 0.0389170 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2017 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;"> -0.0413437 </td>
-   <td style="text-align:right;"> -0.0488835 </td>
-   <td style="text-align:right;"> 0.0304953 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2018 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;"> 0.0243449 </td>
-   <td style="text-align:right;"> -0.0307675 </td>
-   <td style="text-align:right;"> 0.0164822 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2019 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;"> 0.0725449 </td>
-   <td style="text-align:right;"> -0.0126515 </td>
-   <td style="text-align:right;"> 0.0024690 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2022 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;"> -0.0277620 </td>
-   <td style="text-align:right;"> -0.1403430 </td>
-   <td style="text-align:right;"> -0.1274078 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2023 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;"> 0.1748283 </td>
-   <td style="text-align:right;"> -0.0563814 </td>
-   <td style="text-align:right;"> -0.0655509 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: right;">2016</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">-0.0239534</td>
+<td style="text-align: right;">0.0389170</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2017</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">-0.0413437</td>
+<td style="text-align: right;">-0.0488835</td>
+<td style="text-align: right;">0.0304953</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2018</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">0.0243449</td>
+<td style="text-align: right;">-0.0307675</td>
+<td style="text-align: right;">0.0164822</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2019</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">0.0725449</td>
+<td style="text-align: right;">-0.0126515</td>
+<td style="text-align: right;">0.0024690</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2022</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">-0.0277620</td>
+<td style="text-align: right;">-0.1403430</td>
+<td style="text-align: right;">-0.1274078</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">0.1748283</td>
+<td style="text-align: right;">-0.0563814</td>
+<td style="text-align: right;">-0.0655509</td>
+</tr>
 </tbody>
 </table>
+
 
 </div>
 </div>
@@ -517,62 +496,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_paper</span>(<span class="st">"hover"</span>, <span class="at">full_width =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> Year </th>
-   <th style="text-align:left;"> Subgroup </th>
-   <th style="text-align:right;"> dis_score </th>
-   <th style="text-align:right;"> state_score </th>
-   <th style="text-align:right;"> US_score </th>
-  </tr>
- </thead>
+<table class="lightable-paper lightable-hover table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Year</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Subgroup</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">dis_score</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">state_score</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">US_score</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:right;"> 2016 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> -0.0239534 </td>
-   <td style="text-align:right;"> 0.0389170 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2017 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;"> -0.0413437 </td>
-   <td style="text-align:right;"> -0.0488835 </td>
-   <td style="text-align:right;"> 0.0304953 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2018 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;"> 0.0243449 </td>
-   <td style="text-align:right;"> -0.0307675 </td>
-   <td style="text-align:right;"> 0.0164822 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2019 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;"> 0.0725449 </td>
-   <td style="text-align:right;"> -0.0126515 </td>
-   <td style="text-align:right;"> 0.0024690 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2022 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;"> -0.0277620 </td>
-   <td style="text-align:right;"> -0.1403430 </td>
-   <td style="text-align:right;"> -0.1274078 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2023 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;"> 0.1748283 </td>
-   <td style="text-align:right;"> -0.0563814 </td>
-   <td style="text-align:right;"> -0.0655509 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: right;">2016</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">-0.0239534</td>
+<td style="text-align: right;">0.0389170</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2017</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">-0.0413437</td>
+<td style="text-align: right;">-0.0488835</td>
+<td style="text-align: right;">0.0304953</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2018</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">0.0243449</td>
+<td style="text-align: right;">-0.0307675</td>
+<td style="text-align: right;">0.0164822</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2019</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">0.0725449</td>
+<td style="text-align: right;">-0.0126515</td>
+<td style="text-align: right;">0.0024690</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2022</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">-0.0277620</td>
+<td style="text-align: right;">-0.1403430</td>
+<td style="text-align: right;">-0.1274078</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">0.1748283</td>
+<td style="text-align: right;">-0.0563814</td>
+<td style="text-align: right;">-0.0655509</td>
+</tr>
 </tbody>
 </table>
+
 
 </div>
 </div>
@@ -585,62 +564,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="fu">grep</span>(<span class="st">"dis_score"</span>, <span class="fu">colnames</span>(timeseries_weakley_county)), <span class="at">color =</span> <span class="st">"white"</span>,</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">background =</span> <span class="fu">spec_color</span>(timeseries_weakley_county<span class="sc">$</span>dis_score[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> Year </th>
-   <th style="text-align:left;"> Subgroup </th>
-   <th style="text-align:right;"> dis_score </th>
-   <th style="text-align:right;"> state_score </th>
-   <th style="text-align:right;"> US_score </th>
-  </tr>
- </thead>
+<table class="lightable-paper lightable-hover table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Year</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Subgroup</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">dis_score</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">state_score</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">US_score</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:right;"> 2016 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;color: white !important;background-color: rgba(187, 187, 187, 255) !important;"> NA </td>
-   <td style="text-align:right;"> -0.0239534 </td>
-   <td style="text-align:right;"> 0.0389170 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2017 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;color: white !important;background-color: rgba(68, 1, 84, 255) !important;"> -0.0413437 </td>
-   <td style="text-align:right;"> -0.0488835 </td>
-   <td style="text-align:right;"> 0.0304953 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2018 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;color: white !important;background-color: rgba(52, 96, 141, 255) !important;"> 0.0243449 </td>
-   <td style="text-align:right;"> -0.0307675 </td>
-   <td style="text-align:right;"> 0.0164822 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2019 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;color: white !important;background-color: rgba(31, 150, 139, 255) !important;"> 0.0725449 </td>
-   <td style="text-align:right;"> -0.0126515 </td>
-   <td style="text-align:right;"> 0.0024690 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2022 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;color: white !important;background-color: rgba(72, 24, 106, 255) !important;"> -0.0277620 </td>
-   <td style="text-align:right;"> -0.1403430 </td>
-   <td style="text-align:right;"> -0.1274078 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2023 </td>
-   <td style="text-align:left;"> all </td>
-   <td style="text-align:right;color: white !important;background-color: rgba(253, 231, 37, 255) !important;"> 0.1748283 </td>
-   <td style="text-align:right;"> -0.0563814 </td>
-   <td style="text-align:right;"> -0.0655509 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: right;">2016</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right; color: white !important; background-color: rgba(187, 187, 187, 255) !important;">NA</td>
+<td style="text-align: right;">-0.0239534</td>
+<td style="text-align: right;">0.0389170</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2017</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right; color: white !important; background-color: rgba(68, 1, 84, 255) !important;">-0.0413437</td>
+<td style="text-align: right;">-0.0488835</td>
+<td style="text-align: right;">0.0304953</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2018</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right; color: white !important; background-color: rgba(52, 96, 141, 255) !important;">0.0243449</td>
+<td style="text-align: right;">-0.0307675</td>
+<td style="text-align: right;">0.0164822</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2019</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right; color: white !important; background-color: rgba(31, 150, 139, 255) !important;">0.0725449</td>
+<td style="text-align: right;">-0.0126515</td>
+<td style="text-align: right;">0.0024690</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2022</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right; color: white !important; background-color: rgba(72, 24, 106, 255) !important;">-0.0277620</td>
+<td style="text-align: right;">-0.1403430</td>
+<td style="text-align: right;">-0.1274078</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right; color: white !important; background-color: rgba(253, 231, 37, 255) !important;">0.1748283</td>
+<td style="text-align: right;">-0.0563814</td>
+<td style="text-align: right;">-0.0655509</td>
+</tr>
 </tbody>
 </table>
+
 
 </div>
 </div>
@@ -676,9 +655,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -743,6 +736,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

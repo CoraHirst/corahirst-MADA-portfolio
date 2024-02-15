@@ -18,7 +18,7 @@ library(dplyr)
 #install.packages("ggplot2")
 library(ggplot2)
 
-
+#install.packages("kableExtra")
 
 ```
 
@@ -141,7 +141,7 @@ ggsave(filename = figure_file, plot=plot1)
 knitr::include_graphics(here("figures", "simple_lineplot.png"))
 ```
 
-I am going to use CoPilot to turn @fig-simple-lineplot into a close rendition of @fig-New-York-Times-fig.
+I am going to use CoPilot to turn @fig-simple-lineplot into a close rendition of @fig-New-York-fig.
 
 # Using GitHub CoPilot to learn how to generate more visually effective plots
 
@@ -151,7 +151,7 @@ CoPilot functions almost identically to an RStudio terminal, with the added bene
 
 I am posting a link to the CoPilot main page [here](https://github.com/features/copilot?ef_id=_k_Cj0KCQiA5rGuBhCnARIsAN11vgR09l_mZYGoUS271L8shDAAcjYYOFUVCpzWeonp5osUCQ0HJ87et0saAjDDEALw_wcB_k_&OCID=AIDcmmc3fhtaow_SEM__k_Cj0KCQiA5rGuBhCnARIsAN11vgR09l_mZYGoUS271L8shDAAcjYYOFUVCpzWeonp5osUCQ0HJ87et0saAjDDEALw_wcB_k_&gad_source=1&gclid=Cj0KCQiA5rGuBhCnARIsAN11vgR09l_mZYGoUS271L8shDAAcjYYOFUVCpzWeonp5osUCQ0HJ87et0saAjDDEALw_wcB).
 
-@fig-copilot-example.png shows an example of the copilot interface. Here, I didn't know how to generate the yellow rectangle in the New York Times figure - so, I asked!
+@fig-copilot-example shows an example of the copilot interface. Here, I didn't know how to generate the yellow rectangle in the New York Times figure - so, I asked!
 
 ```{r load-copilot-example.png}
 #| label: fig-copilot-example
@@ -173,9 +173,8 @@ plot = timeseries_weakley_county %>%
            ymin = -Inf, ymax = Inf, 
            fill = "goldenrod", alpha = 0.5) + #this is where I am using github copilot!
   theme_classic() +
-  theme(plot.background = element_rect(color = "white", fill = "white"),
-    panel.grid.major.y = element_line(colour = "grey", size = 0.5),
-        axis.ticks.y = element_blank(),
+  theme(panel.grid.major.y = element_line(colour = "grey", size = 0.5),
+  axis.ticks.y = element_blank(),
         axis.line = element_blank()) + #and here
   geom_point(aes(x = Year, y = dis_score), 
              col = "goldenrod") + 
@@ -192,12 +191,16 @@ plot = timeseries_weakley_county %>%
             lwd = 1, 
             col = "darkgrey") +
   geom_hline(yintercept = 0) +
-  scale_y_continuous(limits = c(-0.25, 0.25), 
-                     breaks = NULL) + #and here
+  scale_y_continuous(limits = c(-0.25, 0.25),
+                     labels = NULL) + #and here, latest update!
   scale_x_continuous(breaks = seq(min(timeseries_weakley_county$Year), max(timeseries_weakley_county$Year), by = 1), 
                      labels = paste0("'", seq(min(timeseries_weakley_county$Year)-2000, max(timeseries_weakley_county$Year)-2000, by = 1)), 
                      expand = c(0.25, 0)) +
-  annotate("text", x = 2021, y = 0.5, label = "COVID")+
+  annotate("text", x = c(2016, 2016), y = c(-0.19, 0.21), 
+           label = c("0.2 yrs. behind", "0.2 yrs. ahead"),
+           vjust = c(0.1, 0.1)) +
+  annotate("text", x = 2021, y = 0.25, 
+           label = "COVID")+
   annotate("text", x = rep(2023, 3), 
            y = as.vector(t(timeseries_weakley_county %>% 
                              filter(Subgroup == "all", Year == 2023) %>% 
@@ -210,7 +213,6 @@ plot = timeseries_weakley_county %>%
            fontface = c(2,1,1)) + #and here!
   labs(x = "", y = "")
 
-
 figure_file = here("figures","regenereated.png")
 ggsave(filename = figure_file, plot=plot) 
 ```
@@ -221,6 +223,9 @@ ggsave(filename = figure_file, plot=plot)
 #| echo: FALSE
 knitr::include_graphics(here("figures", "regenereated.png"))
 ```
+
+
+Curiously, I've noticed that the data I'm finding (in either the 'gys' or 'ys' version of the dataset) does not match what was reported. I'm curious which subgorup was being explored (the captions says "poor", but the data for `ecd` (economically challenged) subgroup REALLY doesn't match the plot). It would be nice to see what manipulations were done to produce the orginial figure!
 
 # Generating a nice table with KableExtra
 
