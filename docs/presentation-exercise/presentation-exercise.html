@@ -122,6 +122,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+<script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -384,42 +387,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">ymin =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">ymax =</span> <span class="cn">Inf</span>, </span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">"goldenrod"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="co">#this is where I am using github copilot!</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.5</span>),</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> <span class="co">#and here</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> dis_score), </span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"goldenrod"</span>) <span class="sc">+</span> </span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> dis_score), </span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="dv">1</span>, </span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="st">"goldenrod"</span>) <span class="sc">+</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> state_score), </span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span> </span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> state_score), </span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> US_score), </span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> US_score), </span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="dv">1</span>, </span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.25</span>, <span class="fl">0.25</span>), </span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span> <span class="co">#and here</span></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fu">min</span>(timeseries_weakley_county<span class="sc">$</span>Year), <span class="fu">max</span>(timeseries_weakley_county<span class="sc">$</span>Year), <span class="at">by =</span> <span class="dv">1</span>), </span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="st">"'"</span>, <span class="fu">seq</span>(<span class="fu">min</span>(timeseries_weakley_county<span class="sc">$</span>Year)<span class="sc">-</span><span class="dv">2000</span>, <span class="fu">max</span>(timeseries_weakley_county<span class="sc">$</span>Year)<span class="sc">-</span><span class="dv">2000</span>, <span class="at">by =</span> <span class="dv">1</span>)), </span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">rep</span>(<span class="dv">2023</span>, <span class="dv">3</span>), </span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fu">as.vector</span>(<span class="fu">t</span>(timeseries_weakley_county <span class="sc">%&gt;%</span> </span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">filter</span>(Subgroup <span class="sc">==</span> <span class="st">"all"</span>, Year <span class="sc">==</span> <span class="dv">2023</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">select</span>(dis_score,state_score,US_score))),</span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Weakley"</span>, <span class="st">"Tennessee </span><span class="sc">\n</span><span class="st"> avg."</span>, <span class="st">"US </span><span class="sc">\n</span><span class="st">avg."</span>), </span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>,<span class="sc">-</span><span class="fl">0.05</span>,<span class="sc">-</span><span class="fl">0.2</span>), </span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>           <span class="at">vjust =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>,<span class="sc">-</span><span class="fl">0.25</span>, <span class="dv">1</span>), </span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="dv">4</span>, </span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>           <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"goldenrod"</span>, <span class="st">"black"</span>, <span class="st">"darkgrey"</span>), </span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>           <span class="at">fontface =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>)) <span class="co">#and here!</span></span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"figures"</span>,<span class="st">"regenereated.png"</span>)</span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">fill =</span> <span class="st">"white"</span>),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.5</span>),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> <span class="co">#and here</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> dis_score), </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"goldenrod"</span>) <span class="sc">+</span> </span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> dis_score), </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="dv">1</span>, </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="st">"goldenrod"</span>) <span class="sc">+</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> state_score), </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span> </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> state_score), </span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> US_score), </span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> US_score), </span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="dv">1</span>, </span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.25</span>, <span class="fl">0.25</span>), </span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span> <span class="co">#and here</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fu">min</span>(timeseries_weakley_county<span class="sc">$</span>Year), <span class="fu">max</span>(timeseries_weakley_county<span class="sc">$</span>Year), <span class="at">by =</span> <span class="dv">1</span>), </span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="st">"'"</span>, <span class="fu">seq</span>(<span class="fu">min</span>(timeseries_weakley_county<span class="sc">$</span>Year)<span class="sc">-</span><span class="dv">2000</span>, <span class="fu">max</span>(timeseries_weakley_county<span class="sc">$</span>Year)<span class="sc">-</span><span class="dv">2000</span>, <span class="at">by =</span> <span class="dv">1</span>)), </span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">2021</span>, <span class="at">y =</span> <span class="fl">0.5</span>, <span class="at">label =</span> <span class="st">"COVID"</span>)<span class="sc">+</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">rep</span>(<span class="dv">2023</span>, <span class="dv">3</span>), </span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fu">as.vector</span>(<span class="fu">t</span>(timeseries_weakley_county <span class="sc">%&gt;%</span> </span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">filter</span>(Subgroup <span class="sc">==</span> <span class="st">"all"</span>, Year <span class="sc">==</span> <span class="dv">2023</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">select</span>(dis_score,state_score,US_score))),</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Weakley"</span>, <span class="st">"Tennessee </span><span class="sc">\n</span><span class="st"> avg."</span>, <span class="st">"US </span><span class="sc">\n</span><span class="st">avg."</span>), </span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>,<span class="sc">-</span><span class="fl">0.05</span>,<span class="sc">-</span><span class="fl">0.2</span>), </span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>           <span class="at">vjust =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>,<span class="sc">-</span><span class="fl">0.25</span>, <span class="dv">1</span>), </span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="dv">4</span>, </span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>           <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"goldenrod"</span>, <span class="st">"black"</span>, <span class="st">"darkgrey"</span>), </span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>           <span class="at">fontface =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>)) <span class="sc">+</span> <span class="co">#and here!</span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">""</span>)</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"figures"</span>,<span class="st">"regenereated.png"</span>)</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -429,6 +436,212 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p></p><figcaption class="figure-caption">Figure&nbsp;4: Regenerated New York Times article figure using CoPilot</figcaption><p></p>
 </figure>
 </div>
+</div>
+</div>
+</section>
+<section id="generating-a-nice-table-with-kableextra" class="level1">
+<h1>Generating a nice table with KableExtra</h1>
+<p>I also asked CoPilot what package it suggests for generating a nice table in R, and it suggested “kableExtra”. If you’re familiar with R, you know that “kable” is a wonderful way to explicitly design and render HTML tables when knitting a markdown file. Here, I try to takle <code>kableExtra</code> for a test drive.</p>
+<p>I would like to simply view the scores I plot in a table. This is the output generated by simply using the “kbl” wrapper function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("kableExtra")</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>timeseries_weakley_county <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Subgroup <span class="sc">==</span> <span class="st">"all"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> Year </th>
+   <th style="text-align:left;"> Subgroup </th>
+   <th style="text-align:right;"> dis_score </th>
+   <th style="text-align:right;"> state_score </th>
+   <th style="text-align:right;"> US_score </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 2016 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> -0.0239534 </td>
+   <td style="text-align:right;"> 0.0389170 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2017 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;"> -0.0413437 </td>
+   <td style="text-align:right;"> -0.0488835 </td>
+   <td style="text-align:right;"> 0.0304953 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2018 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;"> 0.0243449 </td>
+   <td style="text-align:right;"> -0.0307675 </td>
+   <td style="text-align:right;"> 0.0164822 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2019 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;"> 0.0725449 </td>
+   <td style="text-align:right;"> -0.0126515 </td>
+   <td style="text-align:right;"> 0.0024690 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2022 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;"> -0.0277620 </td>
+   <td style="text-align:right;"> -0.1403430 </td>
+   <td style="text-align:right;"> -0.1274078 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2023 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;"> 0.1748283 </td>
+   <td style="text-align:right;"> -0.0563814 </td>
+   <td style="text-align:right;"> -0.0655509 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>Of course, I’d like to try something a little nicer! The <code>kable_paper()</code> command allows some interactive aspects to tables, like the “hover” argument, which highlights rows when the viewer moves their cursor over! This was suggested by copilot when I simply prompted: “how do I make an R generated html table cooler?”</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>timeseries_weakley_county <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Subgroup <span class="sc">==</span> <span class="st">"all"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_paper</span>(<span class="st">"hover"</span>, <span class="at">full_width =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> Year </th>
+   <th style="text-align:left;"> Subgroup </th>
+   <th style="text-align:right;"> dis_score </th>
+   <th style="text-align:right;"> state_score </th>
+   <th style="text-align:right;"> US_score </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 2016 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> -0.0239534 </td>
+   <td style="text-align:right;"> 0.0389170 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2017 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;"> -0.0413437 </td>
+   <td style="text-align:right;"> -0.0488835 </td>
+   <td style="text-align:right;"> 0.0304953 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2018 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;"> 0.0243449 </td>
+   <td style="text-align:right;"> -0.0307675 </td>
+   <td style="text-align:right;"> 0.0164822 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2019 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;"> 0.0725449 </td>
+   <td style="text-align:right;"> -0.0126515 </td>
+   <td style="text-align:right;"> 0.0024690 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2022 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;"> -0.0277620 </td>
+   <td style="text-align:right;"> -0.1403430 </td>
+   <td style="text-align:right;"> -0.1274078 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2023 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;"> 0.1748283 </td>
+   <td style="text-align:right;"> -0.0563814 </td>
+   <td style="text-align:right;"> -0.0655509 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>and here, I’ve colored the column we are most interested in - the Weakley County scores - by value!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>timeseries_weakley_county <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Subgroup <span class="sc">==</span> <span class="st">"all"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_paper</span>(<span class="st">"hover"</span>, <span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="fu">grep</span>(<span class="st">"dis_score"</span>, <span class="fu">colnames</span>(timeseries_weakley_county)), <span class="at">color =</span> <span class="st">"white"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">background =</span> <span class="fu">spec_color</span>(timeseries_weakley_county<span class="sc">$</span>dis_score[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class=" lightable-paper lightable-hover" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> Year </th>
+   <th style="text-align:left;"> Subgroup </th>
+   <th style="text-align:right;"> dis_score </th>
+   <th style="text-align:right;"> state_score </th>
+   <th style="text-align:right;"> US_score </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 2016 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;color: white !important;background-color: rgba(187, 187, 187, 255) !important;"> NA </td>
+   <td style="text-align:right;"> -0.0239534 </td>
+   <td style="text-align:right;"> 0.0389170 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2017 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;color: white !important;background-color: rgba(68, 1, 84, 255) !important;"> -0.0413437 </td>
+   <td style="text-align:right;"> -0.0488835 </td>
+   <td style="text-align:right;"> 0.0304953 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2018 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;color: white !important;background-color: rgba(52, 96, 141, 255) !important;"> 0.0243449 </td>
+   <td style="text-align:right;"> -0.0307675 </td>
+   <td style="text-align:right;"> 0.0164822 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2019 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;color: white !important;background-color: rgba(31, 150, 139, 255) !important;"> 0.0725449 </td>
+   <td style="text-align:right;"> -0.0126515 </td>
+   <td style="text-align:right;"> 0.0024690 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2022 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;color: white !important;background-color: rgba(72, 24, 106, 255) !important;"> -0.0277620 </td>
+   <td style="text-align:right;"> -0.1403430 </td>
+   <td style="text-align:right;"> -0.1274078 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2023 </td>
+   <td style="text-align:left;"> all </td>
+   <td style="text-align:right;color: white !important;background-color: rgba(253, 231, 37, 255) !important;"> 0.1748283 </td>
+   <td style="text-align:right;"> -0.0563814 </td>
+   <td style="text-align:right;"> -0.0655509 </td>
+  </tr>
+</tbody>
+</table>
+
 </div>
 </div>
 
