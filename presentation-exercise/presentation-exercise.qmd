@@ -68,7 +68,7 @@ scores_state2023 = read.csv(here("data", "seda2023_state_ys.csv")) #test score d
 scores_admindis2023 = read.csv(here("data", "seda2023_admindist_ys.csv")) #test score data by county 
 ```
 
-## Subsetting and generating relavent information
+## Subsetting and generating relevant information
 
 The following codechunk processes the SEDA data to obtain three time series of the average math test scores across all subgroups for 1) Weakley County, 2) Tennessee, and 3) the US.
 
@@ -228,7 +228,7 @@ knitr::include_graphics(here("figures", "regenerated.png"))
 
 Curiously, I've noticed that the data I'm finding (in either the 'gys' or 'ys' version of the dataset) does not match what was reported. I'm curious which subgorup was being explored (the captions says "poor", but the data for `ecd` (economically challenged) subgroup REALLY doesn't match the plot). It would be nice to see what manipulations were done to produce the orginial figure!
 
-# Generating a nice table with KableExtra
+# Generating a nice table with kableExtra
 
 I also asked CoPilot what package it suggests for generating a nice table in R, and it suggested "kableExtra". If you're familiar with R, you know that "kable" is a wonderful way to explicitly design and render HTML tables when knitting a markdown file. Here, I try to takle `kableExtra` for a test drive. 
 
