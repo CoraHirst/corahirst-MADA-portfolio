@@ -1,0 +1,49 @@
+---
+title: "Fitting Exercise Week 8"
+author: "Cora Hirst"
+execute: 
+  warning: false
+  message: false
+---
+
+```{r setup}
+#install.packages("tidyverse")
+library(tidyverse)
+
+#install.packages("ggplot2")
+library(ggplot2)
+
+#install.packages("here")
+library(here)
+
+```
+
+## Task 1: load the data and visualize
+
+The code chunk below loads the `Mavoglurant_A2121_nmpk.csv` dataset and provides the structure and summary of its variables: 
+
+```{r load-data}
+#read in csv file
+mavoglurant_data = read.csv(here("fitting-exercise", "Mavoglurant_A2121_nmpk.csv"))
+
+#take a look at the structure
+str(mavoglurant_data)
+
+#summary 
+summary(mavoglurant_data)
+```
+
+There are 17 variables and 2678 observations; some variables, such as `AGE`, `SEX`, `RACE`, `HT`, and `WT`, are descriptors of each individual `ID`; that is, the values of these variables will be the same for every observation with the same `ID` value.
+
+There are multiple observations per `ID` level, each with different values for variables like `DV`, `LNDV`, and `TIME`; this suggests that the data is comprised of multiple time-series, with observations taken from the same individuals at different points of time. 
+
+These time series are visualized in @fig-time-series, with `DV` as the outcome.
+
+```{r generate-fig-time-series}
+
+#generate time series figure
+
+plot = ggplot() + geom_point(data = mavoglurant_data, aes(x = TIME, y = DV, group = ID, col = factor(DOSE))) + geom_line(data = mavoglurant_data, aes(x = TIME, y = DV, group = ID, col = factor(DOSE))) +
+  scale_y_continuous(trans = "log")
+
+```

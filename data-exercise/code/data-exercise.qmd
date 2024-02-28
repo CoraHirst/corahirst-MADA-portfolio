@@ -1,7 +1,6 @@
 ---
 title: "Data Exercise Week 4"
 author: "Cora Hirst"
-editor: visual
 execute: 
   warning: false
   message: false
@@ -360,7 +359,7 @@ knitr::kable(resulttable)
 This model also provides a significant p-value. But how different are the p-values for these three models: disease severity \~ age, disease severity \~ time post vaccination, and disease severity \~ age + time post vaccination + time post infection?
 
 | age       | time_post_vaccination       | age + time_post_infection + time_post_vaccination |     |
-|-----------|:----------------------------|--------------------------------------------------:|:---:|
+|-------------|:---------------|------------------------------:|:-----------:|
 | `r p.age` | `r p.time_post_vaccination` |                                         `r p.all` |     |
 
 : comparing p-values for different linear predictors of disease severity
@@ -418,7 +417,7 @@ knitr::kable(resulttable)
 Tables @tbl-lm-diff-between and @tbl-lm-diff-between-age reveal that these models are also significant predictive models. Lets compare these fits with the best fit multi-variable model:
 
 | age + time_post_infection + time_post_vaccination | diff_between       |     diff_between + age |     |
-|---------------------------------------------------|:-------------------|-----------------------:|:---:|
+|-------------------------------|:-------------|-------------:|:------------:|
 | `r p.all`                                         | `r p.diff_between` | `r p.diff_between_age` |     |
 
 : comparing p-values for different linear predictors of disease severity
