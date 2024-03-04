@@ -37,13 +37,82 @@ There are 17 variables and 2678 observations; some variables, such as `AGE`, `SE
 
 There are multiple observations per `ID` level, each with different values for variables like `DV`, `LNDV`, and `TIME`; this suggests that the data is comprised of multiple time-series, with observations taken from the same individuals at different points of time. 
 
-These time series are visualized in @fig-time-series, with `DV` as the outcome.
+Similarly, it appears that participants recieved one of three different dosages of Mavoglurant, and the `DV` aover time after administration of each dose is given. These time series are visualized in @fig-time-series, with `DV` as the outcome and faceted by `DOSE`.
 
 ```{r generate-fig-time-series}
-
 #generate time series figure
-
-plot = ggplot() + geom_point(data = mavoglurant_data, aes(x = TIME, y = DV, group = ID, col = factor(DOSE))) + geom_line(data = mavoglurant_data, aes(x = TIME, y = DV, group = ID, col = factor(DOSE))) +
+plot = ggplot() + geom_point(data = mavoglurant_data, aes(x = TIME, y = DV, group = ID, col = factor(DOSE))) + geom_line(data = mavoglurant_data, aes(x = TIME, y = DV, group = ID, col = factor(DOSE))) + facet_wrap(~ DOSE) +
   scale_y_continuous(trans = "log")
+plot
+
+# Save Figure
+figure_file = here("fitting-exercise", "figures", "time_series.png")
+ggsave(filename = figure_file, plot=plot) 
+```
+
+```{r load-fig-time-series}
+#| label: fig-time-series
+#| fig-cap: "Initial visualization of DV time series per patient after administration of varying dosages of Mavoglurant."
+#| echo: FALSE
+knitr::include_graphics(here("fitting-exercise","figures","time_series.png"))
+```
+
+Clearly, there is quite a bit of heterogeneity in these time series, through each tends to trend down more-or-less exponentially (though it seems the rate of decay is decreasing with time.) 
+As indicated [here](https://andreashandel.github.io/MADAcourse/content/model-fitting/assessment-model-fitting.html), it appears that some indiciduals received the drug more than once, indicated by having both entries with `OCC` = 1 and `OCC` = 2. We will only be considering one dataset for each individual, and we will thus be keeping only 1 adminsitration, that is, `OCC` = 1. 
+
+
+## Task 2: Filtering for observations with `OCC` = 1 only 
+
+The following code chunk removes all observations where `OCC` = 2. In all fairness, I am not removing `OCC` = 2 observations overtly. Instead, I am ensuring that I only keep `OCC` = 1 observations. This way, if we were to update the dataset with more observations from participants who received the drug a third or, even, a fourth time, we would only be analyzing one standard dataset across all participants. 
+
+```{r remove-occ-2}
+#filter dataframe for observations after first administration of mavoglurant only
+mavoglurant_data = mavoglurant_data %>%
+  dplyr::filter(OCC = 1) # keep OCC = 1 observations
+
+#note that I am trying to get into the habit of referencing a package each time I use a function derived from it, i.e dplyr::filter(). It's a challenge to remember to do so, but it will be worth it!
+```
+
+## Task 3: Removing $T_0$ observations and summing total DV for each participant
+
+We would like to compute the total amount of drug (delivered?) for each participant by summing the `DV` values for each time series.
+
+`DV` is a measurment of drug concentration (presumably, drug in system, or drug delivered?). Because we are not going to use some sophisticated way of integrating to find the total drug amount (which makes me think this is total amount administered, but could also mean total amount in the blood over time), and instead we are going to sum DV over time, I'd like to get a sense of how much the length of the time series vary. If they vary dramatically, we should consider this when we draw conclusions based on total integrated `DV`.
+
+```{r time-series-length}
+#list to store time series lengths by dose
+series_lengths = list()
+for(i in 1:length(levels(factor(mavoglurant_data$DOSE)))){
+  
+  lengths = mavoglurant_data %>%
+    filter(DOSE == levels(factor(mavoglurant_data$DOSE))[i]) %>%
+    group_by(ID) %>%
+    count() %>%
+    pull(n)
+
+  series_lengths[[i]] = lengths
+}
+
+df = data.frame(lengths = c(series_lengths[[1]], series_lengths[[2]], series_lengths[[3]]),
+                dose = c(rep("25", length(series_lengths[[1]])), rep("37.5", length(series_lengths[[2]])), rep("50", length(series_lengths[[3]]))))
+
+plot = ggplot() + geom_boxplot(data = df, aes(x = dose, y = lengths, fill = factor(dose))) #filling in boxplots looks cooler than outlining htem, in my opinion!
+
+# Save Figure
+figure_file = here("fitting-exercise", "figures", "time_series_lengthsbydose.png")
+ggsave(filename = figure_file, plot=plot) 
+
 
 ```
+
+```{r load-fig-time-series-lengthsbydose}
+#| label: fig-time-series-lengthsbydose
+#| fig-cap: "Boxplot of lengths of time series of participants by dose."
+#| echo: FALSE
+knitr::include_graphics(here("fitting-exercise","figures","time_series_lengthsbydose.png"))
+```
+
+From @fig-time-series-lengthsbydose, it appears that time series collected for participants given a dose of 37.5 tend to be longer than the time series collected for participants given the other two dosages. However, the mean difference is 3 time points; if these time points occur *later* in the time series, when `DV` is significantly lower than the initial `DV` (@fig-time-series), the difference may not be too extreme; however, if these were to occur earlier in the time series compared to the other two, when concentrations are high, then we've a reason to worry. This applies to the distribution of points collected at different times after original dose delivery, as well - if time series are long but all observations were made at a significantly longer time elapsed from time 0, then we'd have an artifically low sum. We are not going to consider this issue moving forward, but I think it is particularly important to have a more visual and intuitive understanding of the issue. 
+
+
+
