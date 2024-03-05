@@ -13,6 +13,9 @@ library(tidyverse)
 #install.packages("ggplot2")
 library(ggplot2)
 
+#install.packages("tidymodels")
+library(tidymodels)
+
 #install.packages("here")
 library(here)
 
@@ -155,6 +158,48 @@ mavoglurant_data_cleaned = mavoglurant_data_cleaned %>%
 
 ```
 
+## Model Fitting
+
+### `DOSE` as a predictor of `y`
+
+Here, we know that `y` is our `DV` value at `TIME` == 0. We also know that `DV` is related to drug concentration. So, we can already anticipate there will be some relationship between the initial `DOSE` and `y`. 
+
+The `DOSE` variable is *categorical* and the `y` variable is *continuous*, so I will try to visualize this anticipated relationship by plotting a boxplot of `y` for each `DOSE`. 
+
+```{r y-dose-scatterplot}
+# plot
+plot = ggplot() + geom_boxplot(data = mavoglurant_data_cleaned, aes(x = factor(DOSE), y = y, fill = factor(DOSE))) + geom_point(data = mavoglurant_data_cleaned, aes(x = factor(DOSE), y = y)) + labs(x = "Dose", y = "DV at Time 0")
+
+```
+
+Clearly, `y` appears to increase with `DOSE`. However, there is significant overlap between the points. While we can anticipate this trend is significant, we still have two goals for our model: 
+
+1) How significant is this relationship?
+2) Can we parameterize the dependence of `y` on `DOSE` with some GLM?
+
+We would like to find a *linear model* to describe the relationship between `y` and `DOSE`, and we are fine to begin our fitting by looking for ordinary least squares. 
+
+Thus, our model will take the form `y ~ DOSE`, will be linear with categorical predictor for continuous outcome (ANOVA), and we are fine with the `lm` method. 
+
+```{r linear-model-y-DOSE}
+# define recipe with recipes package
+rec_y_DOSE <- 
+  recipes::recipe(y ~ DOSE, 
+         data = mavoglurant_data_cleaned)
+
+# choose model with parsnip package
+y_DOSE_reg = 
+  parsnip::linear_reg() %>% #linear regression model
+  parsnip::set_engine("lm") %>% #with lm method
+  parsnip::set_mode("regression") #mode = regression
+
+# we can turn this into a workflow with workflows package
+y_DOSE_reg_WF = 
+  workflows::workflow() %>% #defining workflow object
+  workflows::add_model(y_DOSE_reg) %>% #choosing the model for the workflow
+  workflows::add_recipe(rec_y_DOSE) #adding the recipe - which variables for outcome, precitor, any interactions...
+  
+# fitting the model with fit()
 
 
-
+```
