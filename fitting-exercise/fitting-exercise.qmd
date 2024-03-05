@@ -68,16 +68,18 @@ The following code chunk removes all observations where `OCC` = 2. In all fairne
 ```{r remove-occ-2}
 #filter dataframe for observations after first administration of mavoglurant only
 mavoglurant_data = mavoglurant_data %>%
-  dplyr::filter(OCC = 1) # keep OCC = 1 observations
+  dplyr::filter(OCC == 1) # keep OCC = 1 observations
 
 #note that I am trying to get into the habit of referencing a package each time I use a function derived from it, i.e dplyr::filter(). It's a challenge to remember to do so, but it will be worth it!
 ```
 
-## Task 3: Removing $T_0$ observations and summing total DV for each participant
+## Task 3: Isolating $T_0$ observations and summing total DV for each participant
 
 We would like to compute the total amount of drug (delivered?) for each participant by summing the `DV` values for each time series.
 
 `DV` is a measurment of drug concentration (presumably, drug in system, or drug delivered?). Because we are not going to use some sophisticated way of integrating to find the total drug amount (which makes me think this is total amount administered, but could also mean total amount in the blood over time), and instead we are going to sum DV over time, I'd like to get a sense of how much the length of the time series vary. If they vary dramatically, we should consider this when we draw conclusions based on total integrated `DV`.
+
+The code chunk below generates a boxplot to compare the lengths of time series collected for participants, stratified by the dosage received. 
 
 ```{r time-series-length}
 #list to store time series lengths by dose
@@ -112,7 +114,47 @@ ggsave(filename = figure_file, plot=plot)
 knitr::include_graphics(here("fitting-exercise","figures","time_series_lengthsbydose.png"))
 ```
 
-From @fig-time-series-lengthsbydose, it appears that time series collected for participants given a dose of 37.5 tend to be longer than the time series collected for participants given the other two dosages. However, the mean difference is 3 time points; if these time points occur *later* in the time series, when `DV` is significantly lower than the initial `DV` (@fig-time-series), the difference may not be too extreme; however, if these were to occur earlier in the time series compared to the other two, when concentrations are high, then we've a reason to worry. This applies to the distribution of points collected at different times after original dose delivery, as well - if time series are long but all observations were made at a significantly longer time elapsed from time 0, then we'd have an artifically low sum. We are not going to consider this issue moving forward, but I think it is particularly important to have a more visual and intuitive understanding of the issue. 
+From @fig-time-series-lengthsbydose, it appears that time series collected for participants given a dose of 37.5 tend to be longer than the time series collected for participants given the other two dosages. However, the mean difference is 3 time points. If these time points occur *later* in the time series, when `DV` is significantly lower than the initial `DV` (@fig-time-series), the difference in the sum of `DV` values may not be too extreme; however, if these were to occur earlier in the time series compared to the other two dosages, when concentrations are high, then we've a reason to worry. This applies to the distribution of points collected at different times after original dose delivery, as well - if time series are long but all observations were made at a significantly longer time elapsed from time 0, then we'd have an artificially low sum. We are not going to address this issue moving forward (i.e by fitting to some function and integrating the model function under the length of the series), but I think it is particularly important to have a more visual and intuitive understanding of the issue. 
+
+**Perhaps I'll revisit this after the model fitting portion of our exercise...**
+
+The code chunk below calculates the sum of `DV` values for each time series collected for each dosage and stores these sums in a data frame object named `sums_nonzero`; the "nonzero" nomer distinguishes the dataframe on the basis that all initial `TIME` == 0 measurements are disregarded and not included in the sum. 
+
+For completeness, we also create a data frame of all initial observations, named `t0_obs`.
+
+We join these together to generate a dataframe of size 120 x 18, which we will call `mavoglurant_data_cleaned`. In our `sums_nonzero` dataframe, we have one observation per ID, where a row lists the sum total `DV` across all time series points (excluding `TIME` == 0) for an ID. We also have one observation per ID in our `t0_obs` dataframe, which contains the initial `TIME` == 0 `DV` observation and other defining characteristics of this first observation for each participant `ID`. We can use `left_join()`, with `ID` as our primary key, to join these dataframes. 
+
+
+```{r t0-and-total-DV-df}
+# excluding observations with TIME == 0 and summing all DV per ID
+sums_nonzero = mavoglurant_data %>%
+  filter(TIME != 0) %>%
+  summarize(y = sum(DV), .by = ID)
+
+# including only TIME == 0
+t0_obs = mavoglurant_data %>%
+  filter(TIME == 0) 
+
+# join the dfs
+mavoglurant_data_cleaned = left_join(t0_obs, sums_nonzero, by = "ID")
+
+```
+
+## Task 4: Cleaning joined dataframe
+
+Lastly, we want to remove unnecessary variables from the joined dataframe `mavoglurant_data_cleaned` and convert categorical variables to type factor. 
+
+The code chunk below selects the `Y`, `DOSE`, `AGE`, `SEX`, `RACE`, `WT`, and `HT` variables, and treats `SEX` and `RACE` as factors. 
+
+```{r cleaned-df}
+#finish cleaning df 
+mavoglurant_data_cleaned = mavoglurant_data_cleaned %>%
+  select(y, DOSE, AGE, SEX, RACE, WT, HT) %>%
+  mutate(SEX = factor(SEX), RACE = factor(RACE))
+
+
+```
+
 
 
 
