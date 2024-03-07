@@ -152,13 +152,13 @@ The code chunk below selects the `Y`, `DOSE`, `AGE`, `SEX`, `RACE`, `WT`, and `H
 ```{r cleaned-df}
 #finish cleaning df 
 mavoglurant_data_cleaned = mavoglurant_data_cleaned %>%
-  select(y, DOSE, AGE, SEX, RACE, WT, HT) %>%
+  select(y, DOSE, RATE, AGE, SEX, RACE, WT, HT) %>%
   mutate(SEX = factor(SEX), RACE = factor(RACE))
 
 
 ```
 
-## Model Fitting
+## Model Fitting: continuous outcomes
 
 ### `DOSE` as a predictor of `y`
 
@@ -170,18 +170,21 @@ The `DOSE` variable is *categorical* and the `y` variable is *continuous*, so I 
 # plot
 plot = ggplot() + geom_boxplot(data = mavoglurant_data_cleaned, aes(x = factor(DOSE), y = y, fill = factor(DOSE))) + geom_point(data = mavoglurant_data_cleaned, aes(x = factor(DOSE), y = y)) + labs(x = "Dose", y = "DV at Time 0")
 
+plot
 ```
 
 Clearly, `y` appears to increase with `DOSE`. However, there is significant overlap between the points. While we can anticipate this trend is significant, we still have two goals for our model: 
 
-1) How significant is this relationship?
-2) Can we parameterize the dependence of `y` on `DOSE` with some GLM?
+1) Can we parameterize the dependence of `y` on `DOSE` with some GLM (we can use a linear model)?
+2) How significant is this relationship (we can use ANOVA on our linear model)?
 
 We would like to find a *linear model* to describe the relationship between `y` and `DOSE`, and we are fine to begin our fitting by looking for ordinary least squares. 
+Thus, our model will take the form `y ~ DOSE`, will be linear with categorical predictor for continuous outcome, and we are fine with the `lm` method. 
 
-Thus, our model will take the form `y ~ DOSE`, will be linear with categorical predictor for continuous outcome (ANOVA), and we are fine with the `lm` method. 
+We can test whether the mean `y` predicted by `DOSE` is significantly different by dosage using ANOVA. 
 
 ```{r linear-model-y-DOSE}
+### fitting a linear model 
 # define recipe with recipes package
 rec_y_DOSE <- 
   recipes::recipe(y ~ DOSE, 
@@ -191,15 +194,491 @@ rec_y_DOSE <-
 y_DOSE_reg = 
   parsnip::linear_reg() %>% #linear regression model
   parsnip::set_engine("lm") %>% #with lm method
-  parsnip::set_mode("regression") #mode = regression
+  parsnip::set_mode("regression") #mode = regression, mode outcome is numeric
 
 # we can turn this into a workflow with workflows package
 y_DOSE_reg_WF = 
   workflows::workflow() %>% #defining workflow object
   workflows::add_model(y_DOSE_reg) %>% #choosing the model for the workflow
-  workflows::add_recipe(rec_y_DOSE) #adding the recipe - which variables for outcome, precitor, any interactions...
+  workflows::add_recipe(rec_y_DOSE) #adding the recipe - which variables for outcome, predictor, any interactions...
   
 # fitting the model with fit()
+y_DOSE_reg_model = fit(y_DOSE_reg_WF, data = mavoglurant_data_cleaned) 
+table1 = y_DOSE_reg_model %>% tidy()
+
+
+### Testing if the mean ys are significantly different
+# ANOVA
+anova_y_DOSE_reg = y_DOSE_reg_model %>% extract_fit_engine() %>% anova() 
+table2 = anova_y_DOSE_reg %>% tidy()
+
+### saving table results 
+# save summary tables
+summarytable_file = here("fitting-exercise", "tables", "y_DOSE_reg.rds")
+saveRDS(table1, file = summarytable_file)
+
+summarytable_file = here("fitting-exercise", "tables", "anova_y_DOSE_reg.rds")
+saveRDS(table2, file = summarytable_file)
+
+```
+
+```{r load-table-y-dose-reg}
+#| label: tbl-y-dose-reg
+#| tbl-cap: "Linear regression model of y predicted by DOSE."
+#| echo: FALSE
+resulttable=readRDS(here("fitting-exercise","tables", "y_DOSE_reg.rds"))
+knitr::kable(resulttable)
+```
+
+The output of `tidymodel`'s `fit()` on our linear regression by `lm` model provides our estimated parameters ("estimate", @tbl-y-dose-reg), as well as the standard error ($\sigma / \sqrt{n}$). Before we examine the results of our ANOVA, however, we want to take a closer look at the fit of othe linear model we fed into the analysis. Below, we use the `yardstick` package to determine the root mean squared error and correlation coefficient of the linear regression between `y` and `DOSE`. 
+
+```{r yardstick-y-dose-reg}
+# calculate r^2 and RMSE from y_DOSE_reg model 
+## make predictions based on real DOSE observations 
+predictions_y_DOSE_reg = data.frame(predictor = mavoglurant_data_cleaned$DOSE,
+                                    .pred = predict(y_DOSE_reg_model, new_data = mavoglurant_data_cleaned %>% select(-y)), #use regression model to make y predictions from existing DOSE observations
+                                    observation = mavoglurant_data_cleaned$y) #bind to observed y observations
+
+## lets take a look 
+plot = ggplot() + geom_point(data = predictions_y_DOSE_reg, aes(x = predictor, y = observation, color = factor(predictor))) + 
+          geom_point(data = predictions_y_DOSE_reg, aes(x = predictor, y = .pred)) + 
+          geom_line(data = predictions_y_DOSE_reg, aes(x = predictor, y = .pred), linetype = "dashed") +
+          labs(x = "Dose", y = "DV sum", title = "Regression model prediction of DV sum by dose")
+        
+## now lets calculate our metrics
+metrics = yardstick::metric_set(rmse, rsq)
+table = metrics(predictions_y_DOSE_reg, truth = observation, estimate = .pred)
+
+## add rmse and rsq to plot 
+plot = plot + annotate("text", y = 5000, x = 32.5, label = paste0("RMSE = ", round(table[1,3], 0), "\n rsq = ", round(table[2,3], 3)))
+
+# saving outputs
+summarytable_file = here("fitting-exercise", "tables", "metrics_y_DOSE_reg.rds")
+saveRDS(table, file = summarytable_file)
+
+figure_file = here("fitting-exercise", "figures", "metrics_y_DOSE_reg.png")
+ggsave(filename = figure_file, plot=plot) 
+```
+
+```{r load-fig-metrics-y-DOSE-reg}
+#| label: fig-metrics-y-DOSE-reg
+#| fig-cap: "Scatterplot of total DV by Dose (colored) observed against estimated prediction (black)."
+#| echo: FALSE
+knitr::include_graphics(here("fitting-exercise","figures","metrics_y_DOSE_reg.png"))
+```
+
+```{r load-table-metrics-y-DOSE-reg}
+#| label: tbl-metrics-y-DOSE-reg
+#| tbl-cap: "RMSE and r-squared for model prediction of DV sum by dose."
+#| echo: FALSE
+resulttable=readRDS(here("fitting-exercise","tables", "metrics_y_DOSE_reg.rds"))
+knitr::kable(resulttable)
+```
+
+Clearly, we can see that the linear regression captured some linear relationship between dose and the sum total DV, `y`. There is clearly quite a bit of variance among the observed values around the estimate predicted by our linear model for each dose (colored vs black points, @fig-metrics-y-DOSE-reg), and similarly, our model fit displays quite a high RMSE (`r round(table[1,3], 0)`) and low $r^2$ (`r round(table[2,3], 3)`).
+
+The ANOVA does reveal that the differences in estimates from the regression model are significant, with a p-value of `r table2$p.value[1]`. Let's see if we can capture a better model by utilizing more variables as predictors. 
+
+```{r load-table-anova-y-dose-reg}
+#| label: tbl-anova-y-dose-reg
+#| tbl-cap: "Anova of regression estimated y by DOSE."
+#| echo: FALSE
+resulttable=readRDS(here("fitting-exercise","tables", "anova_y_DOSE_reg.rds"))
+knitr::kable(resulttable)
+```
+
+### `DOSE`, `RATE`, `AGE`, `SEX`, `RACE`, `HT`, and `WT` as predictors of `y`
+
+We've demonstrated that dose correlates positively with the sum total DV `y`; we've also demonstrated that there is quite a bit of heterogeneity around the estimate predicted by `DOSE` alone. Here, we would like to discern whether a model utilizing `DOSE`, `RATE`, AGE`, `SEX`, `RACE`, `HT`, and `WT` all as predictors of `y` will provide a better fitting model. This will ultimately raise the question of whether we are *overfitting* by introducing too many parameters, but let's not get ahead of ourselves!
+
+The questions addressed in this section are as follows:
+
+1) Can we parameterize the dependence of `y` on `DOSE`, `RATE`, `AGE`, `SEX`, `RACE`, `HT`, and `WT` with some GLM (we can use a linear model)?
+2) How do the RMSE and $r^2$ of this model compare to our previous `y ~ DOSE` regression? 
+
+
+```{r linear-model-y-all}
+### fitting a linear model 
+# define recipe with recipes package
+rec_y_all <- 
+  recipes::recipe(y ~ DOSE + RATE + AGE + SEX + RACE + WT + HT, 
+         data = mavoglurant_data_cleaned)
+
+# choose model with parsnip package
+y_all_reg = 
+  parsnip::linear_reg() %>% #linear regression model
+  parsnip::set_engine("lm") %>% #with lm method
+  parsnip::set_mode("regression") #mode = regression, mode outcome is numeric
+
+# we can turn this into a workflow with workflows package
+y_all_reg_WF = 
+  workflows::workflow() %>% #defining workflow object
+  workflows::add_model(y_all_reg) %>% #choosing the model for the workflow
+  workflows::add_recipe(rec_y_all) #adding the recipe - which variables for outcome, predictor, any interactions...
+  
+# fitting the model with fit()
+y_all_reg_model = fit(y_all_reg_WF, data = mavoglurant_data_cleaned) 
+table1 = y_all_reg_model %>% tidy()
+
+### saving table results 
+# save summary tables
+summarytable_file = here("fitting-exercise", "tables", "y_all_reg.rds")
+saveRDS(table1, file = summarytable_file)
 
 
 ```
+
+```{r load-table-y-all-reg}
+#| label: tbl-y-all-reg
+#| tbl-cap: "Linear regression model of sum total DV predicted by `DOSE`, `RATE`, `AGE`, `SEX`, `RACE`, `HT`, and `WT`."
+#| echo: FALSE
+resulttable=readRDS(here("fitting-exercise","tables", "y_all_reg.rds"))
+knitr::kable(resulttable)
+```
+
+Clearly, `DOSE`, `RATE`, and `WT` are significant predictors of the sum total DV (@tbl-y-all-reg). 
+
+However, when we observe our metrics: 
+
+```{r yardstick-y-all-reg}
+# calculate r^2 and RMSE from y_DOSE_reg model 
+## make predictions based on real DOSE observations 
+predictions_y_all_reg = data.frame(predictor_1= mavoglurant_data_cleaned$DOSE,
+                                   .pred = predict(y_all_reg_model, new_data = mavoglurant_data_cleaned %>% select(-y)), #use regression model to make y predictions from existing observations
+                                   observation = mavoglurant_data_cleaned$y) #bind to observed y observations
+                                    
+## lets take a look 
+plot = ggplot() + geom_point(data = predictions_y_all_reg, aes(x = observation, y = .pred, color = factor(predictor_1))) + 
+          geom_abline(linetype = "dashed") +
+          labs(x = "Observed", y = "Predicted", title = "DV sums observed and predicted by regression")
+        
+## now lets calculate our metrics
+metrics = yardstick::metric_set(rmse, rsq)
+table = metrics(predictions_y_all_reg, truth = observation, estimate = .pred)
+
+## add rmse and rsq to plot 
+plot = plot + annotate("text", y = 5000, x = 2000, label = paste0("RMSE = ", round(table[1,3], 0), "\n rsq = ", round(table[2,3], 3)))
+
+# saving outputs
+summarytable_file = here("fitting-exercise", "tables", "metrics_y_all_reg.rds")
+saveRDS(table, file = summarytable_file)
+
+figure_file = here("fitting-exercise", "figures", "metrics_y_all_reg.png")
+ggsave(filename = figure_file, plot=plot) 
+
+```
+
+```{r load-fig-metrics-y-all-reg}
+#| label: fig-metrics-y-all-reg
+#| fig-cap: "Scatterplot of total DV observed against estimated prediction, colored by dose. Diagonal dashed line shows 1:1 corelation "
+#| echo: FALSE
+knitr::include_graphics(here("fitting-exercise","figures","metrics_y_all_reg.png"))
+```
+
+```{r load-table-metrics-y-all-reg}
+#| label: tbl-metrics-y-all-reg
+#| tbl-cap: "RMSE and r-squared for model prediction of DV sum by all predictor variables."
+#| echo: FALSE
+resulttable=readRDS(here("fitting-exercise","tables", "metrics_y_all_reg.rds"))
+knitr::kable(resulttable)
+```
+
+@tbl-metrics-y-all-reg reveals that a model utilizing all variables as predictors of total DV sums does a slightly better job at recapitulating our observed `y` values, explaining 63% of the variance as opposed to the 52% explained by `DOSE` alone. However, if we were to penalize for the number of predictors and parameters, I'm not sure we'd agree that this model is the better-fitting! Once again, this depends on our goal - do we wish to reproduce our observations with the greatest accuracy? If we were to sample smaller subsets of our data and refit, would we still be able to reproduce all of our results with the same accuracy, and how much variance would we observe in the estimated parameters of each iteration?
+
+<!-- this might be something to try in the future! -->
+
+## Model fitting: categorical outcome
+
+Previously, we formulated two linear models to predict the continuous outcome of the sum total DV for each time series, which we called `y`, with either initial drug `DOSE` alone or all predictor variables as predictors. This led us to ask an interesting question: do we care the most about accuracy, precision, and/or biological meaning in our model?
+
+Here, we would like to ask a similar question: can we accurately predict the sex of an individual based upon the dosage of the drug they recieved? If we fit a model with all of their other characteristic variables, will we see a greater fit, and will this greater fit be meaningful enough that we would opt for the more parameterized model? 
+
+Here, `SEX` is a categorical variable we intend to predict; as such, we can use a logistic model. We will be using the default threshold of 0.5 as a cutoff to categorize our participants as either`SEX` == 1, or "success" (so it's probably women ;)), or `SEX` == 2, or failure. 
+
+### Predicting `SEX` by `DOSE`
+
+Here, we'd like to see how well we can fit a logistic model to `SEX` by the predictor `DOSE`; perhaps certain dosages are more frequently assigned to one sex than the other? `SEX` is a binary categorical variable, and `DOSE` is a categorical variable with more than two levels. We will thus use a logistic regression to classify observations into either `SEX` category, 0 or 1. 
+
+The logistic regression estimates 2 parameters to produce a steep sigmoidal probability of one category of a binary categorical variable and some continuous predictor ( or some probability of success based on categorical predictors). The two parameters produce a sigmoidal relationship by assuming the *odds* of success increase multiplicatively for some unit increase in the predictor (that is, the natural log of the odds function of success is linear). For myself and others, a wonderful resource explaining the inutition behind this can be found in [this online chapter](https://bradleyboehmke.github.io/HOML/logistic-regression.html). 
+
+If the predictor is continuous, we'd see something along the lines (ha, pun intended) of @fig-logistic-example: 
+
+```{r SEX-HT-logistic}
+### fitting a linear model 
+# define recipe with recipes package
+recipe <- 
+  recipes::recipe(SEX ~ HT, 
+         data = mavoglurant_data_cleaned)
+
+# choose model with parsnip package
+reg = 
+  parsnip::logistic_reg() %>% #linear regression model
+  parsnip::set_engine("glm") %>% #with glm method - which we cant use lm for a logistic model becuase OLS-like statstics don't make much sense here!
+  parsnip::set_mode("classification") #mode = classification, mode outcome is categorical
+
+# we can turn this into a workflow with workflows package
+reg_WF = 
+  workflows::workflow() %>% #defining workflow object
+  workflows::add_model(reg) %>% #choosing the model for the workflow
+  workflows::add_recipe(recipe) #adding the recipe - which variables for outcome, predictor, any interactions...
+  
+reg_model = fit(reg_WF, data = mavoglurant_data_cleaned) 
+table1 = reg_model %>% tidy()
+
+###plot 
+plot = ggplot() + geom_point(data = mavoglurant_data_cleaned, aes(x = HT, y = (as.numeric(SEX))-1)) + 
+  stat_function(fun = function(x) exp(table1$estimate[1] + table1$estimate[2]*x)/(1+exp(table1$estimate[1] + table1$estimate[2]*x))) +
+  labs(x = "HT", y = "probability of Sex 2", title = "Example Logistic Regression")
+
+###save fig
+figure_file = here("fitting-exercise", "figures", "logistic_example.png")
+ggsave(filename = figure_file, plot=plot) 
+
+```
+
+```{r load-fig-logistic-example}
+#| label: fig-logistic-example
+#| fig-cap: "Example of a logistic regression categorizing SEX by the continuous variable HT (height?)"
+#| echo: FALSE
+knitr::include_graphics(here("fitting-exercise","figures","logistic_example.png"))
+```
+
+Note that we can also perform a logistic regression utilizing a categorical predictor - and, here, we can treat `DOSE` as a categorical variable or a numeric variable. I will be treating it numerically, because increasing dosage can have biological significance which may be indicated by sexual dimorphism!
+
+Here, we are preforming a logistic regression to predict the probability of belonging to `SEX` category 2 based on the variable `DOSE`. 
+Our formula will be `SEX ~ DOSE`, we will use a `logistic_reg()` model with an `glm` "engine", and the mode of our model is `classification` as the output variable is categorical.
+
+```{r sex-dose-reg}
+### fitting a linear model 
+
+# define recipe with recipes package
+recipe <- 
+  recipes::recipe(SEX ~ DOSE, 
+         data = mavoglurant_data_cleaned)
+
+# choose model with parsnip package
+reg = 
+  parsnip::logistic_reg() %>% #linear regression model
+  parsnip::set_engine("glm") %>% #with glm method - which we cant use lm for a logistic model becuase OLS-like statstics don't make much sense here!
+  parsnip::set_mode("classification") #mode = classification, mode outcome is categorical
+
+# we can turn this into a workflow with workflows package
+reg_WF = 
+  workflows::workflow() %>% #defining workflow object
+  workflows::add_model(reg) %>% #choosing the model for the workflow
+  workflows::add_recipe(recipe) #adding the recipe - which variables for outcome, predictor, any interactions...
+  
+reg_model = fit(reg_WF, data = mavoglurant_data_cleaned) 
+table1 = reg_model %>% tidy()
+
+###plot 
+plot = ggplot() + geom_point(data = mavoglurant_data_cleaned, aes(x = DOSE, y = (as.numeric(SEX))-1, color = SEX), alpha = 0.25) + 
+  stat_function(fun = function(x) exp(table1$estimate[1] + table1$estimate[2]*x)/(1+exp(table1$estimate[1] + table1$estimate[2]*x))) +
+  labs(x = "DOSE", y = "probability of Sex 2", title = "Logistic Regression of Sex 2 Prob by Dose")
+
+### saving table results 
+# save summary tables
+summarytable_file = here("fitting-exercise", "tables", "SEX_DOSE_reg.rds")
+saveRDS(table1, file = summarytable_file)
+
+###save fig
+figure_file = here("fitting-exercise", "figures", "logistic_sex_dose.png")
+ggsave(filename = figure_file, plot=plot) 
+
+```
+
+
+```{r load-fig-logistic-sex-dose}
+#| label: fig-logistic-sex-dose
+#| fig-cap: "Logistic regression categorizing SEX by the variable DOSE. Opacity of point indicates number of observations for each sex at each DOSE. Black line indicates logistic regression curve."
+#| echo: FALSE
+knitr::include_graphics(here("fitting-exercise","figures","logistic_sex_dose.png"))
+```
+
+```{r load-table-logistic-sex-dose}
+#| label: tbl-logistic-sex-dose
+#| tbl-cap: "Logistic regression model to categorize SEX by DOSE, success: SEX == 2."
+#| echo: FALSE
+resulttable=readRDS(here("fitting-exercise","tables", "SEX_DOSE_reg.rds"))
+knitr::kable(resulttable)
+```
+
+Evidently, `DOSE` is a pretty poor predictor (say that five times fast) of `SEX` (see p.values for parameter estimates, @tbl-logistic-sex-dose). This is certainly not helped by the potential that `SEX` category 1 is over-represented in the dataset (see opacity of points, @fig-logistic-sex-dose). (Perhaps mavolglurant is a drug used more by one sex than the other?) 
+
+```{r metrics-sex-dose}
+# calculate r^2 and RMSE from y_DOSE_reg model 
+## make predictions based on real DOSE observations 
+predictions = data.frame(predictor = mavoglurant_data_cleaned$DOSE,
+                                    .pred = predict(reg_model, new_data = mavoglurant_data_cleaned %>% select(-SEX)), #use regression model to make SEX predictions from existing DOSE observations
+                                    observation = mavoglurant_data_cleaned$SEX) #bind to observed sex observations
+#plot barplot
+plot = predictions %>%
+  group_by(predictor) %>%
+  summarize(obs_succeses = sum(as.numeric(observation)), pred_successes = sum(as.numeric(.pred_class))) %>%
+  pivot_longer(cols = c("obs_succeses", "pred_successes"),
+               names_to = "data", 
+               values_to = "SEX2_Count") %>%
+  ggplot(aes(x = as.factor(predictor), y = SEX2_Count, fill = data)) + geom_bar(stat = "identity", position = position_dodge()) + labs(x = "DOSE", y = "Count of Sex 2 participants")
+
+
+## now lets calculate our metrics
+### accuracy
+acc = accuracy(predictions, truth = observation, estimate = .pred_class)
+
+### ROC AUC
+predictions = data.frame(predictor = mavoglurant_data_cleaned$DOSE,
+                                    predict(reg_model, new_data = mavoglurant_data_cleaned %>% select(-SEX), type = "prob"), #use regression model to make SEX predictions from existing DOSE observations, returns probabilities of sex categories (2 cols)
+                                    observation = mavoglurant_data_cleaned$SEX) #bind to observed sex observations
+
+rocauc = roc_auc(predictions, truth = observation, .pred_1) #roc with probabiliy of sex 2 thresholds
+plot2 = roc_curve(predictions, truth = observation, .pred_1) %>% #plot roc curve
+               autoplot() + annotate("text", x = 0.75, y = 0.25, label = paste0("AUC = ", round(rocauc$.estimate, 3)))
+
+## adjust barplot with accuracy metrics 
+plot = plot + annotate("text", x = "50", y = 60, label = paste0("accuracy = ", round(acc$.estimate, 3)))
+
+#save figures
+figure_file = here("fitting-exercise", "figures", "metrics_sex_DOSE_reg.png")
+ggsave(filename = figure_file, plot=plot) 
+
+figure_file = here("fitting-exercise", "figures", "roc_sex_DOSE_reg.png")
+ggsave(filename = figure_file, plot=plot2) 
+
+```
+
+```{r load-fig-metrics-sex-DOSE-reg}
+#| label: fig-metrics-sex-DOSE-reg
+#| fig-cap: "Barplot of observed Sex 2 counts (orange) against estimated prediction (blue)."
+#| echo: FALSE
+knitr::include_graphics(here("fitting-exercise","figures","metrics_sex_DOSE_reg.png"))
+```
+
+```{r load-fig-roc-sex-DOSE-reg}
+#| label: fig-roc-sex-DOSE-reg
+#| fig-cap: "ROC curve of sensitivity vs specificity in correctly categorizing observations by SEX from DOSE predictor, probability threshold = 0.5 ."
+#| echo: FALSE
+knitr::include_graphics(here("fitting-exercise","figures","roc_sex_DOSE_reg.png"))
+```
+
+<!-- get a good understanding of what this curve shows -->
+
+The accuracy is actually pretty high (@fig-metrics-sex-DOSE-reg) at 0.867, though our p-value really isn't. 
+
+### Predicting `SEX` by `DOSE`, `RATE`, `AGE`, `SEX`, `RACE`, `HT`, `WT`, and `y`.
+
+The code chunk below fits a logistic regression model to predict `SEX` by the predictors `DOSE`, `RATE`, `AGE`, `SEX`, `RACE`, `HT`, `WT`, and `y`.
+
+```{r sex-all-reg}
+### fitting a linear model 
+
+# define recipe with recipes package
+recipe <- 
+  recipes::recipe(SEX ~ DOSE + RATE + AGE + y + RACE + WT + HT, 
+         data = mavoglurant_data_cleaned)
+
+# choose model with parsnip package
+reg = 
+  parsnip::logistic_reg() %>% #linear regression model
+  parsnip::set_engine("glm") %>% #with glm method - which we cant use lm for a logistic model becuase OLS-like statstics don't make much sense here!
+  parsnip::set_mode("classification") #mode = classification, mode outcome is categorical
+
+# we can turn this into a workflow with workflows package
+reg_WF = 
+  workflows::workflow() %>% #defining workflow object
+  workflows::add_model(reg) %>% #choosing the model for the workflow
+  workflows::add_recipe(recipe) #adding the recipe - which variables for outcome, predictor, any interactions...
+  
+reg_model = fit(reg_WF, data = mavoglurant_data_cleaned) 
+table1 = reg_model %>% tidy()
+
+###plot 
+plot = ggplot() + geom_point(data = mavoglurant_data_cleaned, aes(x = HT, y = (as.numeric(SEX))-1, color = AGE, shape = RACE)) + 
+  stat_function(fun = function(x) exp(table1$estimate[1] + table1$estimate[10]*x)/(1+exp(table1$estimate[1] + table1$estimate[10]*x))) +
+  labs(x = "HT", y = "probability of Sex 2", title = "Logistic Regression, Probability of Sex 2 by all descriptors")
+
+### saving table results 
+# save summary tables
+summarytable_file = here("fitting-exercise", "tables", "SEX_all_reg.rds")
+saveRDS(table1, file = summarytable_file)
+
+###save fig
+figure_file = here("fitting-exercise", "figures", "logistic_sex_all.png")
+ggsave(filename = figure_file, plot=plot) 
+
+```
+
+
+```{r load-fig-logistic-sex-all}
+#| label: fig-logistic-sex-all
+#| fig-cap: "Logistic regression categorizing SEX by all other predictor variables in the `mavoglurant_data_cleaned` dataframe. Point color indicates age, while point shape indicates race category. The regression line for continuous predictor height is plotted."
+#| echo: FALSE
+knitr::include_graphics(here("fitting-exercise","figures","logistic_sex_all.png"))
+```
+
+```{r load-table-logistic-sex-all}
+#| label: tbl-logistic-sex-all
+#| tbl-cap: "Logistic regression model to categorize SEX by all predictor variables, success: SEX == 2."
+#| echo: FALSE
+resulttable=readRDS(here("fitting-exercise","tables", "SEX_all_reg.rds"))
+knitr::kable(resulttable)
+```
+
+The best predictors of of `SEX` appear to be `HT`, `Race`, `AGE`, and potentially `y` (@tbl-logistic-sex-all).`Dose`, `y`, `RACE`==32 or 88, `WT`, and `HT` are negatively correlated with `SEX==2`. Biologically, if we consider women to be shorter than men on average, then maybe my choice of `SEX` == 2 as the "success" variable under the assumption that `SEX` 2 is women was fortuitous ;). 
+
+```{r metrics-sex-all}
+# calculate r^2 and RMSE from y_DOSE_reg model 
+## make predictions based on real DOSE observations 
+predictions = data.frame(predictor = mavoglurant_data_cleaned$HT,
+                                    .pred = predict(reg_model, new_data = mavoglurant_data_cleaned %>% select(-SEX)), #use regression model to make SEX predictions from existing DOSE observations
+                                    observation = mavoglurant_data_cleaned$SEX) #bind to observed sex observations
+#plot barplot
+observed_successes = predictions %>% select(predictor, observation) %>% filter(observation==2) 
+predicted_successes = predictions %>% select(predictor, .pred_class) %>% filter(.pred_class==2)
+for_hist = data.frame(HT = c(observed_successes$predictor, predicted_successes$predictor),
+                      count = c(rep("observed", nrow(observed_successes)), rep("predicted", nrow(predicted_successes))))
+
+plot = for_hist %>%
+  ggplot() + geom_histogram(aes(x = HT, y = ..density.., color = count, fill = count), alpha = 0.25, position = "identity", bins = 20) + 
+  geom_density(aes(x = HT, y=..density.., color = count, fill = count), position = "identity", alpha = 0.5) +
+  labs(x = "HT", y = "density of total SEX == 2 observations", title = "Comparison of classifications of SEX by Logistic regression model against predictor HT")
+
+
+## now lets calculate our metrics
+### accuracy
+acc = accuracy(predictions, truth = observation, estimate = .pred_class)
+
+### ROC AUC
+predictions = data.frame(predictor = mavoglurant_data_cleaned$HT,
+                                    predict(reg_model, new_data = mavoglurant_data_cleaned %>% select(-SEX), type = "prob"), #use regression model to make SEX predictions from existing DOSE observations, returns probabilities of sex categories (2 cols)
+                                    observation = mavoglurant_data_cleaned$SEX) #bind to observed sex observations
+
+rocauc = roc_auc(predictions, truth = observation, .pred_1) #roc with probabiliy of sex 2 thresholds
+plot2 = roc_curve(predictions, truth = observation, .pred_1) %>% #plot roc curve
+               autoplot() + annotate("text", x = 0.75, y = 0.25, label = paste0("AUC = ", round(rocauc$.estimate, 3)))
+
+## adjust barplot with accuracy metrics 
+plot = plot + annotate("text", x = 1.7, y = 13, label = paste0("accuracy = ", round(acc$.estimate, 3)))
+
+#save figures
+figure_file = here("fitting-exercise", "figures", "metrics_sex_all_reg.png")
+ggsave(filename = figure_file, plot=plot) 
+
+figure_file = here("fitting-exercise", "figures", "roc_sex_all_reg.png")
+ggsave(filename = figure_file, plot=plot2) 
+
+```
+
+```{r load-fig-metrics-sex-all-reg}
+#| label: fig-metrics-sex-all-reg
+#| fig-cap: "Barplot of observed Sex 2 counts (orange) against estimated prediction (blue)."
+#| echo: FALSE
+knitr::include_graphics(here("fitting-exercise","figures","metrics_sex_all_reg.png"))
+```
+
+```{r load-fig-roc-sex-all-reg}
+#| label: fig-roc-sex-all-reg
+#| fig-cap: "ROC curve of sensitivity vs specificity in correctly categorizing observations by SEX from all predictors, probability threshold = 0.5 ."
+#| echo: FALSE
+knitr::include_graphics(here("fitting-exercise","figures","roc_sex_all_reg.png"))
+```
+Including more predictors improves the accuracy of the classification model to 94% (@fig-metrics-sex-all-reg), and the ROC-AUC performance to 0.98 (@fig-roc-sex-all-reg). This model is certainly better at classification than the previous but, once again, fails to support or predict any biological indicator of `SEX` by the predictors included in the study and may suffer from fitting with too many unnecessary parameters. We did discover, however, the significance of the contributions of different factors to the prediction of `SEX`, with `HT` being the most significant predictor (@tbl-logistic-sex-all). 
