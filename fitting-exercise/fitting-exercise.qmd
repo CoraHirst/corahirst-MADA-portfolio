@@ -930,7 +930,7 @@ ggsave(filename = figure_file, plot=plot)
 ```
 
 ```{r load-fig-metrics-null-model-training}
-#| label: fig-metrics-null-model
+#| label: fig-metrics-null-model-training
 #| fig-cap: "Scatterplot of sum total DV, y, predicted by null model of training dataset."
 #| echo: FALSE
 knitr::include_graphics(here("fitting-exercise","figures","metrics_null_model.png"))
@@ -1034,7 +1034,7 @@ table2 = null_model_metrics
 summarytable_file = here("fitting-exercise", "tables", "metrics_CV_models_training.rds")
 saveRDS(table1, file = summarytable_file)
 
-summarytable_file = here("fitting-exercise", "tables", "metrics_null_model.rds")
+summarytable_file = here("fitting-exercise", "tables", "metrics_null_model_CV.rds")
 saveRDS(table2, file = summarytable_file)
 
 ```
@@ -1047,11 +1047,11 @@ resulttable=readRDS(here("fitting-exercise","tables","metrics_CV_models_training
 knitr::kable(resulttable)
 ```
 
-```{r load-table-metrics-null-model-training}
-#| label: tbl-metrics-null-model
+```{r load-table-metrics-null-model-training-CV}
+#| label: tbl-metrics-null-model-training-CV
 #| tbl-cap: "RMSE for null model prediction of DV sum from model training."
 #| echo: FALSE
-resulttable=readRDS(here("fitting-exercise","tables", "metrics_null_model.rds"))
+resulttable=readRDS(here("fitting-exercise","tables", "metrics_null_model_CV.rds"))
 knitr::kable(resulttable)
 ```
 

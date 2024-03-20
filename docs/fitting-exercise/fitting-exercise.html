@@ -1540,7 +1540,7 @@ figure_file = here("fitting-exercise", "figures", "metrics_null_model.png")
 ggsave(filename = figure_file, plot=plot) </code></pre>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-metrics-null-model" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-metrics-null-model-training" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="figures/metrics_null_model.png" class="img-fluid figure-img" width="1844"></p>
 <figcaption class="figure-caption">Figure&nbsp;14: Scatterplot of sum total DV, y, predicted by null model of training dataset.</figcaption>
@@ -1571,7 +1571,7 @@ ggsave(filename = figure_file, plot=plot) </code></pre>
 </div>
 </div>
 </div>
-<p>Comparing the RMSE values reported in <a href="#tbl-metrics-y-DOSE-reg-training">Table&nbsp;9</a>, <a href="#tbl-metrics-y-multiple-reg-training">Table&nbsp;11</a>, and <a href="#tbl-metrics-null-model">Table&nbsp;14</a>, we can see that the model with the smallest mean roots squared error is the multiple regression model. However, we can also observe that the <span class="math inline">\(R^2\)</span> value is greater for the single regression model with <code>DOSE</code> as a predictor, which should be taken into consideration when choosing whether the model with a greater number of parameters is truly the “better” model, and not simply the model with the greatest (over?) fit.</p>
+<p>Comparing the RMSE values reported in <a href="#tbl-metrics-y-DOSE-reg-training">Table&nbsp;9</a>, <a href="#tbl-metrics-y-multiple-reg-training">Table&nbsp;11</a>, and <strong>?@tbl-metrics-null-model</strong>, we can see that the model with the smallest mean roots squared error is the multiple regression model. However, we can also observe that the <span class="math inline">\(R^2\)</span> value is greater for the single regression model with <code>DOSE</code> as a predictor, which should be taken into consideration when choosing whether the model with a greater number of parameters is truly the “better” model, and not simply the model with the greatest (over?) fit.</p>
 <p>Assessing the model performance in a more rigorous way - against unseen data - can improve our understanding of the precision with which the model captures the behavior of the outcome variable based on the predictors. One way to do so is cross-validation.</p>
 </section>
 <section id="cross--validation-of-three-possible-models" class="level3">
@@ -1652,7 +1652,7 @@ ggsave(filename = figure_file, plot=plot) </code></pre>
 <span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>summarytable_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"fitting-exercise"</span>, <span class="st">"tables"</span>, <span class="st">"metrics_CV_models_training.rds"</span>)</span>
 <span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(table1, <span class="at">file =</span> summarytable_file)</span>
 <span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>summarytable_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"fitting-exercise"</span>, <span class="st">"tables"</span>, <span class="st">"metrics_null_model.rds"</span>)</span>
+<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>summarytable_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"fitting-exercise"</span>, <span class="st">"tables"</span>, <span class="st">"metrics_null_model_CV.rds"</span>)</span>
 <span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(table2, <span class="at">file =</span> summarytable_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
@@ -1724,7 +1724,7 @@ ggsave(filename = figure_file, plot=plot) </code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="tbl-metrics-null-model" class="anchored">
+<div id="tbl-metrics-null-model-training-CV" class="anchored">
 <table class="table table-sm table-striped small">
 <caption>Table&nbsp;14: RMSE for null model prediction of DV sum from model training.</caption>
 <thead>
