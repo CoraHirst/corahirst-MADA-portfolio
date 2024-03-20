@@ -19,6 +19,8 @@ library(tidymodels)
 #install.packages("here")
 library(here)
 
+#install.packages("rsample")
+library(rsample)
 ```
 
 ## Task 1: load the data and visualize
@@ -147,7 +149,7 @@ mavoglurant_data_cleaned = left_join(t0_obs, sums_nonzero, by = "ID")
 
 Lastly, we want to remove unnecessary variables from the joined dataframe `mavoglurant_data_cleaned` and convert categorical variables to type factor. 
 
-The code chunk below selects the `Y`, `DOSE`, `AGE`, `SEX`, `RACE`, `WT`, and `HT` variables, and treats `SEX` and `RACE` as factors. 
+The code chunk below selects the `Y`, `DOSE`, `AGE`, `SEX`, `RACE`, `RATE`, `WT`, and `HT` variables, and treats `SEX` and `RACE` as factors. 
 
 ```{r cleaned-df}
 #finish cleaning df 
@@ -162,7 +164,7 @@ mavoglurant_data_cleaned = mavoglurant_data_cleaned %>%
 
 ### `DOSE` as a predictor of `y`
 
-Here, we know that `y` is our `DV` value at `TIME` == 0. We also know that `DV` is related to drug concentration. So, we can already anticipate there will be some relationship between the initial `DOSE` and `y`. 
+Here, we know that `y` is the sum of our `DV` values after `TIME==0` for a time series. We also know that `DV` is related to drug concentration. So, we can already anticipate there will be some relationship between the initial `DOSE` and `y`. 
 
 The `DOSE` variable is *categorical* and the `y` variable is *continuous*, so I will try to visualize this anticipated relationship by plotting a boxplot of `y` for each `DOSE`. 
 
@@ -682,3 +684,375 @@ knitr::include_graphics(here("fitting-exercise","figures","metrics_sex_all_reg.p
 knitr::include_graphics(here("fitting-exercise","figures","roc_sex_all_reg.png"))
 ```
 Including more predictors improves the accuracy of the classification model to 94% (@fig-metrics-sex-all-reg), and the ROC-AUC performance to 0.98 (@fig-roc-sex-all-reg). This model is certainly better at classification than the previous but, once again, fails to support or predict any biological indicator of `SEX` by the predictors included in the study and may suffer from fitting with too many unnecessary parameters. We did discover, however, the significance of the contributions of different factors to the prediction of `SEX`, with `HT` being the most significant predictor (@tbl-logistic-sex-all). 
+
+# Model Improvement Assignment
+
+The code chunk below defines the value of a seed, but does not yet set the seed. 
+
+```{r define-seed}
+rngseed = 1234 #define the number of our seed
+```
+
+As a last step in processing, we know that the `RACE` factor variable has some bizarre entries (7 or 88), and we are not particularly curious about asking questions regarding this variable now. So, we are going to remove it from the dataset in the code chunk below. I have also kept the `RATE` variable until this point, but will be removing it for this part of the assessment as well. 
+
+```{r remove-age}
+mavoglurant_data_cleaned = mavoglurant_data_cleaned %>%
+  select(-c(RATE,RACE)) #remove variables RATE and RACE from the cleaned dataset
+```
+
+Now, our dataset `mavoglurant_data_cleaned` consist of 120 observations of 6 variables: `y`, `DOSE`, `AGE`, `SEX`, `WT`, and `HT`.
+
+In this section, we will be splitting our data into two subsets: a *training* set and a *test* set. The training set will be used to fit our models, while the test set will be used to observe whether the fitted model precisely captures the behavior of the data - that is, how well does it perform when predicting the test data? With so few samples, we would ideally perform cross-validation and estimate model performance on unseen data (separate the dat into k staggered subsets, and run through k epochs of training the model on k-1 subsets and testing on the kth subset each epoch.) But, for the sake of ~learning~, we are not going to do that here. 
+
+We will be randomly splitting our data 75% into the `training` set and 25% into the `testing` set below using the package `rsample` below:
+
+```{r splitting-cleaned-dataset}
+set.seed(rngseed)
+#split the dataset randomly into two sets
+banana_split = initial_split(mavoglurant_data_cleaned, prop = 3/4) #prop refers to the proportion in the training set - 75%
+
+# create dataframes for the two sets
+training = training(banana_split)
+testing = testing(banana_split)
+```
+
+## Model Fit Assessment
+
+Here, we fit two linear models to the continuous outcome, `y` (as a reminder, `y` is the sum of `DV` values for a time series). The first utilises `DOSE` as a predictor, which we anticipate to have some correlation with the total sum of drug concentration measurments over time; the second model utilizes all predictors. Root Mean Squared Error is the metric used to optimize the model. We compare the fit of each model against the fit of a *null model*, predicting the mean of the observations without predictor variables.
+
+### Fitting the models and comparing RMSE metric
+
+The following code chunk utilizes the `tidymodels` framework to fit a linear regression model (method = lm) with `DOSE` as a predictor of `y`:
+
+```{r linear-model-y-DOSE-training}
+### fitting a linear model 
+# define recipe with recipes package
+rec_y_DOSE <- 
+  recipes::recipe(y ~ DOSE, 
+         data = training)
+
+# choose model with parsnip package
+y_DOSE_reg = 
+  parsnip::linear_reg() %>% #linear regression model
+  parsnip::set_engine("lm") %>% #with lm method
+  parsnip::set_mode("regression") #mode = regression, mode outcome is numeric
+
+# we can turn this into a workflow with workflows package
+y_DOSE_reg_WF = 
+  workflows::workflow() %>% #defining workflow object
+  workflows::add_model(y_DOSE_reg) %>% #choosing the model for the workflow
+  workflows::add_recipe(rec_y_DOSE) #adding the recipe - which variables for outcome, predictor, any interactions...
+  
+# fitting the model with fit()
+train_y_DOSE_reg_model = fit(y_DOSE_reg_WF, data = training) 
+table1 = y_DOSE_reg_model %>% tidy()
+
+
+### saving table results 
+# save summary tables
+summarytable_file = here("fitting-exercise", "tables", "y_DOSE_reg_training.rds")
+saveRDS(table1, file = summarytable_file)
+
+```
+
+```{r load-table-y-dose-reg-training}
+#| label: tbl-y-dose-reg-training
+#| tbl-cap: "Linear regression model of y predicted by DOSE on training subset."
+#| echo: FALSE
+resulttable=readRDS(here("fitting-exercise","tables", "y_DOSE_reg_training.rds"))
+knitr::kable(resulttable)
+```
+
+The output of `tidymodel`'s `fit()` on our linear regression by `lm` model provides our estimated parameters ("estimate", @tbl-y-dose-reg_training), as well as the standard error ($\sigma / \sqrt{n}$). Below, we use the `yardstick` package to determine the root mean squared error and correlation coefficient of the linear regression between `y` and `DOSE`. 
+
+```{r yardstick-y-dose-reg-training}
+# calculate r^2 and RMSE from y_DOSE_reg model 
+## make predictions based on real DOSE observations 
+predictions_y_DOSE_reg_train = data.frame(predictor = training$DOSE,
+                                    .pred = predict(train_y_DOSE_reg_model, new_data = training %>% select(-y)), #use regression model to make y predictions from existing DOSE observations
+                                    observation = training$y) #bind to observed y observations
+
+## lets take a look 
+plot = ggplot() + geom_point(data = predictions_y_DOSE_reg_train, aes(x = predictor, y = observation, color = factor(predictor))) + 
+          geom_point(data = predictions_y_DOSE_reg_train, aes(x = predictor, y = .pred)) + 
+          geom_line(data = predictions_y_DOSE_reg_train, aes(x = predictor, y = .pred), linetype = "dashed") +
+          labs(x = "Dose", y = "DV sum", title = "Regression model prediction of DV sum by dose")
+        
+## now lets calculate our metrics
+metrics = yardstick::metric_set(rmse, rsq)
+table = metrics(predictions_y_DOSE_reg_train, truth = observation, estimate = .pred)
+
+## add rmse and rsq to plot 
+plot = plot + annotate("text", y = 4500, x = 32.5, label = paste0("RMSE = ", round(table[1,3], 0), "\n rsq = ", round(table[2,3], 3)))
+
+# saving outputs
+summarytable_file = here("fitting-exercise", "tables", "metrics_y_DOSE_reg_training.rds")
+saveRDS(table, file = summarytable_file)
+
+figure_file = here("fitting-exercise", "figures", "metrics_y_DOSE_reg_training.png")
+ggsave(filename = figure_file, plot=plot) 
+```
+
+```{r load-fig-metrics-y-DOSE-reg-training}
+#| label: fig-metrics-y-DOSE-reg-training
+#| fig-cap: "Scatterplot of total DV observed against dose, for training dataset. Dotted line shows linear regression predictions "
+#| echo: FALSE
+knitr::include_graphics(here("fitting-exercise","figures","metrics_y_DOSE_reg_training.png"))
+```
+
+```{r load-table-metrics-y-DOSE-reg-training}
+#| label: tbl-metrics-y-DOSE-reg-training
+#| tbl-cap: "RMSE and r-squared for model prediction of DV sum by DOSE on training data."
+#| echo: FALSE
+resulttable=readRDS(here("fitting-exercise","tables", "metrics_y_DOSE_reg_training.rds"))
+knitr::kable(resulttable)
+```
+
+The following code chunk utilizes the `tidymodels` framework to fit a multiple linear regression model (method = lm) with all variables as a predictor of `y`:
+
+```{r linear-model-y-multiple-training}
+### fitting a linear model 
+# define recipe with recipes package
+rec_y_multiple <- 
+  recipes::recipe(y ~ ., 
+         data = training)
+
+# choose model with parsnip package
+y_multiple_reg = 
+  parsnip::linear_reg() %>% #linear regression model
+  parsnip::set_engine("lm") %>% #with lm method
+  parsnip::set_mode("regression") #mode = regression, mode outcome is numeric
+
+# we can turn this into a workflow with workflows package
+y_multiple_reg_WF = 
+  workflows::workflow() %>% #defining workflow object
+  workflows::add_model(y_multiple_reg) %>% #choosing the model for the workflow
+  workflows::add_recipe(rec_y_multiple) #adding the recipe - which variables for outcome, predictor, any interactions...
+  
+# fitting the model with fit()
+train_y_multiple_reg_model = fit(y_multiple_reg_WF, data = training) 
+table1 = train_y_multiple_reg_model %>% tidy()
+
+
+### saving table results 
+# save summary tables
+summarytable_file = here("fitting-exercise", "tables", "y_multiple_reg_training.rds")
+saveRDS(table1, file = summarytable_file)
+```
+
+```{r load-table-y-multiple-reg-training}
+#| label: tbl-y-multiple-reg-training
+#| tbl-cap: "Linear regression model of y predicted by multiple predictors on training subset."
+#| echo: FALSE
+resulttable=readRDS(here("fitting-exercise","tables", "y_multiple_reg_training.rds"))
+knitr::kable(resulttable)
+```
+
+```{r yardstick-y-multiple-reg-train}
+# calculate r^2 and RMSE from y_DOSE_reg model 
+## make predictions based on real DOSE observations 
+predictions_y_multiple_reg_train = data.frame(predictor_1= training$DOSE,
+                                   .pred = predict(train_y_multiple_reg_model, new_data = training %>% select(-y)), #use regression model to make y predictions from existing observations
+                                   observation = training$y) #bind to observed y observations
+                                    
+## lets take a look 
+plot = ggplot() + geom_point(data = predictions_y_multiple_reg_train, aes(x = observation, y = .pred, color = factor(predictor_1))) + 
+          geom_abline(linetype = "dashed") +
+          labs(x = "Observed", y = "Predicted", title = "DV sums observed and predicted by regression")
+        
+## now lets calculate our metrics
+metrics = yardstick::metric_set(rmse, rsq)
+table = metrics(predictions_y_multiple_reg_train, truth = observation, estimate = .pred)
+
+## add rmse and rsq to plot 
+plot = plot + annotate("text", y = 5000, x = 2000, label = paste0("RMSE = ", round(table[1,3], 0), "\n rsq = ", round(table[2,3], 3)))
+
+# saving outputs
+summarytable_file = here("fitting-exercise", "tables", "metrics_y_multiple_reg_training.rds")
+saveRDS(table, file = summarytable_file)
+
+figure_file = here("fitting-exercise", "figures", "metrics_y_multiple_reg_training.png")
+ggsave(filename = figure_file, plot=plot) 
+
+```
+
+```{r load-fig-metrics-y-multiple-reg-training}
+#| label: fig-metrics-y-multiple-reg-training
+#| fig-cap: "Scatterplot of total DV observed against estimated prediction, colored by dose. Diagonal dashed line shows 1:1 corelation "
+#| echo: FALSE
+knitr::include_graphics(here("fitting-exercise","figures","metrics_y_multiple_reg_train.png"))
+```
+
+```{r load-table-metrics-y-multiple-reg-train}
+#| label: tbl-metrics-y-multiple-reg-training
+#| tbl-cap: "RMSE and r-squared for model prediction of DV sum by all predictor variables."
+#| echo: FALSE
+resulttable=readRDS(here("fitting-exercise","tables", "metrics_y_multiple_reg_training.rds"))
+knitr::kable(resulttable)
+```
+
+We compare the RMSE of the above two regression models to the RMSE of a null model predicting the mean `y` for each observation without considering `DOSE`.
+
+```{yardstick-null-model-training}
+#null model 
+null_y_reg = null_model() %>%
+  set_engine("parsnip") %>%
+  set_mode("regression") %>%
+  translate()
+
+null_model = fit(null_y_reg, formula = y ~ 1, data = training)
+
+# calculate r^2 and RMSE from y_DOSE_reg model 
+## make predictions based on real DOSE observations 
+predictions_null_model = data.frame(predictor = training$DOSE,
+                                    .pred = predict(null_model, new_data = training %>% select(-y)), #use regression model to make y predictions from existing DOSE observations
+                                    observation = training$y) #bind to observed y observations
+
+## lets take a look 
+plot = ggplot() + geom_point(data = predictions_null_model, aes(x = predictor, y = observation, color = factor(predictor))) + 
+          geom_point(data = predictions_y_DOSE_reg, aes(x = predictor, y = .pred)) + 
+          geom_line(data = predictions_y_DOSE_reg, aes(x = predictor, y = .pred), linetype = "dashed") +
+          labs(x = "Dose", y = "DV sum", title = "Null model prediction of DV sum, y")
+        
+## now lets calculate our metrics
+metrics = yardstick::metric_set(rmse)
+table = metrics(predictions_null_model, truth = observation, estimate = .pred)
+
+## add rmse and rsq to plot 
+plot = plot + annotate("text", y = 4500, x = 32.5, label = paste0("RMSE = ", round(table[1,3], 0)))
+
+# saving outputs
+summarytable_file = here("fitting-exercise", "tables", "metrics_null_model.rds")
+saveRDS(table, file = summarytable_file)
+
+figure_file = here("fitting-exercise", "figures", "metrics_null_model.png")
+ggsave(filename = figure_file, plot=plot) 
+```
+
+```{r load-fig-metrics-null-model-training}
+#| label: fig-metrics-null-model
+#| fig-cap: "Scatterplot of sum total DV, y, predicted by null model of training dataset."
+#| echo: FALSE
+knitr::include_graphics(here("fitting-exercise","figures","metrics_null_model.png"))
+```
+
+```{r load-table-metrics-null-model-training}
+#| label: tbl-metrics-null-model-training
+#| tbl-cap: "RMSE for null model prediction of DV sum from model training."
+#| echo: FALSE
+resulttable=readRDS(here("fitting-exercise","tables", "metrics_null_model.rds"))
+knitr::kable(resulttable)
+```
+
+Comparing the RMSE values reported in @tbl-metrics-y-DOSE-reg-training, @tbl-metrics-y-multiple-reg-training, and @tbl-metrics-null-model, we can see that the model with the smallest mean roots squared error is the multiple regression model. However, we can also observe that the $R^2$ value is greater for the single regression model with `DOSE` as a predictor, which should be taken into consideration when choosing whether the model with a greater number of parameters is truly the "better" model, and not simply the model with the greatest (over?) fit. 
+
+Assessing the model performance in a more rigorous way - against unseen data - can improve our understanding of the precision with which the model captures the behavior of the outcome variable based on the predictors. One way to do so is cross-validation. 
+
+### Cross -Validation of Three Possible Models
+
+In this section, we conduct a 10-fold cross-validation of each model against the training dataset according to the workflow suggest in the [Introduction to TidyModels](https://www.tidymodels.org/start/resampling/#fit-resamples). 
+
+The package `rsample` is used here to create the resampling object - the *folds* of our data, or indices of random subsets, which will be used in the analysis and assessment of the models.
+
+```{r resampling-object}
+set.seed(rngseed) #we are resampling randomly, and should set seed for reproducibility
+
+#here, we define the cross-validation folds from our training data 
+folds = rsample::vfold_cv(training, v = 10) #we would like to define 10 folds
+
+```
+
+We would like to define two `workflow()` objects to bundle the two linear model - formula specifications. 
+
+```{r workflows-for-CV}
+####### workflow for single regression of y by dose ########
+# choose model with parsnip package
+y_DOSE_reg = 
+  parsnip::linear_reg() %>% #linear regression model
+  parsnip::set_engine("lm") %>% #with lm method
+  parsnip::set_mode("regression") #mode = regression, mode outcome is numeric
+
+# we can turn this into a workflow with workflows package
+y_DOSE_reg_WF = 
+  workflows::workflow() %>% #defining workflow object
+  workflows::add_model(y_DOSE_reg) %>% #choosing the model for the workflow
+  workflows::add_formula(y ~ DOSE) %>%
+  fit(data = training)
+
+##########################################################################
+###### workflow for multiple regression of y by all predictors #######
+# choose model with parsnip package
+y_multiple_reg = 
+  parsnip::linear_reg() %>% #linear regression model
+  parsnip::set_engine("lm") %>% #with lm method
+  parsnip::set_mode("regression") #mode = regression, mode outcome is numeric
+
+# we can turn this into a workflow with workflows package
+y_multiple_reg_WF = 
+  workflows::workflow() %>% #defining workflow object
+  workflows::add_model(y_multiple_reg) %>% #choosing the model for the workflow
+  workflows::add_formula(y ~ .) %>%
+  fit(data = training)
+
+
+```
+
+```{r run-CV}
+set.seed(rngseed)
+
+# CV single regression, y ~ DOSE
+train_y_dose_rs = y_DOSE_reg_WF %>%
+  tune::fit_resamples(folds)
+
+train_y_dose_CV_metrics = tune::collect_metrics(train_y_dose_rs) # extract metrics
+
+# CV multiple regression, y ~ all
+train_y_multiple_rs = y_multiple_reg_WF %>%
+  tune::fit_resamples(folds)
+
+train_y_multiple_CV_metrics = tune::collect_metrics(train_y_multiple_rs) # extrac metrics
+
+## CV on null mdoel doesnt make sense, of course, because the mean of the observations will stay the same. I am simply going to re-fit the null model here to keep the RMSE output in one place :)
+#  refit for null model 
+null_y_reg = null_model() %>% #fit null model
+  set_engine("parsnip") %>%
+  set_mode("regression") %>%
+  translate()
+
+null_model_metrics = fit(null_y_reg, formula = y ~ 1, data = training) %>% #extract RMSE
+  predict(new_data = training) %>% #make predictions based on training data
+  select(.pred) %>% # isolate predicted values
+  bind_cols(training$y) %>% # bind predictions to training data observations
+  rename(y = "...2") %>% #rename column containing observations 
+  rmse(truth = y, estimate = .pred) #calculate
+
+#create table with CV output for each model
+table1 = cbind("Predictor" = rep(c("DOSE", "multiple"), each = 2), rbind(train_y_dose_CV_metrics, train_y_multiple_CV_metrics)) #table comparing CV of linear regression models
+table2 = null_model_metrics
+
+# saving outputs
+summarytable_file = here("fitting-exercise", "tables", "metrics_CV_models_training.rds")
+saveRDS(table1, file = summarytable_file)
+
+summarytable_file = here("fitting-exercise", "tables", "metrics_null_model.rds")
+saveRDS(table2, file = summarytable_file)
+
+```
+
+```{r load-tbl-metrics-CV-models-training}
+#| label: tbl-metrics-CV-models-training
+#| tbl-cap: "Mean RMSE and $R^2$ from 10-fold cross-validation of the single and multiple linear regression models of y"
+#| echo: FALSE
+resulttable=readRDS(here("fitting-exercise","tables","metrics_CV_models_training.rds"))
+knitr::kable(resulttable)
+```
+
+```{r load-table-metrics-null-model-training}
+#| label: tbl-metrics-null-model
+#| tbl-cap: "RMSE for null model prediction of DV sum from model training."
+#| echo: FALSE
+resulttable=readRDS(here("fitting-exercise","tables", "metrics_null_model.rds"))
+knitr::kable(resulttable)
+```
+
+The mean RMSE of the linear regression model with `DOSE` as a single predictor has actually improved from 702 to 690, though it is still outperformed by the multiple linear regression model, with a mean RMSE of 645. Here, we also see that the $R^2$ value of the multiple regression model has improved and also demonstrates a greater fit of the model than the single regression model (though only slightly). 
