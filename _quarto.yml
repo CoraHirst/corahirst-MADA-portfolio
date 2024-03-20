@@ -22,7 +22,7 @@ website:
             file: data-exercise/code/data-exercise.qmd
           - text: "Data Analysis Exercise"
             file: cdc-exercise/code/cdcdata-exercise.qmd
-          - text: "Fitting Exercise"
+          - text: "Fitting exercise"
             file: fitting-exercise/fitting-exercise.qmd
     right:
       - icon: github 
