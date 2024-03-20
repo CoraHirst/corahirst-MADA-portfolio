@@ -1,0 +1,92 @@
+---
+output:
+  reprex::reprex_document:
+    venue: "gh"
+    advertise: FALSE
+    session_info: TRUE
+    style: TRUE
+    comment: "#;-)"
+    tidyverse_quiet: FALSE
+    std_out_err: TRUE
+knit: reprex::reprex_render
+---
+
+This template demonstrates many of the bells and whistles of the `reprex::reprex_document()` output format. The YAML sets many options to non-default values, such as using `#;-)` as the comment in front of output.
+
+## Learning how to use This
+
+```{r }
+library(here)
+library(ggplot2)
+library(tidyverse)
+
+df = data.frame(x = sample(1:100, 5),
+                y = sample(1:100, 5))
+
+# use ggplot to make a line graph of df
+# and include a yellow box in the middle behind the line that spans from the bottom of the plot to the top of the plot
+# and I want theme_classic but with horizontal gridlines
+
+ggplot(df, aes(x, y)) +
+  geom_line() +
+  annotate("rect", xmin = 2, xmax = 4, ymin = 0, ymax = 100, fill = "yellow", alpha = 0.5) +
+  theme_classic() +
+  theme(panel.grid.major.y = element_line(colour = "grey", size = 0.5),
+  axis.ticks.y = element_blank(),
+        axis.line = element_blank())
+  
+
+df = data.frame( x = seq(from=2000, to=2010, by = 1),
+                y = sample(1:100, length(seq(from=2000, to=2010, by = 1))))
+
+
+#use ggplot to make a line graph of df with theme_classic but with horizontal gridlines
+# and I want the numbers on the x-axis to look like '21', '22', etc
+# and I want to specify the y range but I don't want y axis tick marks
+# and I don't want axis lines but I still want x tick marks
+ggplot(df, aes(x, y)) +
+  geom_line() +
+  theme_classic() +
+  theme(panel.grid.major.y = element_line(colour = "grey", size = 0.5),
+        axis.text.x = element_text(size = 12, vjust = 0.5, hjust = 0.5),
+        axis.ticks.y = element_blank(),
+        axis.line = element_blank()) +
+  scale_x_continuous(breaks = seq(2000, 2010, by = 1), labels = c("21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31")) +
+  coord_cartesian(ylim = c(0, 100))
+
+
+
+df = data.frame( x = seq(from=2000, to=2010, by = 1),
+                y = sample(1:100, length(seq(from=2000, to=2010, by = 1))),
+                z = sample(1:100, length(seq(from=2000, to=2010, by = 1))))
+
+# turn df into long format with y and z as groups
+df_long = df %>%
+  pivot_longer(cols = c(y, z), names_to = "group", values_to = "value")
+
+#make a line plot of df_long with x on the x-axis and value on the y-axis
+# and I want to color the lines by group
+# and I want theme_classic() but with horizontal gridlines
+# and I want to annotate the name of the line on top of the line but only to the last point of the line with annotate()
+# and finally I want my text to be in times new roman font
+ggplot(df_long, aes(x, value, color = group)) +
+  geom_line() +
+  theme_classic() +
+  theme(panel.grid.major.y = element_line(colour = "grey", size = 0.5),
+        text = element_text(family = "Times New Roman")) +
+  geom_text(data = df_long %>% filter(x == max(x)), aes(label = group), hjust = 0, vjust = 0, nudge_x = 0.5, nudge_y = 0.5)
+
+#make a line plot of df_long with x on the x-axis and value on the y-axis
+#and I want to get rid of the x and y axis lines, but I want to keep horizontal gridlines
+#and I want to color the lines by group
+
+ggplot(df_long, aes(x, value, color = group)) +
+  geom_line() +
+  theme(axis.line = element_blank(),
+        panel.grid.major.y = element_line(colour = "grey", size = 0.5))
+
+
+
+
+```
+

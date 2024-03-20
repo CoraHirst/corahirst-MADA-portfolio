@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,8 +17,42 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -55,9 +89,13 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
+
+<script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -74,47 +112,61 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">Cora Hirst Data Analysis Portfolio</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../aboutme.html">
+    <a class="nav-link" href="../aboutme.html" rel="" target="">
  <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Projects</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-projects">    
         <li>
-    <a class="dropdown-item" href="../starter-analysis-exercise/products/report/starter-analysis-report.html">
+    <a class="dropdown-item" href="../starter-analysis-exercise/products/report/starter-analysis-report.html" rel="" target="">
  <span class="dropdown-text">Starter Analysis Exercise</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../coding-exercise/coding-exercise.html">
+    <a class="dropdown-item" href="../coding-exercise/coding-exercise.html" rel="" target="">
  <span class="dropdown-text">R Coding Exercise</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../presentation-exercise/presentation-exercise.html">
+    <a class="dropdown-item" href="../presentation-exercise/presentation-exercise.html" rel="" target="">
  <span class="dropdown-text">Presentation Exercise</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../tidytuesday-exercise/tidytuesday-exercise.html">
+    <a class="dropdown-item" href="../tidytuesday-exercise/tidytuesday-exercise.html" rel="" target="">
  <span class="dropdown-text">Tidy Tuesday Exercise</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../data-exercise/code/data-exercise.html" rel="" target="">
+ <span class="dropdown-text">Data Exercise</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../cdc-exercise/code/cdcdata-exercise.html" rel="" target="">
+ <span class="dropdown-text">Data Analysis Exercise</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../fitting-exercise/fitting-exercise.html" rel="" target="">
+ <span class="dropdown-text">Fitting exercise</span></a>
   </li>  
     </ul>
   </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/CoraHirst/corahirst-MADA-portfolio"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/CoraHirst/corahirst-MADA-portfolio" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -144,9 +196,441 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Placeholder file for the future data/results presentation exercise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("here")</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("tidyverse")</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("dplyr")</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("ggplot2")</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("kableExtra")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="purpose" class="level1">
+<h1>Purpose</h1>
+<p>In this exercise, I would like to try to recreate this figure from <a href="https://www.nytimes.com/interactive/2024/01/31/us/pandemic-learning-loss-recovery.html">this New York Times arcticle</a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-New-York-fig" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="supplemental-figs/New-York-Times-fig.png" class="img-fluid figure-img" width="687"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Figure generated by SEDA data, Stanford University</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The article discusses a resurgence of high test scores after school closures and remote learning during the COVID-19 Pandemic in the US. US standardized test score data by state and county are available through the <a href="https://edopportunity.org/">Educational Opportunity Project at Stanford University</a>.</p>
+<p>The datasets - one for state-level data and one at the grain of county - contain test score estiamtions by standardized year and grade-standardized year (and, to be frank, I’m not quite sure what the difference is.) I am unsure what filters were applied to the dataset, but the figures I generate below get pretty close!</p>
+</section>
+<section id="loading-the-datasets-and-subsetting-pertinent-information" class="level1">
+<h1>Loading the datasets and subsetting pertinent information</h1>
+<p>The <code>scores_admindis2023</code> dataset contains the average math and english test scores reported for each county for each state in the US, stratified by socioeconomic and racial class. Scores were reported for each state for the years 2016-2023, excluding 2020/2021, during which no standardized testing occured. Each observation pertains to the reported scores for a single subclass in a single district across the 7-year span.</p>
+<p>The <code>stateabb</code> variable contains a character vector of the abbreviated state name; the <code>sedaadminname</code> variable contains a character vector of the names of the districts reporting each observation; the <code>subject</code> variable contains a character vector of the tested subjects, “mth” for math or “rla” for language exams; the <code>subgroup</code> variable contains a character vector of the subgroup for which the average score in the district was calculated, meaning there will be <code>length(subgroup)</code> observations for each district; lastly, the columns <code>ys_mn_2016_ol</code>, <code>ys_mn_2017_ol</code> … <code>ys_mn_2023_ol</code> contain the scores reported by the district for the subclass over the 7-year period.</p>
+<p>The <code>scores_state2023</code> dataset contains the same information, excluding the <code>sedaadminname</code> variable.</p>
+<p>In order to recreate the New York Times figure, I know that I need</p>
+<ol type="1">
+<li>the average math test scores reported for Weakley County, Tennessee;</li>
+<li>the average test scores reported for Tennessee; and</li>
+<li>the average of the average test scores reported across all states in the US.</li>
+</ol>
+<p>For the purpose of this exercise, I am unsure which subgroup’s average scores are being reported; thus, I consider the average score across all classes. Thus, I filter for the average of all class scores, or the <code>all</code> subgroup.</p>
+<p>I obtain the observations for Weakley Counties average math test scores from the <code>scores_admindis2023</code> dataset. I obtain the mean of the average math test scores reported from 2016-2023 by Tennessee, as well as the average math test scores reported from 2016-2023 across all states, from the <code>scores_state2023</code> dataset.</p>
+<section id="loading-the-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="loading-the-dataset">Loading the dataset</h2>
+<p>The following codechunk loads the SEDA datasets:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load mean scores by state</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>scores_state2023 <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"seda2023_state_ys.csv"</span>)) <span class="co">#test score data by state</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># load mean scores by counties within states</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>scores_admindis2023 <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"seda2023_admindist_ys.csv"</span>)) <span class="co">#test score data by county </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="subsetting-and-generating-relevant-information" class="level2">
+<h2 class="anchored" data-anchor-id="subsetting-and-generating-relevant-information">Subsetting and generating relevant information</h2>
+<p>The following codechunk processes the SEDA data to obtain three time series of the average math test scores across all subgroups for 1) Weakley County, 2) Tennessee, and 3) the US.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Weakley Country mean test scores by year</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create subset of district scores dataset for Weakley County, TN, only </span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>weakley_county <span class="ot">=</span> scores_admindis2023 <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(stateabb <span class="sc">==</span> <span class="st">"TN"</span>, sedaadminname <span class="sc">==</span> <span class="st">"Weakley County"</span>, subject <span class="sc">==</span> <span class="st">"mth"</span> ) <span class="sc">%&gt;%</span> <span class="co">#filter for weakley county math data</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"stateabb"</span>, <span class="st">"sedaadminname"</span>, <span class="st">"subject"</span>, <span class="st">"subgroup"</span>,  <span class="co">#include state, county, and subject name to ensure the filters were correct; include subgroup to filter on the poor</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">colnames</span>(scores_admindis2023)[<span class="fu">grep</span>( <span class="st">'_ol$'</span>, <span class="fu">colnames</span>(scores_admindis2023))])</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># let's see how this looks </span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(weakley_county) <span class="co">#missing 2016 data is curious. I'll have to come back to this.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  stateabb  sedaadminname subject subgroup ys_mn_2016_ol ys_mn_2017_ol
+1       TN Weakley County     mth      all            NA   -0.04134371
+2       TN Weakley County     mth      ecd            NA   -0.31809371
+3       TN Weakley County     mth      nec            NA    0.13446430
+4       TN Weakley County     mth      wht            NA    0.02672900
+  ys_mn_2018_ol ys_mn_2019_ol ys_mn_2022_ol ys_mn_2023_ol ys_mn_1922_ol
+1    0.02434486    0.07254493   -0.02776205     0.1748283   -0.10030698
+2   -0.25630497   -0.22634657   -0.41122632    -0.1350673   -0.18487975
+3    0.20263028    0.26241854    0.21583720     0.3716923   -0.04658134
+4    0.06999616    0.13601488    0.04206806     0.2278517   -0.09394683
+  ys_mn_1923_ol ys_mn_2223_ol
+1    0.10228333     0.2025903
+2    0.09127931     0.2761591
+3    0.10927373     0.1558551
+4    0.09183686     0.1857837</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># I want to remove the measurements from 1922, 1923, and 2223</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>weakley_county <span class="ot">=</span> weakley_county <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="st">"ys_mn_1922_ol"</span>, <span class="st">"ys_mn_1923_ol"</span>, <span class="st">"ys_mn_2223_ol"</span>)) <span class="co"># I couldn't think of a clever way to use grep to do this, oh well!</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">### Tenessee and US mean test scores by Year</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">## US</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># First, I am creating a vector of the columns (mean scores for each state, by year) for which to take the mean across all states</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>score_column_names <span class="ot">=</span> <span class="fu">colnames</span>(scores_state2023)[<span class="fu">grep</span>( <span class="st">'_ol$'</span>, <span class="fu">colnames</span>(scores_state2023))]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>score_column_names <span class="ot">=</span> score_column_names[<span class="sc">-</span><span class="fu">grep</span>(<span class="st">"ys_mn_1922_ol|ys_mn_1923_ol|ys_mn_2223_ol"</span>, score_column_names)] <span class="co">#yes, i'm doing it this way so that if any columns had been added to the dataset, I wouldn't have to readjust the indices!</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># vector of US means by Year</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>US_means <span class="ot">=</span> scores_state2023 <span class="sc">%&gt;%</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(subgroup<span class="sc">==</span><span class="st">"all"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">colnames</span>(scores_state2023)[<span class="fu">grep</span>(<span class="st">'^ys_mn_20.*._ol$'</span>, <span class="fu">colnames</span>(scores_state2023))]) <span class="sc">%&gt;%</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colMeans</span>(<span class="at">na.rm =</span> T)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="do">## TN</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># vector of TN means by year </span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>TN_means <span class="ot">=</span> scores_state2023 <span class="sc">%&gt;%</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(stateabb <span class="sc">==</span> <span class="st">"TN"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( subgroup <span class="sc">==</span> <span class="st">"all"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">colnames</span>(scores_state2023)[<span class="fu">grep</span>(<span class="st">'^ys_mn_20.*._ol$'</span>, <span class="fu">colnames</span>(scores_state2023))]) <span class="sc">%&gt;%</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="co">#I figured out how to exclude the 22__ and 19__ years!</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colMeans</span>(<span class="at">na.rm=</span>T)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co"># now I need a data frame that puts this data into longform by subgroup; that is, I need to repeat a vector of the years scores were collected the number of times we have subgroups, i.e c(2016,2017,2018,2019...2016,2017,2018,2019...); the subgroups we have EACH the number of years that were observed, i.e (all, all, all, all...wht, wht, wht....); and the scores we have across the year columns need to be collapsed into a vector of c(subgroup 1 measurements across years, subgroup 2 measurements across years...)</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>years <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">2016</span>,<span class="dv">2017</span>,<span class="dv">2018</span>,<span class="dv">2019</span>,<span class="dv">2022</span>,<span class="dv">2023</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>timeseries_weakley_county <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="st">"Year"</span> <span class="ot">=</span> <span class="fu">rep</span>(years, <span class="at">times =</span> <span class="fu">length</span>(weakley_county<span class="sc">$</span>subgroup)),</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Subgroup"</span> <span class="ot">=</span> <span class="fu">rep</span>(weakley_county<span class="sc">$</span>subgroup, <span class="at">each =</span> <span class="fu">length</span>(years)),</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>                <span class="st">"dis_score"</span> <span class="ot">=</span> <span class="fu">as.vector</span>(<span class="fu">t</span>(weakley_county[,<span class="fu">grep</span>( <span class="st">'_ol$'</span>, <span class="fu">colnames</span>(weakley_county))])),  <span class="co">#the grep function returns the indices of the vector elements which match some pattern; adding $ to the end of my pattern returns elements that </span><span class="re">END</span><span class="co"> WITH the pattern! #the t() function transposes my dataframe so that the functionas.vector, which converts a dataframe into a vector columnwise, will instead return the vector rowwise</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>                <span class="st">"state_score"</span> <span class="ot">=</span> <span class="fu">rep</span>(TN_means, <span class="at">times =</span> <span class="fu">length</span>(weakley_county<span class="sc">$</span>subgroup)),</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>                <span class="st">"US_score"</span> <span class="ot">=</span> <span class="fu">rep</span>(US_means, <span class="at">times =</span> <span class="fu">length</span>(weakley_county<span class="sc">$</span>subgroup)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Notice how I generated a long-form dataframe, with a column for “Year” and three columns for Weakley, Tennessee, and US scores, for ease of ggplotting. :)</p>
+<p>We can see how easy it is to group our time series data in the simple plots generated by the code chunk below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">=</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data=</span>timeseries_weakley_county, <span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y =</span> dis_score, <span class="at">col =</span> Subgroup)) <span class="sc">+</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>timeseries_weakley_county, <span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y =</span> dis_score, <span class="at">col =</span> Subgroup)) <span class="sc">+</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>timeseries_weakley_county, <span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y =</span> state_score), <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>timeseries_weakley_county, <span class="fu">aes</span>(<span class="at">x=</span>Year, <span class="at">y =</span> US_score), <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">linetype =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"figures"</span>,<span class="st">"simple_lineplot.png"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot1) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-simple-lineplot" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/simple_lineplot.png" class="img-fluid figure-img" width="1050"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: A simple lineplot showing the data to be plotted using AI, but stratified by subgroup</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>I am going to use CoPilot to turn <a href="#fig-simple-lineplot">Figure&nbsp;2</a> into a close rendition of <a href="#fig-New-York-fig">Figure&nbsp;1</a>.</p>
+</section>
+</section>
+<section id="using-github-copilot-to-learn-how-to-generate-more-visually-effective-plots" class="level1">
+<h1>Using GitHub CoPilot to learn how to generate more visually effective plots</h1>
+<p>GitHub offers a wonderful feature for free to students, teachers, and popular public repository runners called “CoPilot”.</p>
+<p>CoPilot functions almost identically to an RStudio terminal, with the added benefit that one can ask questions (or really, make demands!) via comments. And, it’s not only limited to coding in R!</p>
+<p>I am posting a link to the CoPilot main page <a href="https://github.com/features/copilot?ef_id=_k_Cj0KCQiA5rGuBhCnARIsAN11vgR09l_mZYGoUS271L8shDAAcjYYOFUVCpzWeonp5osUCQ0HJ87et0saAjDDEALw_wcB_k_&amp;OCID=AIDcmmc3fhtaow_SEM__k_Cj0KCQiA5rGuBhCnARIsAN11vgR09l_mZYGoUS271L8shDAAcjYYOFUVCpzWeonp5osUCQ0HJ87et0saAjDDEALw_wcB_k_&amp;gad_source=1&amp;gclid=Cj0KCQiA5rGuBhCnARIsAN11vgR09l_mZYGoUS271L8shDAAcjYYOFUVCpzWeonp5osUCQ0HJ87et0saAjDDEALw_wcB">here</a>.</p>
+<p><a href="#fig-copilot-example">Figure&nbsp;3</a> shows an example of the copilot interface. Here, I didn’t know how to generate the yellow rectangle in the New York Times figure - so, I asked!</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-copilot-example" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="supplemental-figs/copilot-example.png" class="img-fluid figure-img" width="2111"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Copilot rmarkdown file</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The file <code>questions_for_AI.rmd</code> in the <code>presentation-exercise</code> folder of <a href="https://github.com/CoraHirst/corahirst-MADA-portfolio">my github repository</a> contains a record of all of the questions I asked of copilot to help me format my figure, and the code I implemented and its output (<a href="#fig-regenerated">Figure&nbsp;4</a>) are shown in the code chunk below! I have added comments to the ggplotting code to show where I have implemented the AI’s suggestions:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">=</span> timeseries_weakley_county <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Subgroup <span class="sc">==</span> <span class="st">"all"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"rect"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">xmin =</span> <span class="dv">2020</span>, <span class="at">xmax =</span> <span class="dv">2022</span>, </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">ymin =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">ymax =</span> <span class="cn">Inf</span>, </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">"goldenrod"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="co">#this is where I am using github copilot!</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.5</span>),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> <span class="co">#and here</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> dis_score), </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"goldenrod"</span>) <span class="sc">+</span> </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> dis_score), </span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="dv">1</span>, </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="st">"goldenrod"</span>) <span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> state_score), </span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span> </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> state_score), </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> US_score), </span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> US_score), </span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="dv">1</span>, </span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="st">"darkgrey"</span>) <span class="sc">+</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.25</span>, <span class="fl">0.25</span>),</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="cn">NULL</span>) <span class="sc">+</span> <span class="co">#and here, latest update!</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fu">min</span>(timeseries_weakley_county<span class="sc">$</span>Year), <span class="fu">max</span>(timeseries_weakley_county<span class="sc">$</span>Year), <span class="at">by =</span> <span class="dv">1</span>), </span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="st">"'"</span>, <span class="fu">seq</span>(<span class="fu">min</span>(timeseries_weakley_county<span class="sc">$</span>Year)<span class="sc">-</span><span class="dv">2000</span>, <span class="fu">max</span>(timeseries_weakley_county<span class="sc">$</span>Year)<span class="sc">-</span><span class="dv">2000</span>, <span class="at">by =</span> <span class="dv">1</span>)), </span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">2016</span>, <span class="dv">2016</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.19</span>, <span class="fl">0.21</span>), </span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"0.2 yrs. behind"</span>, <span class="st">"0.2 yrs. ahead"</span>),</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.8</span>),</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>           <span class="at">vjust =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">2021</span>, <span class="at">y =</span> <span class="fl">0.25</span>, </span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">"COVID"</span>)<span class="sc">+</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fu">rep</span>(<span class="dv">2023</span>, <span class="dv">3</span>), </span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fu">as.vector</span>(<span class="fu">t</span>(timeseries_weakley_county <span class="sc">%&gt;%</span> </span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">filter</span>(Subgroup <span class="sc">==</span> <span class="st">"all"</span>, Year <span class="sc">==</span> <span class="dv">2023</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">select</span>(dis_score,state_score,US_score))),</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Weakley"</span>, <span class="st">"Tennessee </span><span class="sc">\n</span><span class="st"> avg."</span>, <span class="st">"US </span><span class="sc">\n</span><span class="st">avg."</span>), </span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>,<span class="sc">-</span><span class="fl">0.05</span>,<span class="sc">-</span><span class="fl">0.2</span>), </span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>           <span class="at">vjust =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>,<span class="sc">-</span><span class="fl">0.25</span>, <span class="dv">1</span>), </span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="dv">4</span>, </span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>           <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"goldenrod"</span>, <span class="st">"black"</span>, <span class="st">"darkgrey"</span>), </span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>           <span class="at">fontface =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>)) <span class="sc">+</span> <span class="co">#and here!</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">""</span>)</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>figure_file <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"figures"</span>,<span class="st">"regenerated.png"</span>)</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> figure_file, <span class="at">plot=</span>plot) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-regenerated" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/regenerated.png" class="img-fluid figure-img" width="1050"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Regenerated New York Times article figure using CoPilot</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Curiously, I’ve noticed that the data I’m finding (in either the ‘gys’ or ‘ys’ version of the dataset) does not match what was reported. I’m curious which subgorup was being explored (the captions says “poor”, but the data for <code>ecd</code> (economically challenged) subgroup REALLY doesn’t match the plot). It would be nice to see what manipulations were done to produce the orginial figure!</p>
+</section>
+<section id="generating-a-nice-table-with-kableextra" class="level1">
+<h1>Generating a nice table with kableExtra</h1>
+<p>I also asked CoPilot what package it suggests for generating a nice table in R, and it suggested “kableExtra”. If you’re familiar with R, you know that “kable” is a wonderful way to explicitly design and render HTML tables when knitting a markdown file. Here, I try to takle <code>kableExtra</code> for a test drive.</p>
+<p>I would like to simply view the scores I plot in a table. This is the output generated by simply using the “kbl” wrapper function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("kableExtra")</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>timeseries_weakley_county <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Subgroup <span class="sc">==</span> <span class="st">"all"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Year</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Subgroup</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">dis_score</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">state_score</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">US_score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2016</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">-0.0239534</td>
+<td style="text-align: right;">0.0389170</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2017</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">-0.0413437</td>
+<td style="text-align: right;">-0.0488835</td>
+<td style="text-align: right;">0.0304953</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2018</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">0.0243449</td>
+<td style="text-align: right;">-0.0307675</td>
+<td style="text-align: right;">0.0164822</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2019</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">0.0725449</td>
+<td style="text-align: right;">-0.0126515</td>
+<td style="text-align: right;">0.0024690</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2022</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">-0.0277620</td>
+<td style="text-align: right;">-0.1403430</td>
+<td style="text-align: right;">-0.1274078</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">0.1748283</td>
+<td style="text-align: right;">-0.0563814</td>
+<td style="text-align: right;">-0.0655509</td>
+</tr>
+</tbody>
+</table>
 
 
+</div>
+</div>
+<p>Of course, I’d like to try something a little nicer! The <code>kable_paper()</code> command allows some interactive aspects to tables, like the “hover” argument, which highlights rows when the viewer moves their cursor over! This was suggested by copilot when I simply prompted: “how do I make an R generated html table cooler?”</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>timeseries_weakley_county <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Subgroup <span class="sc">==</span> <span class="st">"all"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_paper</span>(<span class="st">"hover"</span>, <span class="at">full_width =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="lightable-paper lightable-hover table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Year</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Subgroup</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">dis_score</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">state_score</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">US_score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2016</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">-0.0239534</td>
+<td style="text-align: right;">0.0389170</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2017</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">-0.0413437</td>
+<td style="text-align: right;">-0.0488835</td>
+<td style="text-align: right;">0.0304953</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2018</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">0.0243449</td>
+<td style="text-align: right;">-0.0307675</td>
+<td style="text-align: right;">0.0164822</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2019</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">0.0725449</td>
+<td style="text-align: right;">-0.0126515</td>
+<td style="text-align: right;">0.0024690</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2022</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">-0.0277620</td>
+<td style="text-align: right;">-0.1403430</td>
+<td style="text-align: right;">-0.1274078</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right;">0.1748283</td>
+<td style="text-align: right;">-0.0563814</td>
+<td style="text-align: right;">-0.0655509</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>and here, I’ve colored the column we are most interested in - the Weakley County scores - by value!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>timeseries_weakley_county <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Subgroup <span class="sc">==</span> <span class="st">"all"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_paper</span>(<span class="st">"hover"</span>, <span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="fu">grep</span>(<span class="st">"dis_score"</span>, <span class="fu">colnames</span>(timeseries_weakley_county)), <span class="at">color =</span> <span class="st">"white"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">background =</span> <span class="fu">spec_color</span>(timeseries_weakley_county<span class="sc">$</span>dis_score[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="lightable-paper lightable-hover table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Year</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Subgroup</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">dis_score</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">state_score</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">US_score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2016</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right; color: white !important; background-color: rgba(187, 187, 187, 255) !important;">NA</td>
+<td style="text-align: right;">-0.0239534</td>
+<td style="text-align: right;">0.0389170</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2017</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right; color: white !important; background-color: rgba(68, 1, 84, 255) !important;">-0.0413437</td>
+<td style="text-align: right;">-0.0488835</td>
+<td style="text-align: right;">0.0304953</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2018</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right; color: white !important; background-color: rgba(52, 96, 141, 255) !important;">0.0243449</td>
+<td style="text-align: right;">-0.0307675</td>
+<td style="text-align: right;">0.0164822</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2019</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right; color: white !important; background-color: rgba(31, 150, 139, 255) !important;">0.0725449</td>
+<td style="text-align: right;">-0.0126515</td>
+<td style="text-align: right;">0.0024690</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2022</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right; color: white !important; background-color: rgba(72, 24, 106, 255) !important;">-0.0277620</td>
+<td style="text-align: right;">-0.1403430</td>
+<td style="text-align: right;">-0.1274078</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">all</td>
+<td style="text-align: right; color: white !important; background-color: rgba(253, 231, 37, 255) !important;">0.1748283</td>
+<td style="text-align: right;">-0.0563814</td>
+<td style="text-align: right;">-0.0655509</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -176,9 +660,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -243,6 +741,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

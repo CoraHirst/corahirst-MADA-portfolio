@@ -117,7 +117,7 @@ figure_file <- here::here("starter-analysis-exercise", "results", "figures", "he
 ggsave(filename = figure_file, plot=p5)
 
 # Open the saved image in RStudio viewer
-rstudioapi::viewer(figure_file)
+#rstudioapi::viewer(figure_file)
 ```
 
 ```{r}
@@ -133,7 +133,7 @@ figure_file <- here::here("starter-analysis-exercise", "results", "figures", "we
 ggsave(filename = figure_file, plot=p6)
 
 # View the scatterplot in RStudio viewer
-rstudioapi::viewer(figure_file)
+#rstudioapi::viewer(figure_file)
 ```
 
 # Notes

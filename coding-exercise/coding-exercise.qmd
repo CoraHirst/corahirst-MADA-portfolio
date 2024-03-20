@@ -2,4 +2,375 @@
 title: "R Coding Exercise"
 ---
 
-Placeholder file for the future R coding exercise.
+
+# Purpose
+
+The following is an R coding excerise on loading, viewing, processing, and visualizing data in R. We complete all analysis on the `gapminder` dataset. 
+
+All code chunks are echoed for ease of viewing. 
+
+The following chunk loads all libraries which will be used during this exercise. 
+
+```{r load-libraries}
+## install packages and load required libraries
+
+# install.packages("dslabs") #lines to install required packages are commented
+library(dslabs) #load dslabs library
+
+# install.packages("tidyverse") #install and load tidyverse
+library(tidyverse) 
+
+# install.packages("here")
+library(here)
+
+# install.packages("gtsummary")
+library(gtsummary)
+
+# install.packages("flextable")
+library(flextable)
+```
+
+# Loading and checking the data
+
+Below, we familiarize ourselves with the most recent dataset from the package `gapminder`.
+
+```{r load-dataset}
+# pull information on the gapminder package
+help(gapminder) #open help file for gapminder dataset
+
+# structure of the gapminder dataset?
+str(gapminder) # what is the class of the gapminder dataset? how many variables? class of each variable?
+
+# summarize the gapminder data
+summary(gapminder) #gives summary statistics for each numeric variable and count information for each categorical variable
+
+# although the str() function gives the dataset class, we can check with the function class()
+class(gapminder) #gives the class of the r object gapminder
+
+```
+The `gapminder` dataset is an object of class "data.frame". Each row of the dataframe contains health and income outcomes for some year for some country. The dataframe contains 9 columns, for `country` name, `region`, and `continent`; the `year` of the observation; and 5 different demographic, health, and income outcomes for each observation. These outcomes consist of `infant_mortality`, `life_expectancy`, `fertility`, `population`, and `gdp`.
+
+There are 10545 observations in total, gathered from 184 countries between the years of 1960 and 2016. 
+
+# Processing the data
+
+Here, we are going to select and process data on african countries from the `gapminder` dataset.m 
+
+```{r subsetting-data}
+# subset rows from dataset containing factor level 'Africa' from column "continent"
+africadata = gapminder %>% filter(continent == "Africa") #dplyr's filter() function accomplishes this
+
+# create life expectancy subsets of africadata containing 1) infant mortality and life expectancy and 2) population and life expectancy 
+africa.IMvsLE = africadata %>% select("infant_mortality", "life_expectancy") #dplyrs select() function subsets columns
+africa.PvsLE = africadata %>% select("population", "life_expectancy") 
+
+# structure of the life expectancy subsets
+str(africa.IMvsLE) #2907 observations, 2 columns (variables)
+str(africa.PvsLE) #2907 observations, 2 columns (variables)
+
+# summary of variables in life expectancy subsets
+summary(africa.IMvsLE) #summary stats of both columns containing numerical values
+summary(africa.PvsLE) #summary stats of both columns contain numerical values
+
+```
+The code chunk above isolates the 2907 observations from african countries only within the `gapminder` dataset and stores this subset in the "data.frame" object, `africandata`. Two subsets of the `africandata` data frame are generated. The first, `africa.IMvsLE`, contains two columns showing the values of variables `infant_mortality` and `life_expectancy` for each observation. The second, `africa.PvsLE`, contains two columns showing the values of variables `population` and `life_expectancy` for each observation. 
+
+# Plotting 
+
+The following code chunk generates two plots, visualizing the association of either `infant_mortality` or `population` with `life_expectancy` across Africa between 1960-2016.
+
+```{r life-expectancy-plots}
+#life_expectancy vs infant_mortality 
+
+plot1 = ggplot() + geom_point(data = africa.IMvsLE, aes(x = infant_mortality, y = life_expectancy)) + 
+  labs(x = "infant mortality", y = "life expectancy", title = "correlation between life expectancy and infant mortality in Africa, 1960 - 2016")
+
+plot2 = ggplot() + geom_point(data = africa.PvsLE, aes(x = population, y = life_expectancy)) + 
+  scale_x_continuous(trans = "log") +
+  labs(x = "population", y = "life expectancy", title = "correlation between life expectancy and population size, 1960-2016")
+
+figure_file = here("coding-exercise","results", "figures","life_exp_inf_mort_all.png")
+ggsave(filename = figure_file, plot=plot1) 
+
+figure_file = here("coding-exercise","results", "figures","life_exp_pop_all.png")
+ggsave(filename = figure_file, plot=plot2) 
+
+```
+
+```{r load-life-expectancy-plots-inf-mort-all}
+#| label: fig-inf-mort-all
+#| fig-cap: "life expectancy by infant mortality, Africa, 1960-2016."
+#| echo: FALSE
+knitr::include_graphics(here("coding-exercise","results","figures","life_exp_inf_mort_all.png"))
+```
+
+```{r load-life-expectancy-plots-pop-all}
+#| label: fig-pop-all
+#| fig-cap: "life expectancy by population size, Africa, 1960-2016."
+#| echo: FALSE
+knitr::include_graphics(here("coding-exercise","results","figures","life_exp_pop_all.png"))
+```
+
+Obviously, there appear to be clusters of data associated with the variables `infant_mortality` and  `population`. These clusters may be the result of fixed effects from another associated variable, such as `year`. 
+
+The code chunk below regenerates these figures, with points colored by the year during which the observations were reported. Notice that I am now using the `africadata` subset to generate these figures, as this dataset also contains the `year` variable. 
+
+```{r life-expectancy-plots-stratified}
+
+## life_expectancy vs infant_mortality stratified by year
+plot3 = ggplot() + geom_point(data = africadata, aes(x = infant_mortality, y = life_expectancy, col = as.factor(year))) + 
+  labs(x = "infant mortality", y = "life expectancy", title = "correlation between life expectancy and infant mortality in Africa, 1960 - 2016")
+
+plot4 = ggplot() + geom_point(data = africadata, aes(x = population, y = life_expectancy, col = as.factor(year))) + 
+  scale_x_continuous(trans = "log") +
+  labs(x = "population", y = "life expectancy", title = "correlation between life expectancy and population size, 1960-2016")
+
+figure_file = here("coding-exercise","results", "figures","life_exp_inf_mort_byyears.png")
+ggsave(filename = figure_file, plot=plot3) 
+
+figure_file = here("coding-exercise","results", "figures","life_exp_pop_byyears.png")
+ggsave(filename = figure_file, plot=plot4) 
+
+
+```
+
+```{r load-life-expectancy-plots-inf-mort-byyears}
+#| label: fig-inf-mort-byyears
+#| fig-cap: "life expectancy by infant mortality, Africa, by year."
+#| echo: FALSE
+knitr::include_graphics(here("coding-exercise","results","figures","life_exp_inf_mort_byyears.png"))
+```
+
+```{r load-life-expectancy-plots-pop-byyears}
+#| label: fig-pop-byyears
+#| fig-cap: "life expectancy by population size, Africa, by year."
+#| echo: FALSE
+knitr::include_graphics(here("coding-exercise","results","figures","life_exp_pop_byyears.png"))
+```
+
+Here, we see that "lines" in our data demonstrate how population size and infant mortality each correlate with year. However, this is visually difficult to disentangle. What we can see, particularly from our second plot, is that life expectancy appears somewhat constant across a range of population sizes within the same year. 
+
+Let's recreate these plots, but only choose observations from a single year. 
+
+## More processing
+
+The `infant_mortality` variable within `africandata` contains many NAs. The code below determines which years contain missing (NA) data for infant mortality. 
+
+```{r years-missing-IM}
+## determine which years contain missing infant mortality data
+missing_IM_years = levels(factor(africadata[is.na(africadata$infant_mortality), "year"])) # which levels of factor "year" contain missing data for vairable "infant mortality"?
+
+print(paste("Infant mortality data is missing from the years", paste(missing_IM_years, collapse = " "))) #print these years
+```
+
+Infant mortality data is missing from observations between 1960-1981, and again from 2016. Between 1981 and 2016, then, every observation from each year contains infant mortality data. So, we will plot `life_expectancy` against `infant_mortality` from observations taken during a year within that time frame, say, the year 2000.
+
+## More plotting
+
+The variable `population` is not missing data from the year 2000, so we can also plot `life expectancy` against `population` for observations taken in 2000, as well. 
+
+```{r life-expectancy-plots-2000}
+## extract observations from the year 2000 only and save in a new dataframe
+africadata_2000 = africadata %>% filter(year == 2000)
+
+## check 
+str(africadata_2000) #all variables from africadata included
+summary(africadata_2000) #and each variable is of the same class as corresponding africadata variables
+
+## plot
+## life_expectancy vs infant_mortality in the year 2000
+plot5 = ggplot() + geom_point(data = africadata_2000, aes(x = infant_mortality, y = life_expectancy)) + 
+  geom_smooth(data = africadata_2000, aes(x = infant_mortality, y = life_expectancy), method = 'lm') +
+  labs(x = "infant mortality", y = "life expectancy", title = "correlation between life expectancy and infant mortality in Africa, year 2000")
+
+plot6 = ggplot() + geom_point(data = africadata_2000, aes(x = population, y = life_expectancy)) + 
+  scale_x_continuous(trans = "log") +
+  geom_smooth(data = africadata_2000, aes(x = population, y = life_expectancy), method = 'lm') +
+  labs(x = "population", y = "life expectancy", title = "correlation between life expectancy and population size, year 2000")
+
+figure_file = here("coding-exercise","results", "figures","life_exp_inf_mort_2000.png")
+ggsave(filename = figure_file, plot=plot5) 
+
+figure_file = here("coding-exercise","results", "figures","life_exp_pop_2000.png")
+ggsave(filename = figure_file, plot=plot6) 
+
+```
+
+```{r load-life-expectancy-plots-2000-inf-mort}
+#| label: fig-inf-mort-2000
+#| fig-cap: "life expectancy by infant mortality, Africa 2000."
+#| echo: FALSE
+knitr::include_graphics(here("coding-exercise","results","figures","life_exp_inf_mort_2000.png"))
+```
+
+```{r load-life-expectancy-plots-2000-pop}
+#| label: fig-pop-2000
+#| fig-cap: "life expectancy by population size, Africa 2000."
+#| echo: FALSE
+knitr::include_graphics(here("coding-exercise","results","figures","life_exp_pop_2000.png"))
+```
+
+Are these correlations (linear regressions) significant? 
+
+
+## Simple model fits
+
+The following code chunk utilizes the `lm()` function in R to determine the best-fit, simple linear regression model with `life_expectancy` in the year 2000 as the outcome variable and either `infant_mortality` or `population` as the predictor.
+
+```{r lm-models-life-expectancy}
+# linear regression, fixed effect, life expectancy ~ infant_mortality
+fit1 = lm(data = africadata_2000, life_expectancy ~ infant_mortality) #results saved in lm object `fit1`
+
+# linear regression, fixed effect, life expectancy ~ infant_mortality
+fit2 = lm(data = africadata_2000, life_expectancy ~ population) #results saved in lm object `fit2`
+
+# print summary of lm objects fit1 and fit2
+summary(fit1)
+summary(fit2)
+
+table1 = fit1 %>% tbl_regression() #save summaries as tables using tbl_regression() function from flextable package
+table2 = fit2 %>% tbl_regression() #save summaries as tables using tbl_regression() function from flextable package
+
+# save summary tables
+summarytable_file = here("coding-exercise","results", "tables-files", "lm_life_exp_inf_mort.rds")
+saveRDS(table1, file = summarytable_file)
+
+summarytable_file = here("coding-exercise","results", "tables-files", "lm_life_exp_pop.rds")
+saveRDS(table2, file = summarytable_file)
+
+# extract p-values from summaries to display on figures
+p.infant_mortality = unname(summary(fit1)$coefficients[,"Pr(>|t|)"])[2]
+p.population = unname(summary(fit2)$coefficients[,"Pr(>|t|)"])[2]
+
+```
+
+```{r load-table-LE-IM}
+#| label: tbl-lm_life_exp_inf_mort-2000
+#| tbl-cap: "Linear regression model of life expectancy by infant mortality."
+#| echo: FALSE
+resulttable=readRDS(here("coding-exercise","results","tables-files", "lm_life_exp_inf_mort.rds"))
+knitr::kable(resulttable)
+```
+
+```{r load-table-LE-Pop}
+#| label: tbl-lm_life_exp_pop-2000
+#| tbl-cap: "Linear regression model of life expectancy by population size."
+#| echo: FALSE
+resulttable=readRDS(here("coding-exercise","results","tables-files", "lm_life_exp_pop.rds"))
+knitr::kable(resulttable)
+```
+
+```{r life-expectancy-plots-2000-pvals}
+## replot with pvals 
+## life_expectancy vs infant_mortality in the year 2000
+plot7 = ggplot() + geom_point(data = africadata_2000, aes(x = infant_mortality, y = life_expectancy)) + 
+  geom_smooth(data = africadata_2000, aes(x = infant_mortality, y = life_expectancy), method = 'lm') +
+  annotate(geom = "text", x = 125, y = 70, label = paste("p-value =", signif(p.infant_mortality, digits = 3)), color = "forestgreen") +
+  labs(x = "infant mortality", y = "life expectancy", title = "correlation between life expectancy and infant mortality in Africa, year 2000")
+
+plot8 = ggplot() + geom_point(data = africadata_2000, aes(x = population, y = life_expectancy)) + 
+  scale_x_continuous(trans = "log") +
+  geom_smooth(data = africadata_2000, aes(x = population, y = life_expectancy), method = 'lm') +
+  annotate(geom = "text", x = 163000, y = 40, label = paste("p-value =", signif(p.population, digits = 3)), color = "maroon") +
+  labs(x = "population", y = "life expectancy", title = "correlation between life expectancy and population size, year 2000")
+
+figure_file = here("coding-exercise","results", "figures","life_exp_inf_mort_reg.png")
+ggsave(filename = figure_file, plot=plot7) 
+
+figure_file = here("coding-exercise","results", "figures","life_exp_pop_reg.png")
+ggsave(filename = figure_file, plot=plot8) 
+
+```
+
+```{r load-life-expectancy-plots-2000-pvals-inf-mort}
+#| label: fig-reg-inf-mort-2000
+#| fig-cap: "linear regression of life expectancy by infant mortality, Africa 2000."
+#| echo: FALSE
+knitr::include_graphics(here("coding-exercise","results","figures","life_exp_inf_mort_reg.png"))
+```
+
+```{r load-life-expectancy-plots-2000-pvals-pop}
+#| label: fig-reg-pop-2000
+#| fig-cap: "linear regression of life expectancy by population size, Africa 2000."
+#| echo: FALSE
+knitr::include_graphics(here("coding-exercise","results","figures","life_exp_pop_reg.png"))
+```
+
+Life expectancy appears to decrease with infant mortality, while decreasing only slightly with population size (@fig-reg-inf-mort-2000, @fig-reg-pop-2000). Using a definition of $pvalue < 0.05$ as significance, it is evident that population size is a poor predictor of life expectancy ($p = 0.6 > 0.05$). However, infant mortality is in fact a better, significant predictor of life expectancy ($p = 2 \times 10^{-8}$) (@tbl-lm_life_exp_inf_mort-2000, @tbl-lm_life_exp_pop-2000). Thus, we fail to reject the null hypothesis that life expectancy is not correlated with population size, but do reject the null hypothesis that life expectancy is not correlated with infant mortality rates.
+
+### This section is contributed by Taylor Glass. 
+# Exploring the dataset
+I chose to explore the 'movie' dataset in the dslabs package. I used the help() function to find the description of the dataset and an explanation of the 7 variables it includes. I used the str() function to determine there are 100,004 observations of 7 variables. There are 4 integer variables, 1 character variable, 1 numeric variable and one factor variable with 901 levels. I used the summary() function to examine the range of each numerical variable. The year the movie was released ranges from 1902 to 2016. There are 6 distinct genres along with an 'other' option. The mean rating for all 100,004 movies included in the dataset is 3.544.  
+```{r}
+help("movielens") ##learn about the dataset
+str(movielens) ##determine dimensions of dataset
+summary(movielens) ##explore ranges for numerical variables
+```
+# Processing/cleaning data 
+I decided to create a subset of this data with movie ratings from just the year that I was born, 2001. I used the filter function to create a new object called 'mymovies' with 3442 observations of 7 variables. I decided to explore the ratings among different genres of movies during 2001. I created a boxplot using genres as the categorical variable, which was very messy and not helpful. I decided to filter the datset further by only including movies in the drama and comedy genres, which limited the dataset to 319 observations of 7 variables. I selected the title, genres, and rating columns because they are the only variables useful for this analysis. When I created the second boxplot with the final dataset called 'mymovies3', it became easy to view the spread in ratings for drama and comedy movies released in 2001. The average rating for comedy movies is a 3, while the average rating for drama movies is a 4. 
+```{r}
+mymovies <- movielens %>% 
+              filter(year == 2001) ##limit dataset to movies released in 2001
+str(mymovies)
+
+mymovies %>% ggplot(aes(x=genres,  y=rating)) + ##use genres as the categorical variable and rating as the numerical variable
+              geom_boxplot()   ##create exploratory boxplot 
+
+mymovies2 <- mymovies %>% 
+              filter(year == 2001 & genres %in% c("Drama", "Comedy")) ##further filter dataset to include 2 genres
+str(mymovies2)
+
+mymovies3 <- mymovies2 %>%
+              select("title", "genres", "rating") ##select 3 columns of useful information 
+str(mymovies3)
+
+```
+# Create a few exploratory figures
+I created the second boxplot with the final dataset called 'mymovies3', and it became easy to view the spread in ratings for drama and comedy movies released in 2001. I added a title for the boxplot and centered it to make it easier to read. The average rating for comedy movies is a 3, while the average rating for drama movies is a 4. I practiced saving this image to the folder previously created by Cora using the here() and ggsave() functions. To create another visualization of this data, I used the mean ratings from each category in a bar graph. The means of the ratings for each genre are displayed with better precision in this visualization. The mean rating for comedy movies is a little less than 3 at about 2.9 while the average rating for drama movies seems lower at about 3.5. This discrepancy could be explained by the 2 outliers shown in the drama category on the boxplot because these observations are skewing the mean. I saved this graph to the same folder with the boxplot using the here() and ggsave() functions. I also created a table of my final dataset to include the movie titles of both genres with each of their ratings from reviewers. It is a little busy since there are multiple reviews for the some of the same movies, so I organized it by title to allow for quick review of all the ratings provided for each movie. The first table has been commented out, so it will not print on this rendered website. It is included to show the process of creating the better table.
+```{r}
+boxplot <- mymovies3 %>% ggplot(aes(x=genres,  y=rating)) +   ##visualize the ratings for each genre of movie 
+                geom_boxplot() +    ##create clean boxplot to compare ratings across genres in 2001
+                labs(title = "Ratings for Drama and Comedy Movies in 2001 ") +  ##add a title to the graph
+                theme(plot.title = element_text(hjust = 0.5)) ##center the title 
+
+figure_file <- here("coding-exercise", "results", "figures", "movies_boxplot.png") ##inform R on where to save the image
+ggsave(filename = figure_file, plot = boxplot) ##save the image in the predefined location 
+
+## ensure the figure renders on the website
+#| label: fig-inf-mort-all.  ##create a label for the final figure
+#| fig-cap: "life expectancy by infant mortality, Africa, 1960-2016."  ##create a label for the final figure
+#| echo: FALSE  ##ensure these lines are not reproduced in the rendered version
+knitr::include_graphics(here("coding-exercise","results","figures","movies_boxplot.png")) ##tag the saved location
+
+bargraph <- mymovies3 %>% ggplot(aes(x=genres, y=rating)) + ##visualize the ratings for each genre of movie
+                geom_bar(stat = "summary", fun = "mean") +  ##use the mean of each rating for the bars
+                labs(title = "Ratings for Drama and Comedy Movies in 2001") + ##create a title for the graph
+                theme(plot.title = element_text(hjust = 0.5)) ##center the title
+
+figure_file2 <- here("coding-exercise", "results", "figures", "movies_bargraph.png") ##inform R on where to save the image
+ggsave(filename = figure_file2, plot = bargraph) ##save the image in the predefined location
+
+## ensure the figure renders on the website
+#| label: fig-inf-mort-all  ##create a label for the final figure
+#| fig-cap: "life expectancy by infant mortality, Africa, 1960-2016."  ##create a label for the final figure
+#| echo: FALSE  ##ensure these lines are not reproduced in the rendered version
+knitr::include_graphics(here("coding-exercise","results","figures","movies_bargraph.png")) ##tag the saved location
+
+## knitr::kable(mymovies3) ##create a table to display movie titles with their ratings
+## comment out the first table so it will not show on the rendered website
+better_table <- arrange(mymovies3, title) ##organize the table by title 
+knitr::kable(better_table) ##view new table with all ratings for each movie grouped together by title
+```
+
+# Simple statistical model 
+I decided to conduct a simple t test to determine if the mean ratings among movies in each genre are statistically different from one another. I created an object called 'drama' to pull the ratings for movies in the drama genre from the dataframe. I did the same thing for movies in the comedy genre and saved that object as 'comedy'. I used the base R t.test() function to compare the average ratings between the two groups and printed the results. 
+```{r}
+drama <- mymovies3$rating[mymovies3$genres == "Drama"] ##create an object with ratings only for movies in drama genre
+comedy <- mymovies3$rating[mymovies3$genres == "Comedy"] ##create an object with ratings only for movies in comedy genre
+t.test1 <- t.test(drama, comedy) ##run a two-sample t-test between the two numeric vectors
+print(t.test1) ##show the results of the t-test
+```
+
+# Results of simple statistical model 
+After running the two-sample t-test, I get a test statistic of 4.6912 with a tiny p-value of 4.257e-06. Since the p-value is much less than 0.05, we can reject the null hypothesis to conclude that there is a statistically significant difference between the mean ratings of drama and comedy movies in 2001. It is clear that movies in the drama genre received higher ratings from viewers compared to movies in the comedy genre in 2001. 
+
