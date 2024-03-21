@@ -156,8 +156,6 @@ The code chunk below selects the `Y`, `DOSE`, `AGE`, `SEX`, `RACE`, `RATE`, `WT`
 mavoglurant_data_cleaned = mavoglurant_data_cleaned %>%
   select(y, DOSE, RATE, AGE, SEX, RACE, WT, HT) %>%
   mutate(SEX = factor(SEX), RACE = factor(RACE))
-
-
 ```
 
 ## Model Fitting: continuous outcomes
@@ -232,7 +230,7 @@ resulttable=readRDS(here("fitting-exercise","tables", "y_DOSE_reg.rds"))
 knitr::kable(resulttable)
 ```
 
-The output of `tidymodel`'s `fit()` on our linear regression by `lm` model provides our estimated parameters ("estimate", @tbl-y-dose-reg), as well as the standard error ($\sigma / \sqrt{n}$). Before we examine the results of our ANOVA, however, we want to take a closer look at the fit of othe linear model we fed into the analysis. Below, we use the `yardstick` package to determine the root mean squared error and correlation coefficient of the linear regression between `y` and `DOSE`. 
+The output of `tidymodel`'s `fit()` on our linear regression by `lm` model provides our estimated parameters ("estimate", @tbl-y-dose-reg), as well as the standard error ($\sigma / \sqrt{n}$). Before we examine the results of our ANOVA, however, we want to take a closer look at the fit of the linear model we fed into the analysis. Below, we use the `yardstick` package to determine the root mean squared error and correlation coefficient of the linear regression between `y` and `DOSE`. 
 
 ```{r yardstick-y-dose-reg}
 # calculate r^2 and RMSE from y_DOSE_reg model 
@@ -291,7 +289,7 @@ knitr::kable(resulttable)
 
 ### `DOSE`, `RATE`, `AGE`, `SEX`, `RACE`, `HT`, and `WT` as predictors of `y`
 
-We've demonstrated that dose correlates positively with the sum total DV `y`; we've also demonstrated that there is quite a bit of heterogeneity around the estimate predicted by `DOSE` alone. Here, we would like to discern whether a model utilizing `DOSE`, `RATE`, AGE`, `SEX`, `RACE`, `HT`, and `WT` all as predictors of `y` will provide a better fitting model. This will ultimately raise the question of whether we are *overfitting* by introducing too many parameters, but let's not get ahead of ourselves!
+We've demonstrated that dose correlates positively with the sum total DV `y`; we've also demonstrated that there is quite a bit of heterogeneity around the estimate predicted by `DOSE` alone. Here, we would like to discern whether a model utilizing `DOSE`, `RATE`, `AGE`, `SEX`, `RACE`, `HT`, and `WT` all as predictors of `y` will provide a better fitting model. This will ultimately raise the question of whether we are *overfitting* by introducing too many parameters, but let's not get ahead of ourselves!
 
 The questions addressed in this section are as follows:
 
@@ -326,8 +324,6 @@ table1 = y_all_reg_model %>% tidy()
 # save summary tables
 summarytable_file = here("fitting-exercise", "tables", "y_all_reg.rds")
 saveRDS(table1, file = summarytable_file)
-
-
 ```
 
 ```{r load-table-y-all-reg}
@@ -684,7 +680,6 @@ knitr::include_graphics(here("fitting-exercise","figures","metrics_sex_all_reg.p
 knitr::include_graphics(here("fitting-exercise","figures","roc_sex_all_reg.png"))
 ```
 Including more predictors improves the accuracy of the classification model to 94% (@fig-metrics-sex-all-reg), and the ROC-AUC performance to 0.98 (@fig-roc-sex-all-reg). This model is certainly better at classification than the previous but, once again, fails to support or predict any biological indicator of `SEX` by the predictors included in the study and may suffer from fitting with too many unnecessary parameters. We did discover, however, the significance of the contributions of different factors to the prediction of `SEX`, with `HT` being the most significant predictor (@tbl-logistic-sex-all). 
-
 # Model Improvement Assignment
 
 The code chunk below defines the value of a seed, but does not yet set the seed. 
@@ -747,12 +742,10 @@ y_DOSE_reg_WF =
 train_y_DOSE_reg_model = fit(y_DOSE_reg_WF, data = training) 
 table1 = y_DOSE_reg_model %>% tidy()
 
-
 ### saving table results 
 # save summary tables
 summarytable_file = here("fitting-exercise", "tables", "y_DOSE_reg_training.rds")
 saveRDS(table1, file = summarytable_file)
-
 ```
 
 ```{r load-table-y-dose-reg-training}
@@ -833,7 +826,6 @@ y_multiple_reg_WF =
 train_y_multiple_reg_model = fit(y_multiple_reg_WF, data = training) 
 table1 = train_y_multiple_reg_model %>% tidy()
 
-
 ### saving table results 
 # save summary tables
 summarytable_file = here("fitting-exercise", "tables", "y_multiple_reg_training.rds")
@@ -893,7 +885,7 @@ knitr::kable(resulttable)
 
 We compare the RMSE of the above two regression models to the RMSE of a null model predicting the mean `y` for each observation without considering `DOSE`.
 
-```{yardstick-null-model-training}
+```{r yardstick-null-model-training}
 #null model 
 null_y_reg = null_model() %>%
   set_engine("parsnip") %>%
@@ -948,7 +940,7 @@ Comparing the RMSE values reported in @tbl-metrics-y-DOSE-reg-training, @tbl-met
 
 Assessing the model performance in a more rigorous way - against unseen data - can improve our understanding of the precision with which the model captures the behavior of the outcome variable based on the predictors. One way to do so is cross-validation. 
 
-### Cross -Validation of Three Possible Models
+### Cross-Validation of Three Possible Models
 
 In this section, we conduct a 10-fold cross-validation of each model against the training dataset according to the workflow suggest in the [Introduction to TidyModels](https://www.tidymodels.org/start/resampling/#fit-resamples). 
 
@@ -1056,3 +1048,129 @@ knitr::kable(resulttable)
 ```
 
 The mean RMSE of the linear regression model with `DOSE` as a single predictor has actually improved from 702 to 690, though it is still outperformed by the multiple linear regression model, with a mean RMSE of 645. Here, we also see that the $R^2$ value of the multiple regression model has improved and also demonstrates a greater fit of the model than the single regression model (though only slightly). 
+
+# This section added by Cassia Roth
+
+## Model Predictions
+
+First, we will put the observed values and the predicted values from the 3 original model fits to all of the training data (the ones without the CV) into a data frame as well as adding a label to indicate the model. Then we will use ggplot to create a figure that plots as symbols observed values on the x-axis and predictions from each of the 3 models, including the null model on the y-axis. I have used a different color and/or a different symbol to differentiate between the 3 model predictions. Both x and y axes go from 0 to 5000 and include a 45 degree line.
+
+```{r}
+# ChatGPT and Taylor Glass's example helped me with this code.
+
+# Create data frame with the observed values and predicted values 
+plotdata <- data.frame(
+  observed = training$y,
+  predicted_model1 = predictions_y_DOSE_reg_train$.pred,
+  predicted_model2 = predictions_y_multiple_reg_train$.pred,  # Adding predicted values from the second model
+  predicted_null = predictions_null_model$.pred,  # Adding predicted values from the null model
+  model = c(rep("model 1", nrow(training)),  # Adding labels for each model
+            rep("model 2", nrow(training)),
+            rep("null model", nrow(training)))
+)
+plotdata
+
+# Use GGplot to create a visual representation
+plotmodels <- ggplot(plotdata, aes(x = observed)) +
+  geom_point(aes(y = predicted_null, color = "null model"), shape = 1) +
+  geom_point(aes(y = predicted_model1, color = "model 1"), shape = 2) +
+  geom_point(aes(y = predicted_model2, color = "model 2"), shape = 3) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "black") + #add the 45 degree line
+  xlim(0, 5000) + #limit the x-axis values
+  ylim(0, 5000) + #limit the y-axis values
+  labs(x = "Observed Values", y = "Predicted Values")
+plotmodels
+
+# Save Figure
+figure_file = here("fitting-exercise", "figures", "plot_models.png")
+ggsave(filename = figure_file, plot=plotmodels) 
+```
+
+Per Dr. Handel, a good model will have points that fall along the dotted line, showing that observed and predicted values agree -- with some scatter. Here we can see that the null model (circles in blue) fall along a horizontal line. This makes sense since they are the mean observations. Model 1 (in red triangles), which only predicts `Y` based on the `DOSE` variable falls on three horizontal lines, which corresponds with the variables three discrete values. Finally, the full model, Model 2 (in green plus marks) have more scatter and fall closer to the 45 degree line. This suggests that it is better at predicting the observed values than both the null model and Model 1, the simplest model.
+
+To see if there are patterns to the scatter, we will plot predicted versus residual values for Model 2. 
+```{r}
+# ChatGPT helped me with this code.
+
+# Calculate residuals for Model 2
+plotresiduals <- data.frame(
+  predicted_model2 = plotdata$predicted_model2,  # Predicted values from 'plotdata'
+  residuals_model2 = plotdata$predicted_model2 - plotdata$observed  # Calculate residuals: predicted - observed
+)
+
+# Create the plot
+plotresiduals <- ggplot(plotresiduals, aes(x = predicted_model2, y = residuals_model2)) +
+  geom_point() +  # Scatter plot of predicted versus residuals
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +  # Add a horizontal dashed line at y = 0
+  xlim(min(plotresiduals$predicted_model2) - 100, max(plotresiduals$predicted_model2) + 100) +  # Adjust x-axis limits
+  ylim(min(plotresiduals$residuals_model2) - 100, max(plotresiduals$residuals_model2) + 100) +  # Adjust y-axis limits to symmetrically cover positive and negative residuals
+  labs(x = "Predicted Values (Model 2)", y = "Residuals (Model 2)", title = "Predicted vs Residuals Plot for Model 2")
+plotresiduals
+
+# Save Figure
+figure_file = here("fitting-exercise", "figures", "residuals.png")
+ggsave(filename = figure_file, plot=plotresiduals) 
+```
+
+As Dr. Handel said, a good model will have data in a cloud without any clear pattern. Here, there are more and more negative values compared with positive ones. Thus, our model could be missing something important, or it could still be too simple (imagine if we decided to go with only the `DOSE` variable)!
+
+## Model Predictions and Uncertainty
+
+We have decided we will only focus on Model 2, the more complex linear model, given that it had the best performance from our plotting of the observed versus predicted values.
+
+We will re-set the random seed, using the same values as above. Then, we will use the `bootstraps` function from the `rsample` package to create 100 bootstraps, using the training data. Once we store the predictions, we will compute the mean and 89% confidence intervals. Finally, we will plot a figure of observed values on the x-axis and point estimate (obtained from your original predictions on the training data), as well as median and the upper and lower bounds -- obtained by the bootstrap sampling and stored in pred on the y-axis. We will use black symbols for the original predictions (the point estimate, or the mean), green to indicate median and blue to indicate lower and upper confidence limits.
+
+```{r, message=FALSE,  warning=FALSE}
+# ChatGPT helped me with this code. I also looked at my classmates' Taylor Glass and Emma Hardin-Parker.
+
+# Set seed for reproducibility
+set.seed(rngseed)
+
+#Loop through each bootstrap sample
+for (i in 1:length(bootstraps$splits)) {
+  # Get a single bootstrap sample
+  sample_bs <- rsample::analysis(bootstraps$splits[[i]])
+  
+  # Fit the model to the current bootstrap sample
+  fitted_model <- train_y_multiple_reg_model %>% fit(data = sample_bs)
+  
+  #Make predictions for original training data
+  predictions <- predict(fitted_model, new_data = training)
+  
+  #Store predictions in list
+  preds_bootstrap[[i]] <- predictions
+}
+
+#Convert list of predictions into a matrix
+pred_matrix <- do.call(cbind, preds_bootstrap)
+
+# Compute mean and 89% CIs
+preds <- apply(pred_matrix, 1, quantile, c(0.055, 0.5, 0.945))
+preds <- t(preds)
+preds
+
+# create a data frame with all the necessary variables
+finaldata <- data.frame(
+  observed = c(training$y), 
+  point_estimates = c(predictions_y_multiple_reg_train$.pred),
+  medians = preds[, 2],
+  lower_bound = preds[, 1],
+  upper_bound = preds[, 3]
+)
+# create visualization with all 5 variables 
+finalplot <- ggplot(finaldata, aes(x = observed, y = point_estimates)) +
+  geom_point(color = "black") +  
+  geom_point(aes(y = medians), color = "green") + 
+  geom_errorbar(aes(ymin = lower_bound, ymax = upper_bound), width = 0.1, color = "blue") + 
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "black") +  # add 45 degree line
+  xlim(0, 5000) +
+  ylim(0, 5000) +
+  labs(x = "Observed Values", y = "Predicted Values")
+finalplot
+
+# Save Figure
+figure_file = here("fitting-exercise", "figures", "final_plot.png")
+ggsave(filename = figure_file, plot=finalplot) 
+```
+
+With this plot, we can see that our model does a relatively good job of predicting the observed values. The black points are the original predictions, the green points are the median of the bootstrapped predictions, and the blue lines are the 89% confidence intervals. The 45 degree line is included to show where the observed and predicted values would be if they were the same. Most of the point estimates (the black dots) are very close to the predicted values from the bootstrapping exercise, and both are close to the 45 degree line. Finally, the confidence intervals are relatively narrow. This suggests that our model is doing a good job of predicting the observed values.
