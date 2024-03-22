@@ -1126,6 +1126,9 @@ We will re-set the random seed, using the same values as above. Then, we will us
 # Set seed for reproducibility
 set.seed(rngseed)
 
+# create 100 bootstraps with the training data
+bootstraps <- bootstraps(training, times = 100)
+
 #Loop through each bootstrap sample
 for (i in 1:length(bootstraps$splits)) {
   # Get a single bootstrap sample
@@ -1144,7 +1147,7 @@ for (i in 1:length(bootstraps$splits)) {
 #Convert list of predictions into a matrix
 pred_matrix <- do.call(cbind, preds_bootstrap)
 
-# Compute mean and 89% CIs
+# Compute mean and CIs
 preds <- apply(pred_matrix, 1, quantile, c(0.055, 0.5, 0.945))
 preds <- t(preds)
 preds
@@ -1173,4 +1176,4 @@ figure_file = here("fitting-exercise", "figures", "final_plot.png")
 ggsave(filename = figure_file, plot=finalplot) 
 ```
 
-With this plot, we can see that our model does a relatively good job of predicting the observed values. The black points are the original predictions, the green points are the median of the bootstrapped predictions, and the blue lines are the 89% confidence intervals. The 45 degree line is included to show where the observed and predicted values would be if they were the same. Most of the point estimates (the black dots) are very close to the predicted values from the bootstrapping exercise, and both are close to the 45 degree line. Finally, the confidence intervals are relatively narrow. This suggests that our model is doing a good job of predicting the observed values.
+With this plot, we can see that our model does a relatively good job of predicting the observed values. The black points are the original predictions, the green points are the median of the bootstrapped predictions, and the blue lines are the 89% confidence intervals. The 45 degree line is included to show where the observed and predicted values would be if they were the same. Most of the point estimates (the black dots) are very close to the predicted values from the bootstrapping exercise, and both are close to the 45 degree line. Finally, the confidence intervals are relatively narrow.
