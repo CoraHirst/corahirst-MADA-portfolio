@@ -118,7 +118,7 @@ skimr::skim(d4)
 ```
 
 ```{r}
-processeddata <- d4
+processeddata2 <- d4
 ```
 
 

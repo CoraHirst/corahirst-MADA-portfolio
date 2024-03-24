@@ -1085,6 +1085,12 @@ plotmodels
 figure_file = here("fitting-exercise", "figures", "plot_models.png")
 ggsave(filename = figure_file, plot=plotmodels) 
 ```
+```{r load-fig-plot-models}
+#| label: fig-plot-models
+#| fig-cap: "Scatterplot of sum total DV, y, predicted by trained null model, DOSE (model 1), and All predictor variables (model 2), against observed y values of training set. "
+#| echo: FALSE
+knitr::include_graphics(here("fitting-exercise","figures","plot_models.png"))
+```
 
 Per Dr. Handel, a good model will have points that fall along the dotted line, showing that observed and predicted values agree -- with some scatter. Here we can see that the null model (circles in blue) fall along a horizontal line. This makes sense since they are the mean observations. Model 1 (in red triangles), which only predicts `Y` based on the `DOSE` variable falls on three horizontal lines, which corresponds with the variables three discrete values. Finally, the full model, Model 2 (in green plus marks) have more scatter and fall closer to the 45 degree line. This suggests that it is better at predicting the observed values than both the null model and Model 1, the simplest model.
 
@@ -1128,6 +1134,9 @@ set.seed(rngseed)
 
 # create 100 bootstraps with the training data
 bootstraps <- bootstraps(training, times = 100)
+
+#creating a list to store predictions from bootstrap training 
+preds_bootstrap = list()
 
 #Loop through each bootstrap sample
 for (i in 1:length(bootstraps$splits)) {
@@ -1177,3 +1186,30 @@ ggsave(filename = figure_file, plot=finalplot)
 ```
 
 With this plot, we can see that our model does a relatively good job of predicting the observed values. The black points are the original predictions, the green points are the median of the bootstrapped predictions, and the blue lines are the 89% confidence intervals. The 45 degree line is included to show where the observed and predicted values would be if they were the same. Most of the point estimates (the black dots) are very close to the predicted values from the bootstrapping exercise, and both are close to the 45 degree line. Finally, the confidence intervals are relatively narrow. This suggests that our model is doing a good job of predicting the observed values and that we can be relatively confident in our predictions.
+
+# Part 3: Final Model Evaluation on Test Data (Cora Hirst)
+
+In this section, we utilize the parameter estimates from the multiple regression model (*not* acquired from the bootstrapping exercise, but the model fit to the entirety of our training data.) Refer to @tbl-y-multiple-reg-training.
+
+We will be assessing the performance of this model on our unseen *test data*, which was earlier stored in the object `testing.`
+
+```{r}
+# make predictions on testing data
+predictions_test <- predict(train_y_multiple_reg_model, new_data = testing)$.pred
+
+#for the sake of keeping everything in one code chunk, I am going to generate my predicitons on the training data again.
+predictions_train  = predict(train_y_multiple_reg_model, new_data = training)$.pred
+
+# plot
+ggplot() + geom_point(aes(x = testing$y, y = predictions_test, col = "test")) +
+  geom_point(aes(x=training$y, y = predictions_train, col = "train")) +
+  labs(x = "observed y", y = "predicted y", title = "comparison of performance of trained model on training and test data") +
+  geom_abline(linetype = "dashed")
+
+```
+
+While both the single linear regression model of `y` by `DOSE` and the multiple ression of `y` against all predictor variables fit the data better than the Null Model (@fig-plot-models.) In fact, model 1 - which predicts `y` based solely on `DOSE`, appears to predict the "ball park" of where we would expect `y` to be at that dose. Not considering a person's height or weight, I'm not sure any real practicioner of drug adminstator would base a person's dosage solely on this model, but it seems to have a significant effect on `y`. 
+
+Model 2 does further improve results, and this makes sense - not only are we using more observation (person!) specific variables like height and weight to predict a continuous outcome, but also, it appears that we aren't overfitting the data too terribly. 
+
+What I will say is that model 2 does fail to capture a nonlinear increase in `y` at high `y` values, that is, large `y` values are larger than what a linear model with all predictors predicts, and this is clear from the model's performance on unseen test data, as well. Unless these high `y` values are biologically relevant and easy to achieve, I'm not sure we need to worry about a more specific, non-linear model to catch this trend. However, if these high `y` values are potentially dangerous, we may want to identify which variables this nonlinear trend is most correlated with.
