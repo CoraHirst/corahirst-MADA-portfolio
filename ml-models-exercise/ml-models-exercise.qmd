@@ -1,0 +1,66 @@
+---
+title: "Fitting Exercise Week 8"
+author: "Cora Hirst"
+execute: 
+  warning: false
+  message: false
+---
+
+```{r setup}
+#install.packages("tidymodels")
+library(tidymodels)
+
+#install.packages("tidyverse")
+library(tidyverse)
+
+#install.packages("ggplot2")
+library(ggplot2)
+
+#install.packages("here")
+library(here)
+
+#define seed
+rng.seed = 1234
+```
+
+# More Processing
+
+The code chunk below loads the cleaned data from `fitting-exercise\fitting_exercise.qmd`.
+
+```{r load-data}
+#loading data from cleaned data rds
+mavoglurant_data_cleaned = readRDS(here("ml-models-exercise", "data", "mavoglurant_data_cleaned.rds"))
+
+```
+
+
+The following code chunk combines `RACE` categories $7$ and $88$ into a single category, called $3$. 
+
+```{r combine-RACE-categories}
+#combines RACE categories 7 and 88 into new category, 3
+mavoglurant_data1 = mavoglurant_data_cleaned %>%
+  mutate(RACE = case_when(RACE %in% c(7,88) ~ factor(3), .default = RACE)) # %in% is essentialy == 7 | == 88
+
+```
+
+# Pairwise Correlation
+ 
+We would like to remove continuous variables that are correlated with one another, as to not bias our learned models by weighing one variable more heavily due to its correlation with another. 
+The following code chunk generates a pairwise correlation plot for the continuous variables, `y`, `AGE`, `WT`, and `HT`:
+
+```{r correlation-plot}
+# subset data for continuous variables 
+mavo_cont = mavoglurant_data1 %>% select(y, AGE, WT, HT)
+
+# generate correlation matrix
+correlation_matrix = cor(mavo_cont, use = "pairwise.complete.obs")
+
+## plot correlation matrix as map 
+cont.corrplot = corrplot::corrplot(correlation_matrix, method = "color", type = "upper")
+
+```
+
+The Height and weight variables are most strongly correlated, with a coefficient around `r signif(correlation_matrix["WT", "HT"], 1)`. Age and height are the next most correlated, with a significantly looser correlation coefficient of `r signif(correlation_matrix["AGE", "HT"], 1)`. IF we consider an excessive correlation threshold of 0.9, we need not be concerned that extreme colinearity between our continuous variables will bias the weight assigned each variable of our predictive models. 
+
+# Feature Engineering
+

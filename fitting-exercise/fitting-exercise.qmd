@@ -156,6 +156,11 @@ The code chunk below selects the `Y`, `DOSE`, `AGE`, `SEX`, `RACE`, `RATE`, `WT`
 mavoglurant_data_cleaned = mavoglurant_data_cleaned %>%
   select(y, DOSE, RATE, AGE, SEX, RACE, WT, HT) %>%
   mutate(SEX = factor(SEX), RACE = factor(RACE))
+
+#write to an rds file
+# save summary tables
+data_file = here("ml-models-exercise", "data", "mavoglurant_data_cleaned.rds")
+saveRDS(mavoglurant_data_cleaned, file = data_file)
 ```
 
 ## Model Fitting: continuous outcomes
@@ -690,9 +695,10 @@ rngseed = 1234 #define the number of our seed
 
 As a last step in processing, we know that the `RACE` factor variable has some bizarre entries (7 or 88), and we are not particularly curious about asking questions regarding this variable now. So, we are going to remove it from the dataset in the code chunk below. I have also kept the `RATE` variable until this point, but will be removing it for this part of the assessment as well. 
 
-```{r remove-age}
+```{r remove-race}
 mavoglurant_data_cleaned = mavoglurant_data_cleaned %>%
   select(-c(RATE,RACE)) #remove variables RATE and RACE from the cleaned dataset
+
 ```
 
 Now, our dataset `mavoglurant_data_cleaned` consist of 120 observations of 6 variables: `y`, `DOSE`, `AGE`, `SEX`, `WT`, and `HT`.
