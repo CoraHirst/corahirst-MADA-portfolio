@@ -19,6 +19,12 @@ library(ggplot2)
 #install.packages("here")
 library(here)
 
+#install.packages("glmnet")
+library(glmnet)
+
+#install.packages("ranger")
+library(ranger)
+
 #define seed
 rng.seed = 1234
 ```
@@ -91,14 +97,123 @@ This distribution of BMI around an average of a little under 27 is similar to wh
 
 In this section, we will be fitting three models: 
 
-- For the first model, we’ll revisit the one we had previously, namely a linear model with all predictors.
+- For the first model, we’ll fit a linear model with all predictor,
 
-- For our second model, we’ll use LASSO regression.
+- for our second model, we’ll use LASSO regression, and
 
-- For our third model, we’ll do a random forest (RF).
+- for our third model, we’ll do a random forest (RF).
 
 Note that we will not be doing a training and test split to test the performance of our model. Instead, we will be fitting the entire dataset and performing cross-validation to observe how the model structure itself (not just the parameterization) performs on the data. 
 
+## Fitting to linear model with multiple predictors
+
+We will be fitting the `y` outcome to all of our predictor variables using a multiple linear regression model, not considering any interaction between the variables, in the code chunk below: 
+
+```{r recipes-and-workflows}
+## recipes
+rec_y_all = 
+  recipes::recipe(y ~ ., 
+         data = mavoglurant_data1) %>%
+         step_normalize(all_numeric_predictors()) %>% 
+         step_dummy(all_nominal_predictors())
+
+## models
+# Model 1: choose linear reg model with parsnip package
+linear_reg = 
+  parsnip::linear_reg() %>% #linear regression model
+  parsnip::set_engine("lm") %>% #with lm method
+  parsnip::set_mode("regression") #mode = regression, mode outcome is numeric
+
+# Model 2: choose lasso model
+lasso_mod = 
+  parsnip::linear_reg(penalty = 0.1, mixture = 1) %>%
+  parsnip::set_mode("regression") %>%
+  parsnip::set_engine("glmnet")
+
+# Model 3: random forest
+rf_mod = 
+  parsnip::rand_forest() %>%
+  parsnip::set_mode("regression") %>%
+  parsnip::set_engine("ranger", seed = rngseed)
+
+## Workflows
+# Linear regression 
+y_multiple_reg_WF = 
+  workflows::workflow() %>% #defining workflow object
+  workflows::add_model(linear_reg) %>% #choosing the model for the workflow
+  workflows::add_recipe(rec_y_all) #adding the recipe - which variables for outcome, predictor, any interactions.
+
+# Lasso regression
+y_multiple_LASSO_WF = 
+  workflows::workflow() %>%
+  workflows::add_model(lasso_mod) %>%
+  workflows::add_recipe(rec_y_all)
+
+#rf regression
+y_multiple_rf_WF = 
+  workflows::workflow() %>%
+  workflows::add_model(rf_mod) %>%
+  workflows::add_recipe(rec_y_all)
+
+```
+
+```{r linear-model-y-all}
+# Model 1: linear regression with multiple predictors
+# fit the model with the defined workflow
+model1 = y_multiple_reg_WF %>% fit(mavoglurant_data1) 
+# tidy output 
+tidy(model1) #print result
+```
+
+We have already compared this model to the null model (`fitting-exercise/fitting-exercise.qmd`), but in general, it is important that we do so to compare the performance of our multi-variable linear model. 
+
+The next code chunk fits a LASSO regression to predict `y` from all other variables in the dataset: 
+
+```{r LASSO-model-y-all}
+# Model 2: lasso model with multiple predictors
+model2 = y_multiple_LASSO_WF %>% fit(mavoglurant_data1)
+# tidy output
+tidy(model2) #print result
+```
+
+And here, we fit a random forest model: 
+
+```{r RF-model-y-all}
+# Model 3: random forest model with multiple predictors
+model3 = y_multiple_rf_WF %>% fit(mavoglurant_data1)
+# summarise output
+summary(model3)
+```
+
+Here, we would like to determine the RMSE of each model, and plot the predicted values of `y` per observation against the true observations.
+
+```{r model-performance-initial}
+### create a data frame of y predictions by model
+predictions = data.frame(true = mavoglurant_data1$y,
+                         model.1 = predict(model1, new_data = mavoglurant_data1) %>% select(.pred), 
+                         model.2 = predict(model2, new_data = mavoglurant_data1) %>% select(.pred),
+                         model.3 = predict(model3, new_data = mavoglurant_data1) %>% select(.pred)) 
+colnames(predictions) = c("true", "model.1", "model.2", "model.3")
+
+# make it ~long form~
+predictions_df = predictions %>%
+  pivot_longer(cols = c("model.1", "model.2", "model.3"),
+               values_to = "Prediction",
+               names_to = "Model") 
+
+### create a data frame of RMSE by model
+RMSE_by_model = data.frame(model = c("model.1", "model.2", "model.3"),
+                           rmse = c(rmse(data = predictions, truth = true, estimate = model.1)$.estimate,
+                                    rmse(data = predictions, truth = true, estimate = model.2)$.estimate,
+                                    rmse(data = predictions, truth = true, estimate = model.3)$.estimate))
+
+### plot
+
+plot = ggplot() + geom_point(data = predictions_df, aes(x = true, y = Prediction, col = Model)) + 
+  geom_abline(linetype = "dashed") %>%
+  labs(x = "Observed y", y = "Predicted y", "Model Predictions of Training Data vs True Outcome of Training Data")
+
+```
 
 
 
