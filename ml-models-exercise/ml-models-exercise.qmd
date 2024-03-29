@@ -64,3 +64,41 @@ The Height and weight variables are most strongly correlated, with a coefficient
 
 # Feature Engineering
 
+Even though the correlation between `HT` and `WT` (height and weight) here isn't super high, we still expect there to be some colinearity between them. As a result, we'd like to create a new feature that incorporates both of these variables - a new variable, `BMI`.
+
+While we are unsure of the units of `HT` and `WT` - unfortunately, there's little documentation available to tell us - we can guess from the range of weights (56.6 - 115.3) and heights (1.5 - 1.93) that `WT` is given in units of kgs and `HT` is given in units of meters. 
+
+We thus use the following equation 
+
+$$
+BMI = \frac{WT}{HT^2} kg/m^2
+$$
+
+to compute the BMI from the height and weight recorded for each observation in the code chunk below: 
+
+```{r compute-BMI}
+# calculating BMI and storing as new feature in `mavoglurant_data1` object
+mavoglurant_data1 = mavoglurant_data1 %>%
+  mutate(BMI = WT/(HT^2))
+
+#lets take a look at our BMIs 
+
+ggplot() + geom_boxplot(data = mavoglurant_data1, aes(x = BMI))
+```
+This distribution of BMI around an average of a little under 27 is similar to what we'd expect for North America (add CDC reference later.)
+
+# Model Building
+
+In this section, we will be fitting three models: 
+
+- For the first model, we’ll revisit the one we had previously, namely a linear model with all predictors.
+
+- For our second model, we’ll use LASSO regression.
+
+- For our third model, we’ll do a random forest (RF).
+
+Note that we will not be doing a training and test split to test the performance of our model. Instead, we will be fitting the entire dataset and performing cross-validation to observe how the model structure itself (not just the parameterization) performs on the data. 
+
+
+
+
