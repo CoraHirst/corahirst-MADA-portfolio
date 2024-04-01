@@ -28,6 +28,9 @@ library(ranger)
 #install.packages("doParallel")
 library(doParallel)
 
+#install.packages("rsample")
+library(rsample)
+
 #define seed
 rng.seed = 1234
 ```
@@ -223,19 +226,32 @@ plot
 
 ## Tuning to training data without cross validation
 
-This is a silly thing to do, because we will be tuning our parameters to data and testing our model performcance on the same data - which will, of course, lead us to overfit our model. 
+This is a silly thing to do, because we will be tuning our parameters to data and testing our model performance on the same data - which will, of course, lead us to overfit our model. 
 
-But we should try anyway, so that we can see what do expect from overfitting.
+But we should try anyway, so that we can see what we should expect from overfitting.
 
-### Lasso Model2
+### Tuning the LASSO model
 
-```{r tuning-LASSO-prep}
-# defining recipe again in the same code chunk
-rec_y_all = 
+```{r tuning-prep}
+# defining recipe again in the same section for clarity
+rec_y_tune = 
   recipes::recipe(y ~ ., 
          data = mavoglurant_data1) %>%
          step_normalize(all_numeric_predictors()) %>% 
          step_dummy(all_nominal_predictors())
+
+# creating resamples object 
+samples_tune = apparent(mavoglurant_data1)
+
+```
+
+
+```{r tuning-LASS0}
+# parallel processing is speedy
+doParallel::registerDoParallel()
+
+# setting seed
+set.seed(rng.seed)
 
 # updating LASSO model to include penalty
 lasso_mod2 = linear_reg(penalty = tune(), mixture = 1) %>% 
@@ -252,63 +268,174 @@ y_multiple_LASSO_tune_WF =
 # define paramater grid - vector here because only one tuning parameter
 lambda_grid <- grid_regular(penalty(range = c(-5, 2), trans = transform_log10()), levels = 50)
 
-# creating resamples object 
-samples_Ltune = apparent(mavoglurant_data1)
+# tuning model
+tuned_model2 = lasso_grid <- tune_grid(
+              y_multiple_LASSO_tune_WF,
+              resamples = samples_tune,
+              grid = lambda_grid
+)
+
+# observe the tuning process
+LASSO_tune = tuned_model2 %>% 
+                  autoplot()
+print(LASSO_tune)
+```
+
+### Tuning the Random Forest Model
+
+The random forest model has multiple hyperparameters, which makes sense considering the structure of a random forest (decisions need to be made about the strength of the links between nodes, the number of nodes to include, how large a node should be, how many trees to include, etc.) 
+
+Here, we will only be tuning two different parameters - the number of variables which can be split at each node, `mtry`, and the minimum size of a node, `min_n`. We will manually set the nunber of trees to 300, and keep all other hyperparameters at their default. 
+
+```{r tuning-RF}
+# setting seed
+set.seed(rng.seed)
+
+# update workflow accordingly 
+rf_mod2 <- rand_forest(mode = "regression",
+                      mtry = tune(),  # allow for tuning of mtry hyperparam
+                      min_n = tune(), # allow for tuning of min_n hyperparam
+                      trees = 300) %>% 
+           set_engine("ranger", seed = rng.seed) # set seed for reproducibility internally
+
+workflow2 <- workflow() %>%
+  add_recipe(rec_y_tune) %>%
+  add_model(rf_mod2) # use updated model
+
+# define a 7 by 7 parameter grid
+mtry_min_n_grid <- grid_regular(mtry(range = c(1,7)),
+                            min_n(range = c(1,21)),
+                            levels = 7)
+
+# tune the model 
+tuned_model3 <- workflow2 %>% 
+               tune_grid(resamples = samples_tune,
+                        grid = mtry_min_n_grid)
+
+# observe the tuning process 
+rf_tune <- tuned_model3 %>% 
+                 autoplot()
+print(rf_tune)
 
 ```
 
-```{r tuning-LASS0}
+This plot reveals that the lowest RMSE and highest $R^2$ results from the greater numbers of variables to be split at each node (`mtry`) and smaller node sizes (`min_n`). Decreasing either minimum node size or increasing the number of predictors decreases RMSE regardless of the value of the other; that is, a decrease in minimum node size or increase in number of predictors will always lead to a decrease in RMSE. As such, an `mtry` value of 7 and `min_n` size of 1 produces the best results. 
+
+This is somewhat concerning, especially when coupled with the saturation of $R^2$ near 0.95 (near perfect) at high numbers of predictors per node and a minimal node size of 1. Of course, using the most parameters and decreasing the size of nodes will result in the closest recapitulation of the data on which the model is trained. But what if we were to train the model with some chosen set of hyperparameters multiple times on all but a little subset of the data multiple times, randomizing which subset gets left out, attempting to recapitulate that test data each iteration, and determining the mean RMSE of the iterations at that parameter set? If we repeated this process with varying sets of hyperparameters (say, from our grid?), which set would get us to the lowest mean RMSE across iterations? 
+
+That is essentially the idea behind parameter tuning with cross-validation, and that is what we are going to do in the section below. 
+
+## Tuning with CV
+
+Here, cross validation will allow us to assess model performance on "unseen" data during the tuning process. To that end, in this section, we will be repeating the tuning procedure with samples created with the `vfold_vc()` function from the `rsamples` package. 
+
+The following code chunk defines our recipe (again, just for clarity, to keep the pieces of our process altogether and not scattered throughout this document) and generates 5 different folds of our `mavoglurant_dat1` dataset on which to preform cross-validation. 
+
+```{r tuning-prep-CV}
+# we are about to randomly sample to create our folds, so lets SeT oUr SeEd
+set.seed(rng.seed)
+
+# create samples from the entirety of our dataset
+folds_tune = rsample::vfold_cv(mavoglurant_data1, 5)
+
+# defining recipe again in the same section for clarity
+rec_y_tune = 
+  recipes::recipe(y ~ ., 
+         data = mavoglurant_data1) %>%
+         step_normalize(all_numeric_predictors()) %>% 
+         step_dummy(all_nominal_predictors())
+
+```
+
+With these defined, we can now apply the cross-validation process to both of our models (LASSO and RF.) We should note that now, we are testing our grid of hyperparameters on each fold, and repeating 5 times to return our mean rmse when predicting the outcome on unseen data for each parameter regime. As such, we would anticipate that the process will take significantly longer to run. Just as before, because this is the same process being run multiple times with different values, we can do our calculations in parallel to help speed things up a little :)
+
+### Tuning the LASSO model by cross-validation 
+
+The following code chunk preforms cross-validation on our model with multiple hyperparameter values and returns the mean RMSE and $R^2$ from the predictions generated by the model at each regime:
+
+```{r tuning-LASSO-cv}
 # parallel processing is speedy
 doParallel::registerDoParallel()
 
 # setting seed
 set.seed(rng.seed)
 
+# updating LASSO model to include penalty
+lasso_mod2 = linear_reg(penalty = tune(), mixture = 1) %>% 
+             set_mode("regression") %>% 
+             set_engine("glmnet") 
+
+# updating workflow with new model and recipe
+#Lasso regression
+y_multiple_LASSO_tune_WF = 
+  workflows::workflow() %>%
+  workflows::add_model(lasso_mod2) %>%
+  workflows::add_recipe(rec_y_tune)
+
+# define paramater grid - vector here because only one tuning parameter
+lambda_grid <- grid_regular(penalty(range = c(-5, 2), trans = transform_log10()), levels = 50)
+
 # tuning model
 tuned_model2 = lasso_grid <- tune_grid(
               y_multiple_LASSO_tune_WF,
-              resamples = samples_Ltune,
+              resamples = folds_tune, #this is the only thing that changes!
               grid = lambda_grid
 )
 
 # observe the tuning process
-tuned_model2 %>% 
-  autoplot()
+LASSO_tune = tuned_model2 %>% 
+                  autoplot()
+print(LASSO_tune)
+
 ```
 
-### Random Forest Model
+Here, we can see that the RMSE of the LASSO model increases substantially at large values for the regularization parameter, echoing the results of the tuning process on the entierty of the data. Curiously, however, it appears that at a very large (order of maginitdue 10^2) value, our $R^2$ increases dramatically. This may be a result of overfitting at these large hyperaparameter values, or a particular exacerabation of a correlation between parameters leading to an overly biased prediction.
 
-```{r}
+The tuning suggests that the smaller the regularlization parameter, the lower the RMSE. 
+
+We can also observe that the rmse tends to be greater when cross-validating with folds than when tuning without folds; wimilarly, the $R^2$ is significantly smaller - the power of our models to predict the same data they are trained on will of course be greater than teh power of the models to predict test data separately from training data. 
+
+### Tuning the RF model by cross-validation 
+
+The following code chunk preforms cross-validation on our model with multiple hyperparameter regimes and returns the mean RMSE and $R^2$ from the predictions generated by the model at each regime: 
+
+```{r tuning-RF-CV}
+# setting seed
+set.seed(rng.seed)
 
 # update workflow accordingly 
 rf_mod2 <- rand_forest(mode = "regression",
-                      mtry = tune(),  # allow for tuning
-                      min_n = tune(), # allow for tuning
+                      mtry = tune(),  # allow for tuning of mtry hyperparam
+                      min_n = tune(), # allow for tuning of min_n hyperparam
                       trees = 300) %>% 
-           set_engine("ranger", seed = rngseed) # set seed for reproducibility internally
+           set_engine("ranger", seed = rng.seed) # set seed for reproducibility internally
 
 workflow2 <- workflow() %>%
-  add_recipe(recipe) %>%
+  add_recipe(rec_y_tune) %>%
   add_model(rf_mod2) # use updated model
 
 # define a 7 by 7 parameter grid
-model3_grid <- grid_regular(mtry(range = c(1,7)),
+mtry_min_n_grid <- grid_regular(mtry(range = c(1,7)),
                             min_n(range = c(1,21)),
                             levels = 7)
 
 # tune the model 
- tuned_model3 <- workflow2 %>% 
-               tune_grid(resamples = apparent_resamples,
-                        grid = model3_grid,
-                         metrics = metric_set(rmse))
+tuned_model3 <- workflow2 %>% 
+               tune_grid(resamples = folds_tune,
+                        grid = mtry_min_n_grid)
 
 # observe the tuning process 
- rf_tune <- tuned_model3 %>% 
-              autoplot()
-
+rf_tune <- tuned_model3 %>% 
+                 autoplot()
+print(rf_tune)
 ```
 
+We can see here that there is some trade-off between having a large number of predictors and a small node size. In fact, we see that larger node sizes tend to lead to a lower RMSE than smaller node sizes when the number of predictors per node is high, while minimal node sizes are favored when the number of predictors per node is small. The lowest possible RMSE occurs at a moderate node size and moderate number of predictor splits allowed at a node (`mtry` = 5 and `min_n` = 17.) 
 
+Had we tuned to the same data with which we generated the model without cross-valdiation, we would have missed this trade-off completely, and chosen a hyperaparameter regime of highest possible `mtry` and lowest possible `min_n`, which performs pretty poorly on unseen data. 
 
+# Conclusion 
+
+While tuning to the entirety of the dataset without cross-validation (that is, testing the model's hyperparameters against unseen data) suggests that the random forest model achieves the lowest rmse compared to the LASSO model (rmse $\approx$ 350 vs rmse $\approx$ 560), tuning with repeated challenge from unseen data reveals that the LASSO model has the greater capacity to predict unseen data (rmse $\approx$ 630 vs rmse $\approx$ 660.)
 
 
