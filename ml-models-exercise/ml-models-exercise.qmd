@@ -25,6 +25,9 @@ library(glmnet)
 #install.packages("ranger")
 library(ranger)
 
+#install.packages("doParallel")
+library(doParallel)
+
 #define seed
 rng.seed = 1234
 ```
@@ -105,7 +108,7 @@ In this section, we will be fitting three models:
 
 Note that we will not be doing a training and test split to test the performance of our model. Instead, we will be fitting the entire dataset and performing cross-validation to observe how the model structure itself (not just the parameterization) performs on the data. 
 
-## Fitting to linear model with multiple predictors
+## First fit: all data = training data
 
 We will be fitting the `y` outcome to all of our predictor variables using a multiple linear regression model, not considering any interaction between the variables, in the code chunk below: 
 
@@ -134,7 +137,7 @@ lasso_mod =
 rf_mod = 
   parsnip::rand_forest() %>%
   parsnip::set_mode("regression") %>%
-  parsnip::set_engine("ranger", seed = rngseed)
+  parsnip::set_engine("ranger", seed = rng.seed)
 
 ## Workflows
 # Linear regression 
@@ -149,7 +152,7 @@ y_multiple_LASSO_WF =
   workflows::add_model(lasso_mod) %>%
   workflows::add_recipe(rec_y_all)
 
-#rf regression
+# wf regression
 y_multiple_rf_WF = 
   workflows::workflow() %>%
   workflows::add_model(rf_mod) %>%
@@ -208,12 +211,104 @@ RMSE_by_model = data.frame(model = c("model.1", "model.2", "model.3"),
                                     rmse(data = predictions, truth = true, estimate = model.3)$.estimate))
 
 ### plot
-
 plot = ggplot() + geom_point(data = predictions_df, aes(x = true, y = Prediction, col = Model)) + 
-  geom_abline(linetype = "dashed") %>%
+  geom_abline(linetype = "dashed") +
+  annotate(geom = "text", x = 4500, y = c(2000, 1725, 1500), label = paste0(c("model 1 rmse = ", "model 2 rmse = ", "model 3 rmse = "), as.character(RMSE_by_model$rmse))) + 
   labs(x = "Observed y", y = "Predicted y", "Model Predictions of Training Data vs True Outcome of Training Data")
 
+
+plot
+
 ```
+
+## Tuning to training data without cross validation
+
+This is a silly thing to do, because we will be tuning our parameters to data and testing our model performcance on the same data - which will, of course, lead us to overfit our model. 
+
+But we should try anyway, so that we can see what do expect from overfitting.
+
+### Lasso Model2
+
+```{r tuning-LASSO-prep}
+# defining recipe again in the same code chunk
+rec_y_all = 
+  recipes::recipe(y ~ ., 
+         data = mavoglurant_data1) %>%
+         step_normalize(all_numeric_predictors()) %>% 
+         step_dummy(all_nominal_predictors())
+
+# updating LASSO model to include penalty
+lasso_mod2 = linear_reg(penalty = tune(), mixture = 1) %>% 
+             set_mode("regression") %>% 
+             set_engine("glmnet") 
+
+# updating workflow with new model and recipe
+#Lasso regression
+y_multiple_LASSO_tune_WF = 
+  workflows::workflow() %>%
+  workflows::add_model(lasso_mod2) %>%
+  workflows::add_recipe(rec_y_tune)
+
+# define paramater grid - vector here because only one tuning parameter
+lambda_grid <- grid_regular(penalty(range = c(-5, 2), trans = transform_log10()), levels = 50)
+
+# creating resamples object 
+samples_Ltune = apparent(mavoglurant_data1)
+
+```
+
+```{r tuning-LASS0}
+# parallel processing is speedy
+doParallel::registerDoParallel()
+
+# setting seed
+set.seed(rng.seed)
+
+# tuning model
+tuned_model2 = lasso_grid <- tune_grid(
+              y_multiple_LASSO_tune_WF,
+              resamples = samples_Ltune,
+              grid = lambda_grid
+)
+
+# observe the tuning process
+tuned_model2 %>% 
+  autoplot()
+```
+
+### Random Forest Model
+
+```{r}
+
+# update workflow accordingly 
+rf_mod2 <- rand_forest(mode = "regression",
+                      mtry = tune(),  # allow for tuning
+                      min_n = tune(), # allow for tuning
+                      trees = 300) %>% 
+           set_engine("ranger", seed = rngseed) # set seed for reproducibility internally
+
+workflow2 <- workflow() %>%
+  add_recipe(recipe) %>%
+  add_model(rf_mod2) # use updated model
+
+# define a 7 by 7 parameter grid
+model3_grid <- grid_regular(mtry(range = c(1,7)),
+                            min_n(range = c(1,21)),
+                            levels = 7)
+
+# tune the model 
+ tuned_model3 <- workflow2 %>% 
+               tune_grid(resamples = apparent_resamples,
+                        grid = model3_grid,
+                         metrics = metric_set(rmse))
+
+# observe the tuning process 
+ rf_tune <- tuned_model3 %>% 
+              autoplot()
+
+```
+
+
 
 
 
