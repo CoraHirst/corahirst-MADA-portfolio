@@ -8,6 +8,12 @@ library(tidytuesdayR)
 
 # install.packages("here")
 library(here)
+
+#install.packages("tidyverse")
+library(tidyverse)
+
+#install.packages("gridExtra")
+library(gridExtra)
 ```
 
 # Load TidyTuesday Datasets
@@ -40,15 +46,112 @@ The two datasets contain information about the path of the moon across the sun a
 
 ![An annular total solar eclipse (left) and a total solar eclipse (right). (Image credit: NASA/Bill Dunford, left, and NASA/Aubrey Gemignani, right)](assets/images/annular_v_total_eclipse.png)
 
+We'd like to take a look at our datasets to see what information can be gleaned from them. 
+The code chunk below explores the structure of the datasets (what does each observation contain?)
+
 ```{r explore-datasets}
 ### What do these datasets contain? 
 str(annular_2023) #structure of annular 2023
 str(total_2024) #structure of total_2024
 
-### are there any duplicate observations?
-annular_2023 %>% filter(name == annular_2023$name[duplicated(annular_2023$name)])
+## Summary of their variables 
+summary(annular_2023)
+summary(total_2024)
+```
+
+The annular solar eclipse data and total solar eclipse data each contain 10 variables, with 811 and 3330 observations, respectively. We can see that the datasets contain the same 10 variables: `state`, `name`, `lat`, `lon`, and `eclipse_1` through `eclipse_6`.
+
+`lat` and `lon` are continuous numeric variables, while `eclipse_1` through `eclipse_6` are time variables on the order of seconds. `state` and `name` are character variables, and should likely be factor (categorical) variables. 
+
+# Cleaning (round 1)
+
+In the following codechunk, we convert `state` and `name` to factor variables, and check for any missing entries.
+
+```{r clean-1}
+### filter for rows contaning NA in any column
+annular_2023 %>%
+  filter(if_any(everything(), is.na)) #none
+
+total_2024 %>%
+  filter(if_any(everything(), is.na)) #none
+
+### no missing entries! 
+
+### converting character variables to factor
+annular_2023 = annular_2023 %>%
+  mutate("state" = as.factor(state), "name" = as.factor(name))
+
+total_2024 = total_2024 %>%
+  mutate("state" = as.factor(state), "name" = as.factor(name))
 
 ```
 
-The annular solar eclipse data and total solar eclipse data each contain 10 variables, with 811 and 3330 observations, respectively. 
+There are no missing entries - wonderful! 
+
+Let's take a look at the distributions of and relationships between our variables. 
+
+# Exploratory Analysis 
+
+According to the data dictionary for `annular_2023` dataset, `eclipse_1` reports the time at which the moon first contacts the sun at a location; `eclipse_2` reports the time at which the eclipse es at 50% in the location; `eclipse_3` reports the time at which annularity begins in the location; `eclipse 4` reports the time at which annularity ends in the location; `eclipse_5` reports the time at which the eclipse is back to 50% in the location; and `eclipse_6` reports the time at which the moon last contacts the sun in the location. 
+
+These variables are similar for `total_2024`, with the only difference being the `eclipse_3` and `eclipse_4` describe the times at which totality (not annularity) begins and ends at the location, respectively. 
+
+This means we can create new features that describe the duration of different events. In the code chunk below, we engineer the following features:
+
+- `eclipse_4` - `eclipse_3` describes the duration of annularity or totality. We call this `duration_annular` or `duration_total`;
+- `eclipse_6` - `eclipse_1` describes the duration of the moon's passage across the sun. We call this `duration_contact`; 
+- `eclipse _5` - `eclipse_2` describes the amount of time during which the eclipse is greater than 50%. We call this `duration_majority`; and
+-`eclipse_3` - `eclipse_1` describes the time from the moon's first contact with the sun to the beginning of annularity or totality, which we call `duration_onset`.
+
+```{r duration-features}
+### add features to annularity dataset
+annular_2023 = annular_2023 %>%
+  mutate("duration_annular" = eclipse_4 - eclipse_3,
+         "duration_contact" = eclipse_6 - eclipse_1,
+         "duration_majority" = eclipse_5 - eclipse_2, 
+         "duration_onset" = eclipse_3 - eclipse_1)
+
+### add features to totality dataset
+total_2024 = total_2024 %>%
+  mutate("duration_total" = eclipse_4 - eclipse_3,
+         "duration_contact" = eclipse_6 - eclipse_1,
+         "duration_majority" = eclipse_5 - eclipse_2, 
+         "duration_onset" = eclipse_3 - eclipse_1)
+
+### visualize
+plot1 = annular_2023 %>%
+            select("duration_annular", "duration_contact", "duration_majority", "duration_onset") %>%
+            pivot_longer(cols = c("duration_annular", "duration_contact", "duration_majority", "duration_onset"), 
+                         names_to = "timeframe", 
+                         values_to = "duration") %>%
+            group_by(timeframe) %>%
+            ggplot() + geom_boxplot(aes(y = duration, x = factor(timeframe), fill = factor(timeframe))) + scale_x_discrete(labels = c("annularity", "contact", "majority covered", "onset")) + labs(x = "phase", y = "duration, s", title = "duration of annular eclipse phases") + theme(legend.position = "none")
+
+plot2 = total_2024 %>%
+            select("duration_total", "duration_contact", "duration_majority", "duration_onset") %>%
+            pivot_longer(cols = c("duration_total", "duration_contact", "duration_majority", "duration_onset"), 
+                         names_to = "timeframe", 
+                         values_to = "duration") %>%
+            group_by(timeframe) %>%
+            ggplot() + geom_boxplot(aes(y = duration, x = factor(timeframe), fill = factor(timeframe))) + scale_x_discrete(labels = c("contact", "majority covered", "onset", "totality")) + labs(x = "phase", y = "duration, s", title = "duration of total eclipse phases") + theme(legend.position = "none")
+
+grid.arrange(plot1, plot2, nrow = 1) #arrange plots in 1 figure
+```
+
+**note: change the x-axes so they are comparable**
+
+Given these features, we can ask a couple questions: 
+
+1) is there an association of annular or total solar eclipse events with latitude? 
+2) with longitude? 
+3) is there an association of annular or total solar eclipse duration with latitude? 
+4) with longitude? 
+5) does the duration of annularity or totality depend on longitude or latitude? 
+6) how is the duration of anularity or totality correlated with the time to the onset of annularity or totality?
+
+lastly 
+
+7) is the frequency of annular and total solar eclipses the same across states? Do some states expereince more of one than the other?
+
+# Questions to Explore
 
