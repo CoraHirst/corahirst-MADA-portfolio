@@ -2,4 +2,53 @@
 title: "Tidy Tuesday Exercise"
 ---
 
-Placeholder file for the future Tidy Tuesday exercise.
+```{r setup}
+# install.packages("tidytuesdayR")
+library(tidytuesdayR)
+
+# install.packages("here")
+library(here)
+```
+
+# Load TidyTuesday Datasets
+
+The following code chunk loads the Tidy Tuesday data set for the week of April 09, 2024. 
+
+```{r load-data}
+## save exercise - tt_data object - as variable
+tuesdata <- tidytuesdayR::tt_load('2024-04-09')
+
+## save datasets as .csv files in data folder for continuity and reproducibility
+# annular 2023
+annular_2023 = as.data.frame(tuesdata$eclipse_annular_2023) # save data frame in environment
+  file = here("tidytuesday-exercise", "data", "eclipse_annular_2023.csv") 
+  write.csv(annular_2023, file = file) # save as csv in data subfolder
+# total 2024
+total_2024 = as.data.frame(tuesdata$eclipse_total_2024) # save data frame in environment
+  file = here("tidytuesday-exercise", "data", "eclipse_total_2024.csv") 
+  write.csv(total_2024, file = file) # save as csv in data subfolder
+
+```
+
+This Tidy Tuesday exercise explores data from NASA’s Scientific Visualization Studio about the annular solar eclipse paths recorded on October 14, 2023 and April 8, 2024. 
+
+`eclipse_annular_2023.csv` and `eclipse_total_2024.csv` can be found in the `data` subfolder of the `tidytuesday-exercise` folder. The datasets containing path information of `partial_` eclipses are too large to be saved to github - c'est la vie. 
+
+# Explore Eclipse Path Datasets
+
+The two datasets contain information about the path of the moon across the sun at different locations within the United States during either the *annular solar eclipse* of 2023 (`eclipse_annular_2023.csv`) or the *total solar eclipse* of 2024 (`eclipse_total_2024.csv`.) An annular eclipse occurs when the moon is closer to its maximum distance from the Earth in its orbit and, as a result, a ring of sunlight is still visible around the moon's shadow when they are perfectly centered in the sky. This is not the case for a total eclipse, where the moon is close enough to the earth that the sun is completely obscured. The difference is pretty stark, and can be seen in the image below:
+
+![An annular total solar eclipse (left) and a total solar eclipse (right). (Image credit: NASA/Bill Dunford, left, and NASA/Aubrey Gemignani, right)](assets/images/annular_v_total_eclipse.png)
+
+```{r explore-datasets}
+### What do these datasets contain? 
+str(annular_2023) #structure of annular 2023
+str(total_2024) #structure of total_2024
+
+### are there any duplicate observations?
+annular_2023 %>% filter(name == annular_2023$name[duplicated(annular_2023$name)])
+
+```
+
+The annular solar eclipse data and total solar eclipse data each contain 10 variables, with 811 and 3330 observations, respectively. 
+
